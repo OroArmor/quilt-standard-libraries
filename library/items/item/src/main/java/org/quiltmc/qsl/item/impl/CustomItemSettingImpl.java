@@ -26,13 +26,17 @@ import java.util.WeakHashMap;
 import java.util.function.Supplier;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import org.quiltmc.qsl.item.api.item.v1.CustomDamageHandler;
 import org.quiltmc.qsl.item.api.item.v1.CustomItemSetting;
 import org.quiltmc.qsl.item.api.item.v1.EquipmentSlotProvider;
+import org.quiltmc.qsl.item.api.item.v1.RecipeRemainderProvider;
 
 public class CustomItemSettingImpl<T> implements CustomItemSetting<T> {
 	public static final CustomItemSetting<EquipmentSlotProvider> EQUIPMENT_SLOT_PROVIDER = CustomItemSetting.create(() -> null);
 	public static final CustomItemSetting<CustomDamageHandler> CUSTOM_DAMAGE_HANDLER = CustomItemSetting.create(() -> null);
+	@SuppressWarnings("ConstantConditions")
+	public static final CustomItemSetting<RecipeRemainderProvider> RECIPE_REMAINDER_PROVIDER = CustomItemSetting.create((original, inventory, type, world, pos) -> original.getItem().hasRecipeRemainder() ? original.getItem().getRecipeRemainder().getDefaultStack() : ItemStack.EMPTY);
 
 	private static final Map<Item.Settings, Collection<CustomItemSettingImpl<?>>> CUSTOM_SETTINGS = new WeakHashMap<>();
 
