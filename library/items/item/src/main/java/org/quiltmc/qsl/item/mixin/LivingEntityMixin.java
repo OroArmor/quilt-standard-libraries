@@ -16,7 +16,7 @@
 
 package org.quiltmc.qsl.item.mixin;
 
-import org.quiltmc.qsl.item.impl.AppliedItemSettingHooks;
+import org.quiltmc.qsl.item.impl.CustomItemSettingImpl;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -34,7 +34,7 @@ import org.quiltmc.qsl.item.api.item.v1.EquipmentSlotProvider;
 abstract class LivingEntityMixin {
 	@Inject(method = "getPreferredEquipmentSlot", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/item/ItemStack;getItem()Lnet/minecraft/item/Item;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
 	private static void onGetPreferredEquipmentSlot(ItemStack stack, CallbackInfoReturnable<EquipmentSlot> info, Item item) {
-		EquipmentSlotProvider equipmentSlotProvider = ((AppliedItemSettingHooks) item).qsl$getEquipmentSlotProvider();
+		EquipmentSlotProvider equipmentSlotProvider = CustomItemSettingImpl.EQUIPMENT_SLOT_PROVIDER.get(item);
 
 		if (equipmentSlotProvider != null) {
 			info.setReturnValue(equipmentSlotProvider.getPreferredEquipmentSlot(stack));

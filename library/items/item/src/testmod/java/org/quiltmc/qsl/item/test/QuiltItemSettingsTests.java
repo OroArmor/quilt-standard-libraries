@@ -23,13 +23,19 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 import net.fabricmc.api.ModInitializer;
+import org.quiltmc.qsl.item.api.item.v1.CustomItemSetting;
 import org.quiltmc.qsl.item.api.item.v1.QuiltItemSettings;
 
 public class QuiltItemSettingsTests implements ModInitializer {
+	public static final CustomItemSetting<String> CUSTOM_DATA_TEST = CustomItemSetting.create(() -> null);
+
 	@Override
 	public void onInitialize() {
 		// Registers an item with a custom equipment slot.
 		Item testItem = new Item(new QuiltItemSettings().group(ItemGroup.MISC).equipmentSlot(stack -> EquipmentSlot.CHEST));
-		Registry.register(Registry.ITEM, new Identifier("qsl_items_item", "test_item"), testItem);
+		Registry.register(Registry.ITEM, new Identifier("qsl_items_item_testmod", "test_item"), testItem);
+
+		Item testItem2 = new Item(new QuiltItemSettings().group(ItemGroup.MISC).custom(CUSTOM_DATA_TEST, "Look at me! I have a custom setting!"));
+		Registry.register(Registry.ITEM, new Identifier("qsl_items_item_testmod", "test_item2"), testItem2);
 	}
 }
