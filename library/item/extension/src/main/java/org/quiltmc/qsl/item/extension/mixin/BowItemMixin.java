@@ -16,8 +16,15 @@
 
 package org.quiltmc.qsl.item.extension.mixin;
 
-import org.quiltmc.qsl.item.extension.api.BowExtensions;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
+import net.minecraft.item.ArrowItem;
+import net.minecraft.item.BowItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import org.quiltmc.qsl.item.extension.api.ShotProjectileEvents;
+import org.quiltmc.qsl.item.extension.impl.BowExtensions;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,14 +33,6 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
-import net.minecraft.item.ArrowItem;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 
 @Mixin(BowItem.class)
 public class BowItemMixin implements BowExtensions {

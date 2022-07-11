@@ -16,15 +16,6 @@
 
 package org.quiltmc.qsl.item.extension.mixin;
 
-import org.quiltmc.qsl.item.extension.api.CrossbowExtensions;
-import org.quiltmc.qsl.item.extension.api.ShotProjectileEvents;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ArrowItem;
@@ -32,6 +23,14 @@ import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
+import org.quiltmc.qsl.item.extension.api.ShotProjectileEvents;
+import org.quiltmc.qsl.item.extension.impl.CrossbowExtensions;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(CrossbowItem.class)
 public class CrossbowItemMixin implements CrossbowExtensions {

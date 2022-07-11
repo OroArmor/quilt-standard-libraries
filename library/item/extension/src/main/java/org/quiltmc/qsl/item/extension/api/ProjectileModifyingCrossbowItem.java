@@ -16,20 +16,22 @@
 
 package org.quiltmc.qsl.item.extension.api;
 
-import org.jetbrains.annotations.NotNull;
-
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.quiltmc.qsl.item.extension.impl.CrossbowExtensions;
 
 /**
- * This is the default implementation for {@link CrossbowExtensions}, allowing for the easy creation of new crossbows with no new modded functionality. <p>
- * In order to have this crossbow edit the properties of shot projectiles, you must call {@code ShotProjectileEvents.CROSSBOW_MODIFY_SHOT_PROJECTILE.register(this);} for it to call {@link ExtendedCrossbowItem#onProjectileShot(ItemStack, ItemStack, LivingEntity, PersistentProjectileEntity)}
+ * This is the default implementation for {@link CrossbowExtensions}, allowing for the easy creation of new crossbows with no new modded functionality.
+ * <p>
+ * This crossbow automatically registers itself to modify its projectiles with {@link ProjectileModifyingCrossbowItem#onProjectileShot(ItemStack, ItemStack, LivingEntity, PersistentProjectileEntity)}</p>
  */
-public class ExtendedCrossbowItem extends CrossbowItem implements ShotProjectileEvents.ModifyProjectileFromCrossbow {
-	public ExtendedCrossbowItem(Settings settings) {
+public class ProjectileModifyingCrossbowItem extends CrossbowItem implements ShotProjectileEvents.ModifyProjectileFromCrossbow {
+	public ProjectileModifyingCrossbowItem(Settings settings) {
 		super(settings);
+		ShotProjectileEvents.CROSSBOW_MODIFY_SHOT_PROJECTILE.register(this);
 	}
 
 	@Override
@@ -39,6 +41,6 @@ public class ExtendedCrossbowItem extends CrossbowItem implements ShotProjectile
 		}
 	}
 
-	public void onProjectileShot(ItemStack bowStack, ItemStack arrowStack, LivingEntity user, PersistentProjectileEntity persistentProjectileEntity) {
+	public void onProjectileShot(ItemStack crossbowStack, ItemStack arrowStack, LivingEntity user, PersistentProjectileEntity persistentProjectileEntity) {
 	}
 }

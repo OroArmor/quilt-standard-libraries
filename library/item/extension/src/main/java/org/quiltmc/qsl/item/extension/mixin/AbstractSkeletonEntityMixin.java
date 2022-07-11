@@ -16,19 +16,17 @@
 
 package org.quiltmc.qsl.item.extension.mixin;
 
-import org.quiltmc.qsl.item.extension.api.BowExtensions;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
-
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.world.World;
+import org.quiltmc.qsl.item.extension.impl.BowExtensions;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(AbstractSkeletonEntity.class)
 public abstract class AbstractSkeletonEntityMixin extends MobEntity implements RangedAttackMob {

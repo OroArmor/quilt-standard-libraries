@@ -15,9 +15,9 @@ qslModule {
 		}
 	}
 	injectedInterface("net/minecraft/class_1753") {
-		values = ["org/quiltmc/qsl/item/extension/api/BowExtensions"]
+		values = ["org/quiltmc/qsl/item/extension/impl/BowExtensions"]
 	}
 	injectedInterface("net/minecraft/class_1764") {
-		values = ["org/quiltmc/qsl/item/extension/api/CrossbowExtensions"]
+		values = ["org/quiltmc/qsl/item/extension/impl/CrossbowExtensions"]
 	}
 }

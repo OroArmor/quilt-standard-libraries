@@ -16,13 +16,6 @@
 
 package org.quiltmc.qsl.item.extension.test;
 
-import org.jetbrains.annotations.NotNull;
-import org.quiltmc.loader.api.ModContainer;
-import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
-import org.quiltmc.qsl.item.extension.api.ExtendedBowItem;
-import org.quiltmc.qsl.item.extension.api.ShotProjectileEvents;
-import org.quiltmc.qsl.item.extension.api.ExtendedCrossbowItem;
-
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.Item;
@@ -30,16 +23,21 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import org.jetbrains.annotations.NotNull;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
+import org.quiltmc.qsl.item.extension.api.ProjectileModifyingBowItem;
+import org.quiltmc.qsl.item.extension.api.ProjectileModifyingCrossbowItem;
 
 public class BowsTest implements ModInitializer {
-	public static final Item TEST_BOW = new ExtendedBowItem(new Item.Settings().group(ItemGroup.COMBAT)) {
+	public static final Item TEST_BOW = new ProjectileModifyingBowItem(new Item.Settings().group(ItemGroup.COMBAT)) {
 		@Override
 		public void onProjectileShot(ItemStack bowStack, ItemStack arrowStack, LivingEntity user, float pullProgress, PersistentProjectileEntity persistentProjectileEntity) {
 			persistentProjectileEntity.setPunch(100);
 		}
 	};
 
-	public static final Item TEST_CROSSBOW = new ExtendedCrossbowItem(new Item.Settings().group(ItemGroup.COMBAT)) {
+	public static final Item TEST_CROSSBOW = new ProjectileModifyingCrossbowItem(new Item.Settings().group(ItemGroup.COMBAT)) {
 		@Override
 		public void onProjectileShot(ItemStack crossbowStack, ItemStack projectileStack, LivingEntity entity, @NotNull PersistentProjectileEntity persistentProjectileEntity) {
 			persistentProjectileEntity.setDamage(1000);
@@ -56,9 +54,7 @@ public class BowsTest implements ModInitializer {
 	public void onInitialize(ModContainer container) {
 		// Registers a custom bow.
 		Registry.register(Registry.ITEM, new Identifier(MOD_ID, "test_bow"), TEST_BOW);
-		ShotProjectileEvents.BOW_MODIFY_SHOT_PROJECTILE.register((ShotProjectileEvents.ModifyProjectileFromBow) TEST_BOW);
 		// Registers a custom crossbow.
 		Registry.register(Registry.ITEM, new Identifier(MOD_ID, "test_crossbow"), TEST_CROSSBOW);
-		ShotProjectileEvents.CROSSBOW_MODIFY_SHOT_PROJECTILE.register((ShotProjectileEvents.ModifyProjectileFromCrossbow) TEST_CROSSBOW);
 	}
 }

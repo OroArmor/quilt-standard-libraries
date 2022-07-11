@@ -16,16 +16,15 @@
 
 package org.quiltmc.qsl.item.extension.mixin.client;
 
-import org.quiltmc.qsl.item.extension.api.BowExtensions;
-import org.quiltmc.qsl.item.extension.api.CrossbowExtensions;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
-
 import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import org.quiltmc.qsl.item.extension.impl.BowExtensions;
+import org.quiltmc.qsl.item.extension.impl.CrossbowExtensions;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(HeldItemRenderer.class)
 public abstract class HeldItemRendererMixin {

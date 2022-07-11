@@ -20,15 +20,17 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
+import org.quiltmc.qsl.item.extension.impl.BowExtensions;
 
 /**
  * This is the default implementation for {@link BowExtensions}, allowing for the easy creation of new bows with no new modded functionality.
  * <p>
- * In order to have this bow edit the properties of shot projectiles, you must call {@code ShotProjectileEvents.BOW_MODIFY_SHOT_PROJECTILE.register(this);} for it to call {@link ExtendedBowItem#onProjectileShot(ItemStack, ItemStack, LivingEntity, float, PersistentProjectileEntity)}
+ * This bow automatically registers itself to modify its arrows with {@link ProjectileModifyingBowItem#onProjectileShot(ItemStack, ItemStack, LivingEntity, float, PersistentProjectileEntity)}</p>
  */
-public class ExtendedBowItem extends BowItem implements ShotProjectileEvents.ModifyProjectileFromBow {
-	public ExtendedBowItem(Settings settings) {
+public class ProjectileModifyingBowItem extends BowItem implements ShotProjectileEvents.ModifyProjectileFromBow {
+	public ProjectileModifyingBowItem(Settings settings) {
 		super(settings);
+		ShotProjectileEvents.BOW_MODIFY_SHOT_PROJECTILE.register(this);
 	}
 
 	@Override

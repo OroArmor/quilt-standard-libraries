@@ -14,22 +14,29 @@
  * limitations under the License.
  */
 
-package org.quiltmc.qsl.item.extension.api;
-
-import org.quiltmc.qsl.item.extension.mixin.CrossbowItemAccessor;
+package org.quiltmc.qsl.item.extension.impl;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.ApiStatus;
+import org.quiltmc.qsl.base.api.util.InjectedInterface;
+import org.quiltmc.qsl.item.extension.api.ProjectileModifyingCrossbowItem;
+import org.quiltmc.qsl.item.extension.api.ShotProjectileEvents;
+import org.quiltmc.qsl.item.extension.mixin.CrossbowItemAccessor;
 
 /**
- * An interface to implement for all custom crossbows in Quilt. <p>
- * This is meant to be used on a {@link net.minecraft.item.CrossbowItem} class. Unless similar functionality is implemented on your custom item, most functionality will not work. <p>
- * In order to modify the projectile shot from your crossbow, implementing and registering {@link ShotProjectileEvents.ModifyProjectileFromCrossbow} is recommended.
+ * An interface to implement for all custom crossbows in Quilt.
+ * <p>
+ * This is meant to be used on a {@link net.minecraft.item.CrossbowItem} class.</p>
+ * <p>
+ * In order to modify the projectile shot from your crossbow, implementing and registering {@link ShotProjectileEvents.ModifyProjectileFromCrossbow} is recommended.</p>
  *
- * @see ExtendedCrossbowItem
+ * @see ProjectileModifyingCrossbowItem
  */
+@ApiStatus.Internal
+@InjectedInterface(CrossbowItem.class)
 public interface CrossbowExtensions {
 	/**
 	 * Allows modifying the speed of the crossbow projectile. <p>
