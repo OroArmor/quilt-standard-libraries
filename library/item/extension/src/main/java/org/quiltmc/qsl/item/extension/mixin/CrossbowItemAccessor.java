@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(CrossbowItem.class)
 public interface CrossbowItemAccessor {
 	@Invoker("getSpeed")
-	static float quilt$getSpeed(ItemStack stack){
+	static float quilt$getSpeed(ItemStack stack) {
 		throw new AssertionError("Calling @Invoker method");
 	}
 }
