@@ -1,0 +1,17 @@
+plugins {
+	id("qsl.module")
+}
+
+qslModule {
+	name = "Quilt Config Value API"
+	moduleName = "config_value"
+	id = "quilt_config_value"
+	description = ""
+	library = "config"
+	moduleDependencies {
+		core {
+			api("qsl_base")
+			api("resource_loader")
+		}
+	}
+}
