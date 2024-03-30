@@ -30,6 +30,7 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.screen.StonecutterScreenHandler;
 import net.minecraft.screen.slot.Slot;
 
+import org.quiltmc.qsl.item.setting.api.RecipeRemainderLocation;
 import org.quiltmc.qsl.item.setting.api.RecipeRemainderLogicHandler;
 
 @Mixin(targets = {"net.minecraft.screen.StonecutterScreenHandler$C_biccipxg"})
@@ -53,6 +54,7 @@ public class StonecutterOutputSlotMixin extends Slot {
 				slot,
 				amount,
 				recipe,
+				RecipeRemainderLocation.STONE_CUTTER_INPUT,
 				player
 		);
 
