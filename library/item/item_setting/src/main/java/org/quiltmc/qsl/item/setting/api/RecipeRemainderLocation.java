@@ -27,7 +27,7 @@ import org.quiltmc.qsl.item.setting.impl.RecipeRemainderLogicHandlerImpl;
 
 /**
  * Contains the different recipe remainder locations that QSL supports.
- * Calling {@link #register(Identifier)} allows mods to create their own remainder locations.
+ * Calling {@link #getOrCreate(Identifier)} allows mods to create their own remainder locations or get remainder locations without needing to compile against the other mod.
  *
  * <p> This class should not be extended.
  */
@@ -36,47 +36,47 @@ public interface RecipeRemainderLocation {
 	/**
 	 * Remainder location for Vanilla crafting. Used in Crafting Tables and the inventory crafting screen.
 	 */
-	RecipeRemainderLocation CRAFTING = register(new Identifier("minecraft:crafting"));
+	RecipeRemainderLocation CRAFTING = getOrCreate(new Identifier("minecraft:crafting"));
 
 	/**
 	 * Remainder location for the furnace fuel slot in the different furnace types.
 	 */
-	RecipeRemainderLocation FURNACE_FUEL = register(new Identifier("minecraft:furnace_fuel"));
+	RecipeRemainderLocation FURNACE_FUEL = getOrCreate(new Identifier("minecraft:furnace_fuel"));
 
 	/**
 	 * Remainder location for the furnace ingredient slot in the different furnace types.
 	 */
-	RecipeRemainderLocation FURNACE_INGREDIENT = register(new Identifier("minecraft:furnace_ingredient"));
+	RecipeRemainderLocation FURNACE_INGREDIENT = getOrCreate(new Identifier("minecraft:furnace_ingredient"));
 
 	/**
 	 * Remainder location for the dye slot in looms.
 	 */
-	RecipeRemainderLocation LOOM_DYE = register(new Identifier("minecraft:loom_dye"));
+	RecipeRemainderLocation LOOM_DYE = getOrCreate(new Identifier("minecraft:loom_dye"));
 
 	/**
 	 * Remainder location for the potion addition in brewing stands.
 	 */
-	RecipeRemainderLocation POTION_ADDITION = register(new Identifier("minecraft:potion_addition"));
+	RecipeRemainderLocation POTION_ADDITION = getOrCreate(new Identifier("minecraft:potion_addition"));
 
 	/**
 	 * Remainder location for the input to the stone cutter.
 	 */
-	RecipeRemainderLocation STONE_CUTTER_INPUT = register(new Identifier("minecraft:stone_cutter_input"));
+	RecipeRemainderLocation STONE_CUTTER_INPUT = getOrCreate(new Identifier("minecraft:stone_cutter_input"));
 
 	/**
 	 * Remainder location for the smithing template slot.
 	 */
-	RecipeRemainderLocation SMITHING_TEMPLATE = register(new Identifier("minecraft:smithing_template"));
+	RecipeRemainderLocation SMITHING_TEMPLATE = getOrCreate(new Identifier("minecraft:smithing_template"));
 
 	/**
 	 * Remainder location for the smithing base slot.
 	 */
-	RecipeRemainderLocation SMITHING_BASE = register(new Identifier("minecraft:smithing_base"));
+	RecipeRemainderLocation SMITHING_BASE = getOrCreate(new Identifier("minecraft:smithing_base"));
 
 	/**
 	 * Remainder location for the smithing ingredient slot.
 	 */
-	RecipeRemainderLocation SMITHING_INGREDIENT = register(new Identifier("minecraft:smithing_ingredient"));
+	RecipeRemainderLocation SMITHING_INGREDIENT = getOrCreate(new Identifier("minecraft:smithing_ingredient"));
 
 	/**
 	 * The default locations for a recipe remainder.
@@ -84,23 +84,18 @@ public interface RecipeRemainderLocation {
 	RecipeRemainderLocation[] DEFAULT_LOCATIONS = {CRAFTING, FURNACE_FUEL};
 
 	/**
-	 * Registers a new remainder location.
+	 * Gets a new remainder location if it already exists, creating it otherwise.
 	 * @param id the id for the location
-	 * @return a new remainder location
+	 * @return the remainder location
 	 */
 	@Contract("null -> fail; _ -> new")
-	static RecipeRemainderLocation register(Identifier id) {
+	static RecipeRemainderLocation getOrCreate(Identifier id) {
 		record RecipeRemainderLocationImpl(Identifier id) implements RecipeRemainderLocation {
 		}
 
 		Objects.requireNonNull(id, "`id` must not be null.");
 
-		var location = new RecipeRemainderLocationImpl(id);
-		if (!RecipeRemainderLogicHandlerImpl.LOCATIONS.add(location)) {
-			throw new IllegalArgumentException(String.format("Cannot add `%s` as a recipe remainder location twice!", id));
-		}
-
-		return location;
+		return RecipeRemainderLogicHandlerImpl.LOCATIONS.computeIfAbsent(id, RecipeRemainderLocationImpl::new);
 	}
 
 	/**

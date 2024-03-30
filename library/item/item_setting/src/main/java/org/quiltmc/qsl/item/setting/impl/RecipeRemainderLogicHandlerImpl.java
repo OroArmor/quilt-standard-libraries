@@ -16,8 +16,8 @@
 
 package org.quiltmc.qsl.item.setting.impl;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import org.jetbrains.annotations.ApiStatus;
@@ -29,13 +29,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.Identifier;
 
 import org.quiltmc.qsl.item.setting.api.RecipeRemainderLocation;
 import org.quiltmc.qsl.item.setting.api.RecipeRemainderLogicHandler;
 
 @ApiStatus.Internal
 public final class RecipeRemainderLogicHandlerImpl implements RecipeRemainderLogicHandler {
-	public static final Set<RecipeRemainderLocation> LOCATIONS = new HashSet<>();
+	public static final Map<Identifier, RecipeRemainderLocation> LOCATIONS = new HashMap<>();
 
 	/**
 	 * @return {@code true} if returning the item to the inventory was successful, or {@code false} if additional handling for the remainder is needed
