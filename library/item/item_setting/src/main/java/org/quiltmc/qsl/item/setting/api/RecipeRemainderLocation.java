@@ -28,6 +28,7 @@ import org.quiltmc.qsl.item.setting.impl.RecipeRemainderLogicHandlerImpl;
 /**
  * Contains the different recipe remainder locations that QSL supports.
  * Calling {@link #getOrCreate(Identifier)} allows mods to create their own remainder locations or get remainder locations without needing to compile against the other mod.
+ * The hierarchy of recipe remainder locations is: {@link #DEFAULT_LOCATIONS} &lt; any location &lt; {@link #ALL_LOCATIONS}.
  *
  * <p> This class should not be extended.
  */
@@ -36,12 +37,12 @@ public interface RecipeRemainderLocation {
 	/**
 	 * Remainder location for Vanilla crafting. Used in Crafting Tables and the inventory crafting screen.
 	 */
-	RecipeRemainderLocation CRAFTING = getOrCreate(new Identifier("minecraft:crafting"));
+	RecipeRemainderLocation CRAFTING = addToDefaultLocations(getOrCreate(new Identifier("minecraft:crafting")));
 
 	/**
 	 * Remainder location for the furnace fuel slot in the different furnace types.
 	 */
-	RecipeRemainderLocation FURNACE_FUEL = getOrCreate(new Identifier("minecraft:furnace_fuel"));
+	RecipeRemainderLocation FURNACE_FUEL = addToDefaultLocations(getOrCreate(new Identifier("minecraft:furnace_fuel")));
 
 	/**
 	 * Remainder location for the furnace ingredient slot in the different furnace types.
@@ -79,9 +80,14 @@ public interface RecipeRemainderLocation {
 	RecipeRemainderLocation SMITHING_INGREDIENT = getOrCreate(new Identifier("minecraft:smithing_ingredient"));
 
 	/**
-	 * The default locations for a recipe remainder.
+	 * Remainder location for the default locations. This starts with {@link #CRAFTING} and {@link #FURNACE_FUEL}.
 	 */
-	RecipeRemainderLocation[] DEFAULT_LOCATIONS = {CRAFTING, FURNACE_FUEL};
+	RecipeRemainderLocation DEFAULT_LOCATIONS = getOrCreate(new Identifier("quilt:default"));
+
+	/**
+	 * Remainder location for all locations. Using this will override any other locations that is specified.
+	 */
+	RecipeRemainderLocation ALL_LOCATIONS = getOrCreate(new Identifier("quilt:all"));
 
 	/**
 	 * Gets a new remainder location if it already exists, creating it otherwise.
@@ -96,6 +102,17 @@ public interface RecipeRemainderLocation {
 		Objects.requireNonNull(id, "`id` must not be null.");
 
 		return RecipeRemainderLogicHandlerImpl.LOCATIONS.computeIfAbsent(id, RecipeRemainderLocationImpl::new);
+	}
+
+	/**
+	 * @param location the location to add to the default locations
+	 */
+	@Contract("null -> fail")
+	static RecipeRemainderLocation addToDefaultLocations(RecipeRemainderLocation location) {
+		Objects.requireNonNull(location, "`location` must not be null");
+
+		RecipeRemainderLogicHandlerImpl.DEFAULT_LOCATIONS.add(location);
+		return location;
 	}
 
 	/**

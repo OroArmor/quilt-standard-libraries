@@ -18,6 +18,8 @@ package org.quiltmc.qsl.item.setting.impl;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Consumer;
 
 import org.jetbrains.annotations.ApiStatus;
@@ -37,6 +39,7 @@ import org.quiltmc.qsl.item.setting.api.RecipeRemainderLogicHandler;
 @ApiStatus.Internal
 public final class RecipeRemainderLogicHandlerImpl implements RecipeRemainderLogicHandler {
 	public static final Map<Identifier, RecipeRemainderLocation> LOCATIONS = new HashMap<>();
+	public static final Set<RecipeRemainderLocation> DEFAULT_LOCATIONS = new HashSet<>();
 
 	/**
 	 * @return {@code true} if returning the item to the inventory was successful, or {@code false} if additional handling for the remainder is needed

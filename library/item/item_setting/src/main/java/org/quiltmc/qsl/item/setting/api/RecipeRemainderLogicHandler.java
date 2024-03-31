@@ -16,6 +16,7 @@
 
 package org.quiltmc.qsl.item.setting.api;
 
+import java.util.Map;
 import java.util.function.Consumer;
 
 import org.jetbrains.annotations.ApiStatus;
@@ -49,10 +50,24 @@ public interface RecipeRemainderLogicHandler {
 	 * @return the recipe remainder
 	 */
 	static ItemStack getRemainder(ItemStack original, @Nullable Recipe<?> recipe, RecipeRemainderLocation location) {
-		ItemStack remainder = CustomItemSettingImpl.RECIPE_REMAINDER_PROVIDER
-				.get(original.getItem())
-				.getOrDefault(location, (_original, _recipe) -> ItemStack.EMPTY)
-				.getRecipeRemainder(
+		Map<RecipeRemainderLocation, RecipeRemainderProvider> providers = CustomItemSettingImpl.RECIPE_REMAINDER_PROVIDER
+				.get(original.getItem());
+
+		RecipeRemainderProvider provider = (_original, _recipe) -> ItemStack.EMPTY;
+
+		if (RecipeRemainderLogicHandlerImpl.DEFAULT_LOCATIONS.contains(location)) {
+			provider = providers.get(RecipeRemainderLocation.DEFAULT_LOCATIONS);
+		}
+
+		if (providers.containsKey(location)) {
+			provider = providers.get(location);
+		}
+
+		if (providers.containsKey(RecipeRemainderLocation.ALL_LOCATIONS)) {
+			provider = providers.get(RecipeRemainderLocation.ALL_LOCATIONS);
+		}
+
+		ItemStack remainder = provider.getRecipeRemainder(
 					original,
 					recipe
 				);
