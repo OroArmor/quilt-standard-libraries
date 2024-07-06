@@ -25,6 +25,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
+import net.minecraft.server.network.EntityTrackerEntry;
 import net.minecraft.util.math.Vec3d;
 
 /**
@@ -253,7 +254,7 @@ public abstract class AbstractEntityPart<E extends Entity> extends Entity implem
 	}
 
 	@Override
-	public Packet<ClientPlayPacketListener> createSpawnPacket() {
+	public Packet<ClientPlayPacketListener> createSpawnPacket(EntityTrackerEntry entityTrackerEntry) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -32,7 +32,7 @@ public final class StatusEffectTest implements ModInitializer {
 	public static final String NAMESPACE = "quilt_status_effect_testmod";
 
 	public static Identifier id(String path) {
-		return new Identifier(NAMESPACE, path);
+		return Identifier.of(NAMESPACE, path);
 	}
 
 	public static final StatusEffectRemovalReason DRANK_PASTEURIZED_MILK = new StatusEffectRemovalReason(id("action.drank_pasteurized_milk")) {
