@@ -60,7 +60,7 @@ public class EntityRenderDispatcherMixin {
 			double entityZ = -MathHelper.lerp(tickDelta, entity.lastRenderZ, entity.getZ());
 
 			for (EntityPart<?> part : multipartEntity.getEntityParts()) {
-				part.renderHitbox(matrices, vertices, entityX, entityY, entityZ, entity, tickDelta);
+				part.renderHitbox(matrices, vertices, entityX, entityY, entityZ, entity, red, green, blue, tickDelta);
 			}
 		}
 	}

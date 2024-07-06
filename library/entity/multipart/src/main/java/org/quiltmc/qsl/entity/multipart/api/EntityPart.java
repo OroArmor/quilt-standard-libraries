@@ -45,17 +45,20 @@ public interface EntityPart<E extends Entity> {
 	 * @param ownerY the {@link #getOwner() owner's} rendered Y coordinate
 	 * @param ownerZ the {@link #getOwner() owner's} rendered Z coordinate
 	 * @param owner the {@link #getOwner() owner}
+	 * @param red the red value for the color of the hitbox
+	 * @param green the green value for the color of the hitbox
+	 * @param blue the blue value for the color of the hitbox
 	 * @param tickDelta progress for linearly interpolating between the previous and current game state
 	 */
 	@ClientOnly
-	default void renderHitbox(MatrixStack matrices, VertexConsumer vertices, double ownerX, double ownerY, double ownerZ, Entity owner, float tickDelta) {
+	default void renderHitbox(MatrixStack matrices, VertexConsumer vertices, double ownerX, double ownerY, double ownerZ, Entity owner, float red, float green, float blue, float tickDelta) {
 		if (this instanceof Entity entityPart) {
 			matrices.push();
 			double entityPartX = ownerX + MathHelper.lerp(tickDelta, entityPart.lastRenderX, entityPart.getX());
 			double entityPartY = ownerY + MathHelper.lerp(tickDelta, entityPart.lastRenderY, entityPart.getY());
 			double entityPartZ = ownerZ + MathHelper.lerp(tickDelta, entityPart.lastRenderZ, entityPart.getZ());
 			matrices.translate(entityPartX, entityPartY, entityPartZ);
-			WorldRenderer.drawBox(matrices, vertices, entityPart.getVisibilityBoundingBox().offset(-entityPart.getX(), -entityPart.getY(), -entityPart.getZ()), 0.25F, 1.0F, 0.0F, 1.0F);
+			WorldRenderer.drawBox(matrices, vertices, entityPart.getVisibilityBoundingBox().offset(-entityPart.getX(), -entityPart.getY(), -entityPart.getZ()), red, green, blue, 1.0F);
 			matrices.pop();
 		}
 	}
