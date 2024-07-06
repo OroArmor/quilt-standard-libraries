@@ -17,10 +17,10 @@
 
 package org.quiltmc.qsl.block.extensions.mixin;
 
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
 
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
@@ -34,7 +34,6 @@ import net.minecraft.feature_flags.FeatureFlagBitSet;
 import net.minecraft.loot.LootTable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.Identifier;
 
 @Mixin(AbstractBlock.Settings.class)
 public interface AbstractBlockSettingsAccessor {
@@ -100,7 +99,8 @@ public interface AbstractBlockSettingsAccessor {
 	boolean getToolRequired();
 
 	@Accessor
-	Optional<AbstractBlock.OffsetFunction> getOffsetFunction();
+	@Nullable
+	AbstractBlock.OffsetFunction getOffsetFunction();
 
 	@Accessor
 	boolean getSpawnsDustParticles();
@@ -166,7 +166,7 @@ public interface AbstractBlockSettingsAccessor {
 	void setToolRequired(boolean toolRequired);
 
 	@Accessor
-	void setOffsetFunction(Optional<AbstractBlock.OffsetFunction> offsetFunction);
+	void setOffsetFunction(@Nullable AbstractBlock.OffsetFunction offsetFunction);
 
 	@Accessor
 	void setDynamicBounds(boolean dynamicBounds);

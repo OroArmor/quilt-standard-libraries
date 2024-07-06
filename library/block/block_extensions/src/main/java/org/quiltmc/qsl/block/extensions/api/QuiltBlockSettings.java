@@ -268,8 +268,8 @@ public class QuiltBlockSettings extends AbstractBlock.Settings {
 	}
 
 	@Override
-	public QuiltBlockSettings requiresTool() {
-		super.requiresTool();
+	public QuiltBlockSettings toolRequired() {
+		super.toolRequired();
 		return this;
 	}
 

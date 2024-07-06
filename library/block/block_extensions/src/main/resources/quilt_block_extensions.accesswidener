@@ -99,4 +99,4 @@ transitive-accessible method net/minecraft/block/WetSpongeBlock <init> (Lnet/min
 transitive-accessible method net/minecraft/block/WitherSkeletonWallSkullBlock <init> (Lnet/minecraft/block/AbstractBlock$Settings;)V
 transitive-accessible method net/minecraft/block/WitherSkullBlock <init> (Lnet/minecraft/block/AbstractBlock$Settings;)V
 transitive-accessible method net/minecraft/block/dispenser/DispenserBlock <init> (Lnet/minecraft/block/AbstractBlock$Settings;)V
-transitive-accessible method net/minecraft/block/sapling/SaplingBlock <init> (Lnet/minecraft/block/WoodTypes;Lnet/minecraft/block/AbstractBlock$Settings;)V
+transitive-accessible method net/minecraft/block/sapling/SaplingBlock <init> (Lnet/minecraft/block/sapling/TreeGrower;Lnet/minecraft/block/AbstractBlock$Settings;)V
