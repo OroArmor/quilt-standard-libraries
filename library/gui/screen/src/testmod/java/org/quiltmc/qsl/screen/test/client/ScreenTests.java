@@ -37,7 +37,7 @@ import org.quiltmc.qsl.screen.api.client.ScreenEvents;
 @ClientOnly
 public class ScreenTests implements ScreenEvents.AfterInit, ScreenEvents.AfterRender {
 	public static final Logger LOGGER = LoggerFactory.getLogger("ScreenEventsTest");
-	private static final Identifier ARMOR_FULL_ICON = new Identifier("hud/armor_full");
+	private static final Identifier ARMOR_FULL_ICON = Identifier.ofDefault("hud/armor_full");
 	private Screen actualScreen;
 
 	@Override
