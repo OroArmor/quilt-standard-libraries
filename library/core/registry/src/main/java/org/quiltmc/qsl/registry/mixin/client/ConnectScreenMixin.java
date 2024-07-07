@@ -33,8 +33,10 @@ import org.quiltmc.qsl.registry.impl.sync.client.ClientRegistrySync;
 @ClientOnly
 @Mixin(ConnectScreen.class)
 public class ConnectScreenMixin {
-	@Inject(method = "connect(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/network/ServerAddress;Lnet/minecraft/client/network/ServerInfo;Lnet/minecraft/network/CookieStorage;)V",
-		at = @At(value = "HEAD"))
+	@Inject(
+			method = "connect(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/network/ServerAddress;Lnet/minecraft/client/network/ServerInfo;Lnet/minecraft/network/CookieStorage;)V",
+			at = @At(value = "HEAD")
+	)
 	private void quilt$snapshotRegistry(MinecraftClient client, ServerAddress address, ServerInfo serverInfo, CookieStorage cookieStorage, CallbackInfo ci) {
 		ClientRegistrySync.createSnapshot();
 	}

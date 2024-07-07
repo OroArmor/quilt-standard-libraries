@@ -12,12 +12,12 @@ qslModule {
 			api("qsl_base")
 			api("networking")
 			api("lifecycle_events")
-			testmodOnly("resource_loader")
-			testmodOnly("testing")
+//			testmodOnly("resource_loader")
+//			testmodOnly("testing")
 		}
-		data {
-			testmodOnly("tags")
-		}
+//		data {
+//			testmodOnly("tags")
+//		}
 		gui {
 			testmodOnly("screen") // for resource loader
 		}

@@ -23,8 +23,8 @@ import net.minecraft.registry.Registries;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.quiltmc.qsl.networking.api.PayloadTypeRegistry;
-import org.quiltmc.qsl.networking.api.ServerConfigurationConnectionEvents;
-import org.quiltmc.qsl.networking.api.ServerConfigurationTaskManager;
+import org.quiltmc.qsl.networking.api.server.ServerConfigurationConnectionEvents;
+import org.quiltmc.qsl.networking.api.server.ServerConfigurationTaskManager;
 import org.quiltmc.qsl.registry.impl.sync.mod_protocol.ModProtocolImpl;
 import org.quiltmc.qsl.registry.impl.sync.registry.SynchronizedRegistry;
 import org.quiltmc.qsl.registry.impl.sync.server.ServerRegistrySync;
@@ -38,18 +38,25 @@ public class RegistrySyncInitializer implements ModInitializer {
 		ModProtocolImpl.loadVersions();
 
 		SynchronizedRegistry.markForSync(
+				Registries.ARMOR_MATERIAL,
 				Registries.BLOCK,
 				Registries.BLOCK_ENTITY_TYPE,
 				Registries.CAT_VARIANT,
 				Registries.COMMAND_ARGUMENT_TYPE,
-				Registries.ENCHANTMENT,
+				Registries.CUSTOM_STAT,
+				Registries.DATA_COMPONENT_TYPE,
+				Registries.ENTITY_ATTRIBUTE,
 				Registries.ENTITY_TYPE,
 				Registries.FLUID,
 				Registries.FROG_VARIANT,
 				Registries.GAME_EVENT,
 				Registries.ITEM,
-				Registries.PAINTING_VARIANT,
+				Registries.NUMBER_FORMAT_TYPE,
+				Registries.MAP_DECORATION_TYPE,
 				Registries.PARTICLE_TYPE,
+				Registries.POSITION_SOURCE_TYPE,
+				Registries.POTION,
+				Registries.RECIPE_SERIALIZER,
 				Registries.SCREEN_HANDLER_TYPE,
 				Registries.SOUND_EVENT,
 				Registries.STAT_TYPE,

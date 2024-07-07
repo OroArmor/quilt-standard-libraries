@@ -29,10 +29,10 @@ import java.util.stream.Collectors;
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.network.codec.PacketCodec;
 import org.jetbrains.annotations.ApiStatus;
 
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.payload.CustomPayload;
 import net.minecraft.registry.Registries;
@@ -40,7 +40,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 import org.quiltmc.qsl.networking.api.PacketByteBufs;
-import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
+import org.quiltmc.qsl.networking.api.server.ServerPlayNetworking;
 import org.quiltmc.qsl.registry.impl.sync.registry.RegistryFlag;
 import org.quiltmc.qsl.registry.impl.sync.registry.SynchronizedRegistry;
 
@@ -154,7 +154,7 @@ public class ServerFabricRegistrySync {
 				for (var entry : syncMap.entrySet()) {
 					for (var entry2 : entry.getValue()) {
 						if (!RegistryFlag.isOptional(entry2.flags()) && !RegistryFlag.isSkipped(entry2.flags())) {
-							idMap.put(new Identifier(entry.getKey(), entry2.path()), entry2.rawId());
+							idMap.put(Identifier.of(entry.getKey(), entry2.path()), entry2.rawId());
 						}
 					}
 				}
@@ -175,7 +175,7 @@ public class ServerFabricRegistrySync {
 	}
 
 	public record Payload(byte[] data) implements CustomPayload {
-		public static CustomPayload.Id<Payload> ID = new Id<>(new Identifier("fabric", "registry/sync/direct"));
+		public static CustomPayload.Id<Payload> ID = new Id<>(Identifier.of("fabric", "registry/sync/direct"));
 		public static PacketCodec<PacketByteBuf, Payload> CODEC = CustomPayload.create(Payload::write, Payload::new);
 
 		Payload(PacketByteBuf buf) {
@@ -183,7 +183,7 @@ public class ServerFabricRegistrySync {
 		}
 
 		private void write(PacketByteBuf buf) {
-			buf.writeBytes(data);
+			buf.writeBytes(this.data);
 		}
 
 		private static byte[] readAllBytes(PacketByteBuf buf) {
@@ -200,7 +200,7 @@ public class ServerFabricRegistrySync {
 
 	public static class SyncCompletePayload implements CustomPayload {
 		public static final SyncCompletePayload INSTANCE = new SyncCompletePayload();
-		public static final CustomPayload.Id<?> ID = new CustomPayload.Id<>(new Identifier("fabric", "registry/sync/complete"));
+		public static final CustomPayload.Id<?> ID = new CustomPayload.Id<>(Identifier.of("fabric", "registry/sync/complete"));
 		public static final PacketCodec<PacketByteBuf, SyncCompletePayload> CODEC = PacketCodec.unit(INSTANCE);
 
 		private SyncCompletePayload() { }

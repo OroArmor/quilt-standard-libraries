@@ -234,7 +234,7 @@ public abstract class SimpleRegistryMixin<V> implements Registry<V>, Synchronize
 
 		for (var key : entries.keySet()) {
 			for (var idEntry : entries.get(key)) {
-				var identifier = new Identifier(key, idEntry.path());
+				var identifier = Identifier.of(key, idEntry.path());
 				var holder = this.byId.get(identifier);
 
 				if (holder != null) {

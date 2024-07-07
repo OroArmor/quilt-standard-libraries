@@ -40,7 +40,7 @@ public class MultiplayerServerListWidgetServerEntryMixin {
 
 	@Dynamic("method_55816: second lambda in getServerListPinger().add(...) in render(...)")
 	@ModifyArg(method = "method_55816", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ServerInfo;setPingResult(Lnet/minecraft/client/network/ServerInfo$PingResult;)V"))
-	private ServerInfo.PingResult quilt$checkModProtocol(ServerInfo.PingResult result){
+	private ServerInfo.PingResult quilt$checkModProtocol(ServerInfo.PingResult result) {
 		var map = ModProtocolContainer.of(this.server).quilt$getModProtocol();
 
 		if (map != null) {

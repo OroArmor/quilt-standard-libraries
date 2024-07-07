@@ -22,7 +22,7 @@ import net.minecraft.server.network.ServerConfigurationNetworkHandler;
 import net.minecraft.network.configuration.ConfigurationTask;
 import net.minecraft.network.packet.Packet;
 
-import org.quiltmc.qsl.networking.api.ServerConfigurationTaskManager;
+import org.quiltmc.qsl.networking.api.server.ServerConfigurationTaskManager;
 
 public class FabricSyncTask implements ConfigurationTask {
 	public static final Type TYPE = new Type("fabric:registry_sync");

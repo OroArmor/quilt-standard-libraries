@@ -38,13 +38,6 @@ import org.quiltmc.qsl.registry.impl.dynamic.DynamicRegistryFlagManager;
 
 @Mixin(DynamicRegistrySync.class)
 public abstract class DynamicRegistrySyncMixin {
-	// TODO this is related to the TODO in DynamicMetaRegistryImpl.
-	/*@SuppressWarnings("unused")	// makes the field mutable for use by the accessor
-	@Shadow
-	@Final
-	@Mutable
-	public static Map<RegistryKey<? extends Registry<?>>, ?> SYNCED_CODECS;*/
-
 	@Unique
 	private static boolean filterRegistryEntry(DynamicRegistryManager.RegistryEntry<?> entry) {
 		// OPTIONAL
@@ -63,8 +56,13 @@ public abstract class DynamicRegistrySyncMixin {
 	/**
 	 * This redirect mixin's annotation was taken directly from Fabric API (and adapted for Quilt Mappings), the rest of this file was not.
 	 */
-	@Redirect(method = "streamReloadableSyncedRegistries",
-			at = @At(value = "INVOKE", target = "Lnet/minecraft/registry/DynamicRegistrySync;streamSyncedRegistries(Lnet/minecraft/registry/DynamicRegistryManager;)Ljava/util/stream/Stream;"))
+	@Redirect(
+			method = "streamReloadableSyncedRegistries",
+			at = @At(
+				value = "INVOKE",
+				target = "Lnet/minecraft/registry/DynamicRegistrySync;streamSyncedRegistries(Lnet/minecraft/registry/DynamicRegistryManager;)Ljava/util/stream/Stream;"
+			)
+	)
 	private static Stream<DynamicRegistryManager.RegistryEntry<?>> filterNonSyncedEntries(DynamicRegistryManager drm) {
 		return streamSyncedRegistries(drm).filter(DynamicRegistrySyncMixin::filterRegistryEntry);
 	}

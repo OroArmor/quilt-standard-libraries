@@ -13,11 +13,10 @@
     "IdListMixin",
     "ItemsMixin",
     "RegistriesMixin",
+    "RegistryKeysMixin",
     "RegistryLoaderMixin",
-    "ServerConfigurationNetworkHandlerAccessor",
     "ServerMetadataVersionMixin",
-    "SimpleRegistryMixin",
-    "TagManagerLoaderMixin"
+    "SimpleRegistryMixin"
   ],
   "client": [
     "client.BlockColorMapMixin",

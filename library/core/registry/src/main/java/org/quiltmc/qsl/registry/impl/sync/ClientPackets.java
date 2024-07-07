@@ -44,9 +44,7 @@ public final class ClientPackets {
 		public static final PacketCodec<PacketByteBuf, Handshake> CODEC = CustomPayload.create(Handshake::write, Handshake::new);
 
 		public Handshake(PacketByteBuf buf) {
-			this(
-				buf.readVarInt()
-			);
+			this(buf.readVarInt());
 		}
 
 		private void write(PacketByteBuf buf) {
@@ -187,6 +185,6 @@ public final class ClientPackets {
 	}
 
 	private static <T extends CustomPayload> CustomPayload.Id<T> id(String path) {
-		return new CustomPayload.Id<>(new Identifier("qsl", path));
+		return new CustomPayload.Id<>(Identifier.of("qsl", path));
 	}
 }

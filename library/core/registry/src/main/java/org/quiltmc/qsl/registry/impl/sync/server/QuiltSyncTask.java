@@ -27,7 +27,7 @@ import net.minecraft.network.configuration.ConfigurationTask;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.registry.Registries;
 
-import org.quiltmc.qsl.networking.api.ServerConfigurationTaskManager;
+import org.quiltmc.qsl.networking.api.server.ServerConfigurationTaskManager;
 import org.quiltmc.qsl.registry.impl.sync.ClientPackets;
 import org.quiltmc.qsl.registry.impl.sync.ProtocolVersions;
 
@@ -87,7 +87,7 @@ public class QuiltSyncTask implements ConfigurationTask {
 
 	public void handleEnd(ClientPackets.End end) {
 		if (this.syncVersion == ProtocolVersions.NO_PROTOCOL && ServerRegistrySync.requiresSync()) {
-			this.packetHandler.disconnect(ServerRegistrySync.noRegistrySyncMessage);
+			this.packetHandler.method_52396(ServerRegistrySync.noRegistrySyncMessage);
 		} else {
 			((ServerConfigurationTaskManager) this.packetHandler).finishTask(TYPE);
 		}

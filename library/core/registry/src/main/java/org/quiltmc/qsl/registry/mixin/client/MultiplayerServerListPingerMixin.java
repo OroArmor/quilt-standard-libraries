@@ -26,7 +26,7 @@ import net.minecraft.client.network.ServerInfo;
 import net.minecraft.network.listener.ClientQueryPacketListener;
 import net.minecraft.network.packet.s2c.query.QueryPongS2CPacket;
 import net.minecraft.network.packet.s2c.query.ServerMetadataS2CPacket;
-import net.minecraft.text.Text;
+import net.minecraft.unmapped.C_igbzvhln;
 
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.quiltmc.qsl.registry.impl.sync.mod_protocol.ModProtocolContainer;
@@ -54,7 +54,7 @@ public class MultiplayerServerListPingerMixin {
 			}
 
 			@Override
-			public void onDisconnected(Text reason) {
+			public void onDisconnected(C_igbzvhln reason) {
 				queryPacketListener.onDisconnected(reason);
 			}
 

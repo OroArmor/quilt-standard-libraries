@@ -340,8 +340,8 @@ public final class ServerPackets {
 
 		public ErrorStyle(PacketByteBuf buf) {
 			this(Text.SerializationUtil.fromLenientJson(buf.readString(PacketByteBuf.MAX_TEXT_LENGTH), DynamicRegistryManager.EMPTY),
-				Text.SerializationUtil.fromLenientJson(buf.readString(PacketByteBuf.MAX_TEXT_LENGTH), DynamicRegistryManager.EMPTY),
-				buf.readBoolean());
+					Text.SerializationUtil.fromLenientJson(buf.readString(PacketByteBuf.MAX_TEXT_LENGTH), DynamicRegistryManager.EMPTY),
+					buf.readBoolean());
 		}
 
 		private void write(PacketByteBuf buf) {
@@ -392,6 +392,6 @@ public final class ServerPackets {
 	}
 
 	private static <T extends CustomPayload> CustomPayload.Id<T> id(String path) {
-		return new CustomPayload.Id<>(new Identifier("qsl", path));
+		return new CustomPayload.Id<>(Identifier.of("qsl", path));
 	}
 }

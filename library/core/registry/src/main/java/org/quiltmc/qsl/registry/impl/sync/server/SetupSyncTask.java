@@ -18,13 +18,12 @@ package org.quiltmc.qsl.registry.impl.sync.server;
 
 import java.util.function.Consumer;
 
-import net.minecraft.network.packet.payload.CustomPayload;
 import net.minecraft.server.network.ServerConfigurationNetworkHandler;
 import net.minecraft.network.configuration.ConfigurationTask;
 import net.minecraft.network.packet.Packet;
 
-import org.quiltmc.qsl.networking.api.ServerConfigurationNetworking;
-import org.quiltmc.qsl.networking.api.ServerConfigurationTaskManager;
+import org.quiltmc.qsl.networking.api.server.ServerConfigurationNetworking;
+import org.quiltmc.qsl.networking.api.server.ServerConfigurationTaskManager;
 import org.quiltmc.qsl.registry.impl.sync.ServerPackets;
 import org.quiltmc.qsl.registry.mixin.AbstractServerPacketHandlerAccessor;
 
@@ -44,7 +43,7 @@ public record SetupSyncTask(ServerConfigurationNetworkHandler handler) implement
 				((ServerConfigurationTaskManager) this.handler).addImmediateTask(fabricSyncTask);
 			} else {
 				if (ServerRegistrySync.requiresSync()) {
-					((AbstractServerPacketHandlerAccessor) this.handler).getConnection().disconnect(ServerRegistrySync.noRegistrySyncMessage);
+					((AbstractServerPacketHandlerAccessor) this.handler).getConnection().method_10747(ServerRegistrySync.noRegistrySyncMessage);
 				}
 			}
 		}

@@ -31,7 +31,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.NetworkSide;
 import net.minecraft.registry.Registry;
-import net.minecraft.util.Util;
 
 import org.quiltmc.qsl.registry.impl.sync.ProtocolVersions;
 import org.quiltmc.qsl.registry.impl.sync.server.ExtendedConnectionClient;
@@ -69,7 +68,7 @@ public abstract class ClientConnectionMixin implements ExtendedConnectionClient 
 		var set = this.quilt$unknownEntries.get(registry);
 
 		if (set == null) {
-			set = new ObjectOpenCustomHashSet<>(quilt$identiyHashStrategy);
+			set = new ObjectOpenCustomHashSet<>(this.quilt$identiyHashStrategy);
 			this.quilt$unknownEntries.put(registry, set);
 		}
 

@@ -28,7 +28,6 @@ import com.google.common.base.Preconditions;
 import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.objects.Object2IntLinkedOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import net.minecraft.network.codec.PacketCodec;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
@@ -119,14 +118,14 @@ public class ClientFabricRegistrySync {
 						for (int m = 0; m < bulkSize; m++) {
 							currentRawId++;
 							String idPath = combinedBuf.readString();
-							idMap.put(new Identifier(idNamespace, idPath), currentRawId);
+							idMap.put(Identifier.of(idNamespace, idPath), currentRawId);
 						}
 
 						lastBulkLastRawId = currentRawId;
 					}
 				}
 
-				syncedRegistryMap.put(new Identifier(regNamespace, regPath), idMap);
+				syncedRegistryMap.put(Identifier.of(regNamespace, regPath), idMap);
 			}
 		}
 
@@ -189,6 +188,4 @@ public class ClientFabricRegistrySync {
 		ClientRegistrySync.rebuildEverything(MinecraftClient.getInstance());
 		ClientConfigurationNetworking.send(ServerFabricRegistrySync.SyncCompletePayload.INSTANCE);
 	}
-
-
 }

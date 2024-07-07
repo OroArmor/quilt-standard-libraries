@@ -16,7 +16,7 @@
 
 package org.quiltmc.qsl.registry.impl.sync.server;
 
-import static org.quiltmc.qsl.networking.api.ServerConfigurationNetworking.createS2CPacket;
+import static org.quiltmc.qsl.networking.api.server.ServerConfigurationNetworking.createS2CPacket;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -48,8 +48,8 @@ import net.minecraft.util.collection.IdList;
 import org.quiltmc.loader.api.LoaderValue;
 import org.quiltmc.loader.api.QuiltLoader;
 import org.quiltmc.qsl.networking.api.PacketSender;
-import org.quiltmc.qsl.networking.api.ServerConfigurationNetworking;
-import org.quiltmc.qsl.networking.api.ServerConfigurationTaskManager;
+import org.quiltmc.qsl.networking.api.server.ServerConfigurationNetworking;
+import org.quiltmc.qsl.networking.api.server.ServerConfigurationTaskManager;
 import org.quiltmc.qsl.registry.api.sync.RegistrySynchronization;
 import org.quiltmc.qsl.registry.impl.RegistryConfig;
 import org.quiltmc.qsl.registry.impl.sync.ClientPackets;

@@ -20,14 +20,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.Codec;
-import net.minecraft.registry.DynamicRegistrySync;
 import org.jetbrains.annotations.ApiStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.minecraft.registry.DynamicRegistrySync;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryLoader;
@@ -54,7 +52,7 @@ public class DynamicMetaRegistryImpl {
 		if (frozen) throw new IllegalStateException("Registry is already frozen");
 
 		MODDED_REGISTRY_IDS.add(ref.getValue());
-		RegistryLoader.WORLDGEN_REGISTRIES.add(new RegistryLoader.DecodingData<>(ref, entryCodec));
+		RegistryLoader.WORLDGEN_REGISTRIES.add(new RegistryLoader.DecodingData<>(ref, entryCodec, false));
 		for (DynamicRegistryFlag flag : flags) {
 			DynamicRegistryFlagManager.setFlag(ref.getValue(), flag);
 		}
@@ -67,7 +65,7 @@ public class DynamicMetaRegistryImpl {
 			RegistryLoader.SYNCED_REGISTRIES = new ArrayList<>(RegistryLoader.SYNCED_REGISTRIES);
 		}
 
-		RegistryLoader.SYNCED_REGISTRIES.add(new RegistryLoader.DecodingData<>(ref, syncCodec));
+		RegistryLoader.SYNCED_REGISTRIES.add(new RegistryLoader.DecodingData<>(ref, syncCodec, false));
 
 		if (!(DynamicRegistrySync.SYNCED_CODECS instanceof HashSet<RegistryKey<? extends Registry<?>>>)) {
 			DynamicRegistrySync.SYNCED_CODECS = new HashSet<>(DynamicRegistrySync.SYNCED_CODECS);

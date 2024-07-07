@@ -54,19 +54,13 @@ public abstract class RegistryLoaderMixin {
 		SYNCED_REGISTRIES = new ArrayList<>(SYNCED_REGISTRIES);
 	}
 
-	@Inject(method = "getPath", at = @At("HEAD"), cancellable = true)
-	private static void replaceDynamicRegistryPath(Identifier id, CallbackInfoReturnable<String> cir) {
-		if (DynamicMetaRegistryImpl.isModdedRegistryId(id)) {
-			cir.setReturnValue(id.getNamespace() + "/" + id.getPath());
-		}
-	}
-
 	// TODO is there a better solution for acquiring the used resource manager?
 	@Inject(method = "loadFromResource", at = @At("HEAD"))
-	private static void cacheResourceManager(ResourceManager resourceManager,
-											 DynamicRegistryManager registryManager,
-											 List<RegistryLoader.DecodingData<?>> entries,
-											 CallbackInfoReturnable<DynamicRegistryManager.Frozen> cir){
+	private static void cacheResourceManager(
+			ResourceManager resourceManager,
+			DynamicRegistryManager registryManager,
+			List<RegistryLoader.DecodingData<?>> entries,
+			CallbackInfoReturnable<DynamicRegistryManager.Frozen> cir) {
 		cachedResourceManager.set(resourceManager);
 	}
 
@@ -76,11 +70,11 @@ public abstract class RegistryLoaderMixin {
 			locals = LocalCapture.CAPTURE_FAILHARD
 	)
 	private static void onBeforeLoad(
-		RegistryLoader.LoadingFunction function,
-		DynamicRegistryManager registryManager,
-		List<RegistryLoader.DecodingData<?>> data,
-		CallbackInfoReturnable<DynamicRegistryManager.Frozen> cir,
-		Map<RegistryKey<?>, Exception> map, List<RegistryLoader.ContentLoader<?>> list, RegistryOps.RegistryInfoLookup registryInfoLookup) {
+			RegistryLoader.LoadingFunction function,
+			DynamicRegistryManager registryManager,
+			List<RegistryLoader.DecodingData<?>> data,
+			CallbackInfoReturnable<DynamicRegistryManager.Frozen> cir,
+			Map<RegistryKey<?>, Exception> map, List<RegistryLoader.ContentLoader<?>> list, RegistryOps.RegistryInfoLookup registryInfoLookup) {
 		RegistryEvents.DYNAMIC_REGISTRY_SETUP.invoker().onDynamicRegistrySetup(
 				new DynamicRegistryManagerSetupContextImpl(cachedResourceManager.get(), list.stream().map(RegistryLoader.ContentLoader::registry))
 		);

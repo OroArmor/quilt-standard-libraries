@@ -18,7 +18,6 @@ package org.quiltmc.qsl.registry.test;
 
 import java.util.function.Consumer;
 
-import com.mojang.serialization.Codec;
 import net.fabricmc.api.EnvType;
 
 import net.minecraft.item.Item;
@@ -40,19 +39,19 @@ import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 import org.quiltmc.qsl.base.api.entrypoint.server.DedicatedServerModInitializer;
 import org.quiltmc.qsl.base.api.event.Event;
 import org.quiltmc.qsl.networking.api.PayloadTypeRegistry;
-import org.quiltmc.qsl.networking.api.ServerConfigurationConnectionEvents;
-import org.quiltmc.qsl.networking.api.ServerConfigurationTaskManager;
+import org.quiltmc.qsl.networking.api.server.ServerConfigurationConnectionEvents;
+import org.quiltmc.qsl.networking.api.server.ServerConfigurationTaskManager;
 import org.quiltmc.qsl.networking.api.client.ClientConfigurationNetworking;
 
 /**
  * Makes sure that the registry sync is done soon enough in the configuration system.
  */
 public class RegistryLibSyncOrderTest implements ModInitializer, DedicatedServerModInitializer, ClientModInitializer {
-	private static final CustomPayload.Id<TestPayload> PACKET_ID = new CustomPayload.Id<>(new Identifier("quilt", "reg_sync_order_packet"));
+	private static final CustomPayload.Id<TestPayload> PACKET_ID = new CustomPayload.Id<>(Identifier.of("quilt", "reg_sync_order_packet"));
 	private static final PacketCodec<PacketByteBuf, TestPayload> PACKET_CODEC = CustomPayload.create(TestPayload::write, TestPayload::new);
 	public static Item ITEM_A = new Item(new Item.Settings());
 	public static Item ITEM_B = new Item(new Item.Settings());
-	private static final Identifier EARLY_PHASE = new Identifier("quilt", "reg_sync_order_early");
+	private static final Identifier EARLY_PHASE = Identifier.of("quilt", "reg_sync_order_early");
 
 	record TestPayload(boolean early, int a, int b) implements CustomPayload {
 		TestPayload(PacketByteBuf buf) {
@@ -74,11 +73,11 @@ public class RegistryLibSyncOrderTest implements ModInitializer, DedicatedServer
 	@Override
 	public void onInitialize(ModContainer mod) {
 		if (MinecraftQuiltLoader.getEnvironmentType() == EnvType.CLIENT) {
-			Registry.register(Registries.ITEM, new Identifier("quilt", "reg_sync_order_a"), ITEM_A);
-			Registry.register(Registries.ITEM, new Identifier("quilt", "reg_sync_order_b"), ITEM_B);
+			Registry.register(Registries.ITEM, Identifier.of("quilt", "reg_sync_order_a"), ITEM_A);
+			Registry.register(Registries.ITEM, Identifier.of("quilt", "reg_sync_order_b"), ITEM_B);
 		} else {
-			Registry.register(Registries.ITEM, new Identifier("quilt", "reg_sync_order_b"), ITEM_B);
-			Registry.register(Registries.ITEM, new Identifier("quilt", "reg_sync_order_a"), ITEM_A);
+			Registry.register(Registries.ITEM, Identifier.of("quilt", "reg_sync_order_b"), ITEM_B);
+			Registry.register(Registries.ITEM, Identifier.of("quilt", "reg_sync_order_a"), ITEM_A);
 		}
 
 		PayloadTypeRegistry.configurationS2C().register(PACKET_ID, PACKET_CODEC);
@@ -86,7 +85,7 @@ public class RegistryLibSyncOrderTest implements ModInitializer, DedicatedServer
 
 	@Override
 	public void onInitializeClient(ModContainer mod) {
-		ClientConfigurationNetworking.registerGlobalReceiver(PACKET_ID, (ClientConfigurationNetworking.CustomChannelReceiver<TestPayload>) (client, handler, payload, responseSender) -> {
+		ClientConfigurationNetworking.registerGlobalReceiver(PACKET_ID, (client, handler, payload, responseSender) -> {
 			int aID = Registries.ITEM.getRawId(ITEM_A);
 			int bID = Registries.ITEM.getRawId(ITEM_B);
 			if (payload.early()) {
