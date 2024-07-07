@@ -21,11 +21,15 @@ import java.util.Map;
 
 import org.jetbrains.annotations.Contract;
 
+import net.minecraft.component.DataComponentType;
+import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.feature_flags.FeatureFlag;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.unmapped.C_yeazlrrn;
 import net.minecraft.util.Rarity;
 
 import org.quiltmc.qsl.item.setting.impl.CustomItemSettingImpl;
@@ -232,6 +236,27 @@ public class QuiltItemSettings extends Item.Settings {
 	@Contract("_->this")
 	public QuiltItemSettings requiredFlags(FeatureFlag... flags) {
 		super.requiredFlags(flags);
+		return this;
+	}
+
+	@Override
+	@Contract("_->this")
+	public QuiltItemSettings method_60745(RegistryKey<C_yeazlrrn> song) {
+		super.method_60745(song);
+		return this;
+	}
+
+	@Override
+	@Contract("_,_->this")
+	public <T> QuiltItemSettings component(DataComponentType<T> type, T value) {
+		super.component(type, value);
+		return this;
+	}
+
+	@Override
+	@Contract("_->this")
+	public QuiltItemSettings attributeModifiersComponent(AttributeModifiersComponent value) {
+		super.attributeModifiersComponent(value);
 		return this;
 	}
 }
