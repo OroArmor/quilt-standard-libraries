@@ -24,17 +24,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeInput;
 import net.minecraft.util.collection.DefaultedList;
 
 import org.quiltmc.qsl.item.setting.api.RecipeRemainderLocation;
 import org.quiltmc.qsl.item.setting.api.RecipeRemainderProvider;
 
 @Mixin(Recipe.class)
-public interface RecipeMixin {
+public interface RecipeMixin<T extends RecipeInput> {
 	@Inject(method = "getRemainder", at = @At(value = "RETURN", ordinal = 0), cancellable = true)
-	private <C extends Inventory> void interceptGetRemainingStacks(C inventory, CallbackInfoReturnable<DefaultedList<ItemStack>> cir) {
+	private void interceptGetRemainingStacks(T input, CallbackInfoReturnable<DefaultedList<ItemStack>> cir) {
 		cir.setReturnValue(
-				RecipeRemainderProvider.getRemainingStacks(inventory, (Recipe<?>) this, RecipeRemainderLocation.CRAFTING, cir.getReturnValue())
+				RecipeRemainderProvider.getRemainingStacks(input, (Recipe<?>) this, RecipeRemainderLocation.CRAFTING, cir.getReturnValue())
 		);
 	}
 }

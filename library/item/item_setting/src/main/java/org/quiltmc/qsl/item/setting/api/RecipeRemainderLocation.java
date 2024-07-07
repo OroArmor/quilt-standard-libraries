@@ -37,57 +37,57 @@ public interface RecipeRemainderLocation {
 	/**
 	 * Remainder location for Vanilla crafting. Used in Crafting Tables and the inventory crafting screen.
 	 */
-	RecipeRemainderLocation CRAFTING = addToDefaultLocations(getOrCreate(new Identifier("minecraft:crafting")));
+	RecipeRemainderLocation CRAFTING = addToDefaultLocations(getOrCreate(Identifier.parse("minecraft:crafting")));
 
 	/**
 	 * Remainder location for the furnace fuel slot in the different furnace types.
 	 */
-	RecipeRemainderLocation FURNACE_FUEL = addToDefaultLocations(getOrCreate(new Identifier("minecraft:furnace_fuel")));
+	RecipeRemainderLocation FURNACE_FUEL = addToDefaultLocations(getOrCreate(Identifier.parse("minecraft:furnace_fuel")));
 
 	/**
 	 * Remainder location for the furnace ingredient slot in the different furnace types.
 	 */
-	RecipeRemainderLocation FURNACE_INGREDIENT = getOrCreate(new Identifier("minecraft:furnace_ingredient"));
+	RecipeRemainderLocation FURNACE_INGREDIENT = getOrCreate(Identifier.parse("minecraft:furnace_ingredient"));
 
 	/**
 	 * Remainder location for the dye slot in looms.
 	 */
-	RecipeRemainderLocation LOOM_DYE = getOrCreate(new Identifier("minecraft:loom_dye"));
+	RecipeRemainderLocation LOOM_DYE = getOrCreate(Identifier.parse("minecraft:loom_dye"));
 
 	/**
 	 * Remainder location for the potion addition in brewing stands.
 	 */
-	RecipeRemainderLocation POTION_ADDITION = addToDefaultLocations(getOrCreate(new Identifier("minecraft:potion_addition")));
+	RecipeRemainderLocation POTION_ADDITION = addToDefaultLocations(getOrCreate(Identifier.parse("minecraft:potion_addition")));
 
 	/**
 	 * Remainder location for the input to the stonecutter.
 	 */
-	RecipeRemainderLocation STONECUTTER_INPUT = getOrCreate(new Identifier("minecraft:stonecutter_input"));
+	RecipeRemainderLocation STONECUTTER_INPUT = getOrCreate(Identifier.parse("minecraft:stonecutter_input"));
 
 	/**
 	 * Remainder location for the smithing template slot.
 	 */
-	RecipeRemainderLocation SMITHING_TEMPLATE = getOrCreate(new Identifier("minecraft:smithing_template"));
+	RecipeRemainderLocation SMITHING_TEMPLATE = getOrCreate(Identifier.parse("minecraft:smithing_template"));
 
 	/**
 	 * Remainder location for the smithing base slot.
 	 */
-	RecipeRemainderLocation SMITHING_BASE = getOrCreate(new Identifier("minecraft:smithing_base"));
+	RecipeRemainderLocation SMITHING_BASE = getOrCreate(Identifier.parse("minecraft:smithing_base"));
 
 	/**
 	 * Remainder location for the smithing ingredient slot.
 	 */
-	RecipeRemainderLocation SMITHING_INGREDIENT = getOrCreate(new Identifier("minecraft:smithing_ingredient"));
+	RecipeRemainderLocation SMITHING_INGREDIENT = getOrCreate(Identifier.parse("minecraft:smithing_ingredient"));
 
 	/**
 	 * Remainder location for the default locations. This starts with {@link #CRAFTING}, {@link #FURNACE_FUEL}, and {@link #POTION_ADDITION}.
 	 */
-	RecipeRemainderLocation DEFAULT_LOCATIONS = getOrCreate(new Identifier("quilt:default"));
+	RecipeRemainderLocation DEFAULT_LOCATIONS = getOrCreate(Identifier.parse("quilt:default"));
 
 	/**
 	 * Remainder location for all locations. Using this will override any other locations that is specified.
 	 */
-	RecipeRemainderLocation ALL_LOCATIONS = getOrCreate(new Identifier("quilt:all"));
+	RecipeRemainderLocation ALL_LOCATIONS = getOrCreate(Identifier.parse("quilt:all"));
 
 	/**
 	 * Gets a new remainder location if it already exists, creating it otherwise.

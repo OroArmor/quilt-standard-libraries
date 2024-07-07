@@ -35,7 +35,7 @@ import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 public class CustomDamageTest implements ModInitializer {
 	public static final DataComponentType<Integer> WEIRD = Registry.register(
 			Registries.DATA_COMPONENT_TYPE,
-			new Identifier("quilt-item-api-testmod", "weird"),
+			Identifier.of("quilt-item-api-testmod", "weird"),
 			DataComponentType.<Integer>builder()
 				.codec(Codecs.NONNEGATIVE_INT)
 				.packetCodec(PacketCodecs.VAR_INT)
@@ -44,7 +44,7 @@ public class CustomDamageTest implements ModInitializer {
 
 	@Override
 	public void onInitialize(ModContainer mod) {
-		Registry.register(Registries.ITEM, new Identifier(QuiltItemSettingsTests.NAMESPACE, "weird_pickaxe"), new WeirdPick());
+		Registry.register(Registries.ITEM, Identifier.of(QuiltItemSettingsTests.NAMESPACE, "weird_pickaxe"), new WeirdPick());
 	}
 
 	public static final CustomDamageHandler WEIRD_DAMAGE_HANDLER = (stack, amount, entity, slot, breakCallback) -> {

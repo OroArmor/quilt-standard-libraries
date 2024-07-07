@@ -31,7 +31,7 @@ import net.minecraft.util.Identifier;
 import org.quiltmc.qsl.command.impl.ServerArgumentTypeImpl;
 import org.quiltmc.qsl.command.impl.ServerArgumentTypes;
 import org.quiltmc.qsl.command.mixin.ArgumentTypeInfosAccessor;
-//import org.quiltmc.qsl.registry.api.sync.RegistrySynchronization;
+import org.quiltmc.qsl.registry.api.sync.RegistrySynchronization;
 
 /**
  * Represents an argument type that only needs to be known server-side.
@@ -93,7 +93,7 @@ public interface ServerArgumentType<A extends ArgumentType<?>, T extends Argumen
 			ArgumentTypeFallbackProvider<A> fallbackProvider, @Nullable SuggestionProvider<?> fallbackSuggestions) {
 		var value = new ServerArgumentTypeImpl<>(id, type, typeInfo, fallbackProvider, fallbackSuggestions);
 		var info = ArgumentTypeInfosAccessor.callRegister(Registries.COMMAND_ARGUMENT_TYPE, id.toString(), type, typeInfo);
-//		RegistrySynchronization.setEntryOptional((SimpleRegistry<ArgumentTypeInfo<?, ?>>) Registries.COMMAND_ARGUMENT_TYPE, info);
+		RegistrySynchronization.setEntryOptional((SimpleRegistry<ArgumentTypeInfo<?, ?>>) Registries.COMMAND_ARGUMENT_TYPE, info);
 		ServerArgumentTypes.register(value);
 		return value;
 	}

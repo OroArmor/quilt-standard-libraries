@@ -20,8 +20,7 @@
     },
     "depends": [
       "quilt_loader",
-      "quilt_block_entity",
-      "quilt_resource_loader"
+      "quilt_block_entity"
     ]
   },
   "mixin": "quilt_block_entity_testmod.mixins.json"

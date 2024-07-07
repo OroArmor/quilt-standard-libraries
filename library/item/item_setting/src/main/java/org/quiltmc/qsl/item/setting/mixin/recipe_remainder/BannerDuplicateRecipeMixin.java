@@ -21,9 +21,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.BannerDuplicateRecipe;
+import net.minecraft.recipe.CraftingRecipeInput;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.util.collection.DefaultedList;
 
@@ -31,11 +31,11 @@ import org.quiltmc.qsl.item.setting.api.RecipeRemainderLocation;
 import org.quiltmc.qsl.item.setting.api.RecipeRemainderProvider;
 
 @Mixin(BannerDuplicateRecipe.class)
-public abstract class BannerDuplicateRecipeMixin implements Recipe<RecipeInputInventory> {
-	@Inject(method = "getRemainder(Lnet/minecraft/inventory/RecipeInputInventory;)Lnet/minecraft/util/collection/DefaultedList;", at = @At(value = "RETURN", ordinal = 0), cancellable = true)
-	private void interceptGetRemainingStacks(RecipeInputInventory inventory, CallbackInfoReturnable<DefaultedList<ItemStack>> cir) {
+public abstract class BannerDuplicateRecipeMixin implements Recipe<CraftingRecipeInput> {
+	@Inject(method = "getRemainder(Lnet/minecraft/recipe/CraftingRecipeInput;)Lnet/minecraft/util/collection/DefaultedList;", at = @At(value = "RETURN", ordinal = 0), cancellable = true)
+	private void interceptGetRemainingStacks(CraftingRecipeInput input, CallbackInfoReturnable<DefaultedList<ItemStack>> cir) {
 		cir.setReturnValue(
-				RecipeRemainderProvider.getRemainingStacks(inventory, this, RecipeRemainderLocation.CRAFTING, cir.getReturnValue())
+				RecipeRemainderProvider.getRemainingStacks(input, this, RecipeRemainderLocation.CRAFTING, cir.getReturnValue())
 		);
 	}
 }

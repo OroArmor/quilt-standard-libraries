@@ -20,8 +20,7 @@
     },
     "depends": [
       "quilt_loader",
-      "quilt_block_extensions",
-      "quilt_resource_loader"
+      "quilt_block_extensions"
     ]
   }
 }

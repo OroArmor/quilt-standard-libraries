@@ -40,10 +40,7 @@ public class LoginQueryResponseC2SPacketMixin {
 			return;
 		}
 
-		PacketByteBuf newBuf = PacketByteBufs.create();
-		newBuf.writeBytes(buf.copy());
-		buf.skipBytes(buf.readableBytes());
-
+		PacketByteBuf newBuf = PacketByteBufs.read(buf);
 		cir.setReturnValue(new PacketByteBufLoginQueryResponsePayload(newBuf));
 	}
 }

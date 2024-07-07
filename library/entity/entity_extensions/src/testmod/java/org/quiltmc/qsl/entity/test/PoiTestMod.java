@@ -34,6 +34,6 @@ public class PoiTestMod implements ModInitializer {
 		PointOfInterestHelper.setBlocks(PointOfInterestTypes.LEATHERWORKER, Blocks.OAK_TRAPDOOR);
 		PointOfInterestHelper.addBlocks(PointOfInterestTypes.FISHERMAN, Blocks.CAULDRON);
 
-		PointOfInterestHelper.register(new Identifier("quilt_point_of_interest_testmod", "test_poi"), 1, 1, Blocks.DIAMOND_BLOCK);
+		PointOfInterestHelper.register(Identifier.of("quilt_point_of_interest_testmod", "test_poi"), 1, 1, Blocks.DIAMOND_BLOCK);
 	}
 }

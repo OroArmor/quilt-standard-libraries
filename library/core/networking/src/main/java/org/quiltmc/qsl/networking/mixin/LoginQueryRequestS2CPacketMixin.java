@@ -33,10 +33,7 @@ import org.quiltmc.qsl.networking.impl.payload.PacketByteBufLoginQueryRequestPay
 public class LoginQueryRequestS2CPacketMixin {
 	@Inject(method = "readPayload", at = @At("HEAD"), cancellable = true)
 	private static void read(Identifier id, PacketByteBuf buf, CallbackInfoReturnable<CustomQueryPayload> cir) {
-		PacketByteBuf newBuf = PacketByteBufs.create();
-		newBuf.writeBytes(buf.copy());
-		buf.skipBytes(buf.readableBytes());
-
+		PacketByteBuf newBuf = PacketByteBufs.read(buf);
 		cir.setReturnValue(new PacketByteBufLoginQueryRequestPayload(id, newBuf));
 	}
 }

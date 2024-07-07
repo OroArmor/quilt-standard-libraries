@@ -201,6 +201,18 @@ public final class PacketByteBufs {
 		return new PacketByteBuf(buf.retainedDuplicate());
 	}
 
+	/**
+	 * Copys the data from the buf and then advances it to the end.
+	 * @param buf the original buffer
+	 * @return the written buffer
+	 */
+	public static PacketByteBuf read(PacketByteBuf buf) {
+		PacketByteBuf newBuf = create();
+		newBuf.writeBytes(buf.copy());
+		buf.skipBytes(buf.readableBytes());
+		return newBuf;
+	}
+
 	private PacketByteBufs() {
 	}
 }

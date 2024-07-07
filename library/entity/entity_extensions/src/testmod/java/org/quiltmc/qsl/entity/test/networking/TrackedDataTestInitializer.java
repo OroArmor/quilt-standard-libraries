@@ -24,6 +24,9 @@ import net.minecraft.entity.data.TrackedDataHandler;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.registry.Registries;
@@ -35,31 +38,18 @@ import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.quiltmc.qsl.entity.extensions.api.networking.QuiltTrackedDataHandlerRegistry;
 
 public class TrackedDataTestInitializer implements ModInitializer {
-	public static final TrackedDataHandler<ParticleEffect> PARTICLE_DATA_HANDLER = new TrackedDataHandler.SimpleHandler<>() {
-		@Override
-		public void write(PacketByteBuf buf, ParticleEffect value) {
-			buf.writeFromIterable(Registries.PARTICLE_TYPE, value.getType());
-			value.write(buf);
-		}
-
-		@SuppressWarnings({"rawtypes", "unchecked"})
-		@Override
-		public ParticleEffect read(PacketByteBuf buf) {
-			ParticleType type = buf.readFromIterable(Registries.PARTICLE_TYPE);
-			return Objects.requireNonNull(type).getParametersFactory().read(type, buf);
-		}
-	};
-	public static final TrackedDataHandler<StatusEffect> TEST_HANDLER = TrackedDataHandler.createIndexed(Registries.STATUS_EFFECT);
-	public static final TrackedDataHandler<StatusEffect> BAD_EXAMPLE_HANDLER = TrackedDataHandler.createIndexed(Registries.STATUS_EFFECT);
+	public static final TrackedDataHandler<StatusEffect> TEST_HANDLER = TrackedDataHandler.create(PacketCodecs.entryOf(Registries.STATUS_EFFECT));
+	public static final TrackedDataHandler<StatusEffect> TEST2_HANDLER = TrackedDataHandler.create(PacketCodecs.entryOf(Registries.STATUS_EFFECT));
+	public static final TrackedDataHandler<StatusEffect> BAD_EXAMPLE_HANDLER = TrackedDataHandler.create(PacketCodecs.entryOf(Registries.STATUS_EFFECT));
 
 	@Override
 	public void onInitialize(ModContainer mod) {
 		if (MinecraftQuiltLoader.getEnvironmentType() == EnvType.CLIENT) {
-			QuiltTrackedDataHandlerRegistry.register(new Identifier("quilt_test_mod", "particle"), PARTICLE_DATA_HANDLER);
-			QuiltTrackedDataHandlerRegistry.register(new Identifier("quilt_test_mod", "test"), TEST_HANDLER);
+			QuiltTrackedDataHandlerRegistry.register(Identifier.of("quilt_test_mod", "test2"), TEST2_HANDLER);
+			QuiltTrackedDataHandlerRegistry.register(Identifier.of("quilt_test_mod", "test"), TEST_HANDLER);
 		} else {
-			QuiltTrackedDataHandlerRegistry.register(new Identifier("quilt_test_mod", "test"), TEST_HANDLER);
-			QuiltTrackedDataHandlerRegistry.register(new Identifier("quilt_test_mod", "particle"), PARTICLE_DATA_HANDLER);
+			QuiltTrackedDataHandlerRegistry.register(Identifier.of("quilt_test_mod", "test"), TEST_HANDLER);
+			QuiltTrackedDataHandlerRegistry.register(Identifier.of("quilt_test_mod", "test2"), TEST2_HANDLER);
 		}
 
 		// Dont do that

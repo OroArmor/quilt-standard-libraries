@@ -19,7 +19,6 @@
     },
     "depends": [
       "quilt_loader",
-      "quilt_resource_loader",
       "quilt_item_extensions"
     ]
   }

@@ -16,8 +16,6 @@
 
 package org.quiltmc.qsl.entity.test.mixin.networking;
 
-import org.quiltmc.qsl.entity.test.networking.CreeperWithItem;
-import org.quiltmc.qsl.entity.test.networking.TrackedDataTestInitializer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,18 +26,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
+
+import org.quiltmc.qsl.entity.extensions.api.networking.QuiltExtendedSpawnDataEntity;
+import org.quiltmc.qsl.entity.test.networking.CreeperWithItem;
+import org.quiltmc.qsl.entity.test.networking.TrackedDataTestInitializer;
 
 /**
  * In actual mods, do not add tracked data to existing entities, and do not replace spawn packets.
@@ -50,15 +53,15 @@ public class CreeperEntityMixin extends HostileEntity implements QuiltExtendedSp
 	// Make creepers store a particle effect to test a custom tracked data handler
 
 	@SuppressWarnings("WrongEntityDataParameterClass")
-	private static final TrackedData<ParticleEffect> PARTICLE = DataTracker.registerData(CreeperEntity.class, TrackedDataTestInitializer.PARTICLE_DATA_HANDLER);
+	private static final TrackedData<ParticleEffect> PARTICLE = DataTracker.registerData(CreeperEntity.class, TrackedDataHandlerRegistry.PARTICLE);
 
 	protected CreeperEntityMixin(EntityType<? extends HostileEntity> entityType, World world) {
 		super(entityType, world);
 	}
 
 	@Inject(method = "initDataTracker", at = @At("TAIL"))
-	private void quiltTestMod$addCustomTracker(CallbackInfo ci) {
-		this.dataTracker.startTracking(PARTICLE, ParticleTypes.ANGRY_VILLAGER);
+	private void quiltTestMod$addCustomTracker(DataTracker.Builder builder, CallbackInfo ci) {
+		builder.add(PARTICLE, ParticleTypes.ANGRY_VILLAGER);
 	}
 
 	@Inject(method = "interactMob", at = @At("HEAD"))
@@ -93,13 +96,13 @@ public class CreeperEntityMixin extends HostileEntity implements QuiltExtendedSp
 	}
 
 	@Override
-	public void writeAdditionalSpawnData(PacketByteBuf buffer) {
-		buffer.writeItemStack(this.quilt$stackToDrop);
+	public void writeAdditionalSpawnData(RegistryByteBuf buffer) {
+		ItemStack.PACKET_CODEC.encode(buffer, this.quilt$stackToDrop);
 	}
 
 	@Override
-	public void readAdditionalSpawnData(PacketByteBuf buffer) {
-		this.quilt$stackToDrop = buffer.readItemStack();
+	public void readAdditionalSpawnData(RegistryByteBuf buffer) {
+		this.quilt$stackToDrop = ItemStack.PACKET_CODEC.decode(buffer);
 	}
 
 	@Override

@@ -42,7 +42,7 @@ import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 public class ArmorKnockbackTest implements ModInitializer {
 	private static final Holder<ArmorMaterial> KNOCKBACK_RESISTANCE_ARMOR = Registry.registerHolder(
 			Registries.ARMOR_MATERIAL,
-			new Identifier("quilt-item-extension-testmod:knockback_armor"),
+			Identifier.of("quilt-item-extension-testmod", "knockback_armor"),
 			new ArmorMaterial(
 				Util.make(new EnumMap<>(ArmorItem.ArmorSlot.class), (map) -> {
 					map.put(ArmorSlot.BOOTS, 0);
@@ -54,7 +54,7 @@ public class ArmorKnockbackTest implements ModInitializer {
 				0,
 				Registries.SOUND_EVENT.wrapAsHolder(SoundEvents.BLOCK_AMETHYST_BLOCK_CHIME),
 					() -> Ingredient.EMPTY,
-				List.of(new ArmorMaterial.Layer(new Identifier("quilt-item-extension-testmod:knockback_armor"))),
+				List.of(new ArmorMaterial.Layer(Identifier.of("quilt-item-extension-testmod", "knockback_armor"))),
 				0.0F, 200.0F)
 		);
 
@@ -74,7 +74,7 @@ public class ArmorKnockbackTest implements ModInitializer {
 	public void onInitialize(ModContainer mod) {
 		Registry.register(
 				Registries.ITEM,
-				new Identifier(mod.metadata().id(), "knockback_resistance_chestplate"),
+				Identifier.of(mod.metadata().id(), "knockback_resistance_chestplate"),
 				KNOCKBACK_RESISTANCE_CHESTPLATE
 		);
 	}

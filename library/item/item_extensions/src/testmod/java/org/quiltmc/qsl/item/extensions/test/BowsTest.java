@@ -37,7 +37,7 @@ public class BowsTest implements ModInitializer {
 	public static final Item TEST_BOW = new ProjectileModifyingBowItem(new Item.Settings().maxCount(1)) {
 		@Override
 		public void onProjectileShot(ItemStack bowStack, ItemStack arrowStack, LivingEntity user, float pullProgress, PersistentProjectileEntity projectile) {
-			projectile.setPunch(100);
+			projectile.setCritical(true);
 		}
 	};
 
@@ -58,8 +58,8 @@ public class BowsTest implements ModInitializer {
 	@Override
 	public void onInitialize(ModContainer mod) {
 		// Registers a custom bow.
-		Registry.register(Registries.ITEM, new Identifier(mod.metadata().id(), "test_bow"), TEST_BOW);
+		Registry.register(Registries.ITEM, Identifier.of(mod.metadata().id(), "test_bow"), TEST_BOW);
 		// Registers a custom crossbow.
-		Registry.register(Registries.ITEM, new Identifier(mod.metadata().id(), "test_crossbow"), TEST_CROSSBOW);
+		Registry.register(Registries.ITEM, Identifier.of(mod.metadata().id(), "test_crossbow"), TEST_CROSSBOW);
 	}
 }

@@ -26,6 +26,6 @@ record SimpleTradeFactory(TradeOffer offer) implements TradeOffers.Factory {
 	@Override
 	public TradeOffer create(Entity entity, RandomGenerator random) {
 		// ALWAYS supply a copy of the offer.
-		return new TradeOffer(this.offer.toNbt());
+		return this.offer.copy();
 	}
 }

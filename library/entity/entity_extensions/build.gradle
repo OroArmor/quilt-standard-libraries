@@ -9,7 +9,7 @@ qslModule {
 	description = "Extensions for creating and working with entities."
 	moduleDependencies {
 		core {
-			api("resource_loader")
+//			api("resource_loader") todo: Is this needed?
 			api("registry")
 			api("networking")
 			testmodOnly("qsl_base")

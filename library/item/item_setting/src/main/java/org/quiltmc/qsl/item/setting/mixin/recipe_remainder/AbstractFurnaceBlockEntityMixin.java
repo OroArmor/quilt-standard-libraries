@@ -31,13 +31,13 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.AbstractCookingRecipe;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeHolder;
 import net.minecraft.recipe.RecipeManager;
+import net.minecraft.recipe.SingleRecipeInput;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
@@ -61,7 +61,7 @@ public abstract class AbstractFurnaceBlockEntityMixin extends BlockEntity implem
 	protected DefaultedList<ItemStack> inventory;
 	@Shadow
 	@Final
-	private RecipeManager.CachedCheck<Inventory, ? extends AbstractCookingRecipe> recipeCache;
+	private RecipeManager.CachedCheck<SingleRecipeInput, ? extends AbstractCookingRecipe> recipeCache;
 
 	public AbstractFurnaceBlockEntityMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -104,7 +104,7 @@ public abstract class AbstractFurnaceBlockEntityMixin extends BlockEntity implem
 
 		Recipe<?> recipe;
 		if (!cast.inventory.get(INPUT_SLOT).isEmpty()) {
-			recipe = cast.recipeCache.getRecipeFor(blockEntity, world).map(RecipeHolder::value).orElse(null);
+			recipe = cast.recipeCache.getFirstMatch(new SingleRecipeInput(cast.inventory.get(INPUT_SLOT)), world).map(RecipeHolder::value).orElse(null);
 		} else {
 			recipe = null;
 		}

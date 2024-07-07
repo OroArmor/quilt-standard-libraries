@@ -17,9 +17,12 @@
 
 package org.quiltmc.qsl.entity.test.villager;
 
+import java.util.Optional;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.village.TradeOffer;
+import net.minecraft.village.TradeableItem;
 import net.minecraft.village.VillagerProfession;
 
 import org.quiltmc.loader.api.ModContainer;
@@ -30,11 +33,11 @@ public class VillagerTypeTest1 implements ModInitializer {
 	@Override
 	public void onInitialize(ModContainer mod) {
 		TradeOfferHelper.registerVillagerOffers(VillagerProfession.ARMORER, 1, factories -> {
-			factories.add(new SimpleTradeFactory(new TradeOffer(new ItemStack(Items.GOLD_INGOT, 3), new ItemStack(Items.NETHERITE_SCRAP, 4), new ItemStack(Items.NETHERITE_INGOT), 2, 6, 0.15F)));
+			factories.add(new SimpleTradeFactory(new TradeOffer(new TradeableItem(Items.GOLD_INGOT, 3), Optional.of(new TradeableItem(Items.NETHERITE_SCRAP, 4)), new ItemStack(Items.NETHERITE_INGOT), 2, 6, 0.15F)));
 		});
 
 		TradeOfferHelper.registerWanderingTraderOffers(1, factories -> {
-			factories.add(new SimpleTradeFactory(new TradeOffer(new ItemStack(Items.GOLD_INGOT, 3), new ItemStack(Items.NETHERITE_SCRAP, 4), new ItemStack(Items.NETHERITE_INGOT), 2, 6, 0.35F)));
+			factories.add(new SimpleTradeFactory(new TradeOffer(new TradeableItem(Items.GOLD_INGOT, 3), Optional.of(new TradeableItem(Items.NETHERITE_SCRAP, 4)), new ItemStack(Items.NETHERITE_INGOT), 2, 6, 0.35F)));
 		});
 	}
 }

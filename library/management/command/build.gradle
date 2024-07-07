@@ -10,7 +10,7 @@ qslModule {
 	moduleDependencies {
 		core {
 			api("qsl_base")
-//			api("registry")
+			api("registry")
 //			api("resource_loader")
 			compileOnly("networking")
 

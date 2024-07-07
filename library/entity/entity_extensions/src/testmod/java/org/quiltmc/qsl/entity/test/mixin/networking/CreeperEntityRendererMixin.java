@@ -49,7 +49,7 @@ public abstract class CreeperEntityRendererMixin extends MobEntityRenderer<Creep
 		matrixStack.push();
 		matrixStack.translate(0, 2, 0);
 		matrixStack.scale(0.25f, 0.25f, 0.25f);
-		matrixStack.multiply(Axis.Y_POSITIVE.rotation(rotation));
+		matrixStack.rotate(Axis.Y_POSITIVE.rotation(rotation));
 		itemRenderer.renderItem(
 				stack, ModelTransformationMode.NONE, light, OverlayTexture.DEFAULT_UV,
 				matrixStack, vertexConsumerProvider, creeper.getWorld(), 0
