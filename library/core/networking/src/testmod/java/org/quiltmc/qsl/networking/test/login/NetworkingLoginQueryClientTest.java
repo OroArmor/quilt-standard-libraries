@@ -24,18 +24,23 @@ import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 import org.quiltmc.qsl.networking.api.PacketByteBufs;
 import org.quiltmc.qsl.networking.api.client.ClientLoginConnectionEvents;
 import org.quiltmc.qsl.networking.api.client.ClientLoginNetworking;
+import org.quiltmc.qsl.networking.test.NetworkingTestMods;
 
 @ClientOnly
 public final class NetworkingLoginQueryClientTest implements ClientModInitializer {
 	@Override
 	public void onInitializeClient(ModContainer mod) {
 		// Send a dummy response to the server in return, by registering here we essentially say we understood the server's query
-		ClientLoginNetworking.registerGlobalReceiver(NetworkingLoginQueryTest.TEST_CHANNEL_GLOBAL, (client, handler, buf, listenerAdder) ->
-			CompletableFuture.completedFuture(PacketByteBufs.empty()));
+		ClientLoginNetworking.registerGlobalReceiver(NetworkingLoginQueryTest.TEST_CHANNEL_GLOBAL, (client, handler, buf, listenerAdder) -> {
+			NetworkingTestMods.LOGGER.info("Received TEST_CHANNEL_GLOBAL on the client.");
+			return CompletableFuture.completedFuture(PacketByteBufs.empty());
+		});
 
 		ClientLoginConnectionEvents.QUERY_START.register((handler, client) -> {
-			ClientLoginNetworking.registerReceiver(NetworkingLoginQueryTest.TEST_CHANNEL, (_client, _handler, buf, listenerAdder) ->
-				CompletableFuture.completedFuture(PacketByteBufs.empty()));
+			ClientLoginNetworking.registerReceiver(NetworkingLoginQueryTest.TEST_CHANNEL, (_client, _handler, buf, listenerAdder) -> {
+				NetworkingTestMods.LOGGER.info("Received TEST_CHANNEL on the client.");
+				return CompletableFuture.completedFuture(PacketByteBufs.empty());
+			});
 		});
 	}
 }

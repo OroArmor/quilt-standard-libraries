@@ -101,7 +101,7 @@ public final class GlobalReceiverRegistry<H> {
 			throw new IllegalArgumentException(String.format("Cannot unregister packet handler for reserved channel with name \"%s\"", channelName));
 		}
 
-		assertPayloadType(channelName);
+		this.assertPayloadType(channelName);
 		Lock lock = this.lock.writeLock();
 		lock.lock();
 
@@ -191,12 +191,12 @@ public final class GlobalReceiverRegistry<H> {
 	}
 
 	public void assertPayloadType(CustomPayload.Id<?> channelName) {
-		if (payloadTypeRegistry == null) {
+		if (this.payloadTypeRegistry == null) {
 			return;
 		}
 
-		if (payloadTypeRegistry.get(channelName) == null) {
-			throw new IllegalArgumentException(String.format("Cannot register handler as no payload type has been registered with name \"%s\" for %s %s", channelName, side, state));
+		if (this.payloadTypeRegistry.get(channelName) == null) {
+			throw new IllegalArgumentException(String.format("Cannot register handler as no payload type has been registered with name \"%s\" for %s %s", channelName, this.side, this.state));
 		}
 
 		if (channelName.toString().length() > DEFAULT_CHANNEL_NAME_MAX_LENGTH) {

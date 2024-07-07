@@ -25,6 +25,7 @@ import io.netty.util.AsciiString;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.packet.payload.CustomPayload;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.InvalidIdentifierException;
 
 import org.quiltmc.qsl.networking.impl.NetworkingImpl;
@@ -68,7 +69,7 @@ public interface ChannelPayload extends CustomPayload {
 		String literal = sb.toString();
 
 		try {
-			ids.add(CustomPayload.create(literal));
+			ids.add(new CustomPayload.Id<>(Identifier.parse(literal)));
 		} catch (InvalidIdentifierException ex) {
 			NetworkingImpl.LOGGER.warn("Received invalid channel identifier \"{}\"", literal);
 		}
@@ -78,7 +79,7 @@ public interface ChannelPayload extends CustomPayload {
 
 	record RegisterChannelPayload(List<CustomPayload.Id<?>> channels) implements ChannelPayload {
 		public static final PacketCodec<PacketByteBuf, RegisterChannelPayload> CODEC =
-			CustomPayload.create(RegisterChannelPayload::write, RegisterChannelPayload::new);
+				CustomPayload.create(RegisterChannelPayload::write, RegisterChannelPayload::new);
 
 		public RegisterChannelPayload(PacketByteBuf buf) {
 			this(ChannelPayload.readIds(buf));
@@ -96,7 +97,7 @@ public interface ChannelPayload extends CustomPayload {
 
 	record UnregisterChannelPayload(List<CustomPayload.Id<?>> channels) implements ChannelPayload {
 		public static final PacketCodec<PacketByteBuf, UnregisterChannelPayload> CODEC =
-			CustomPayload.create(UnregisterChannelPayload::write, UnregisterChannelPayload::new);
+				CustomPayload.create(UnregisterChannelPayload::write, UnregisterChannelPayload::new);
 
 		public UnregisterChannelPayload(PacketByteBuf buf) {
 			this(ChannelPayload.readIds(buf));

@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2016, 2017, 2018, 2019 FabricMC
+ * Copyright 2024 The Quilt Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,16 +20,16 @@ package org.quiltmc.qsl.networking.mixin;
 import com.llamalad7.mixinextras.sugar.Local;
 import io.netty.buffer.ByteBuf;
 import io.netty.handler.codec.EncoderException;
-import net.minecraft.network.packet.payload.CustomPayload;
-import net.minecraft.unmapped.C_ifijxdsf;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.minecraft.network.packet.payload.CustomPayload;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.packet.c2s.common.CustomPayloadC2SPacket;
 import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
+import net.minecraft.unmapped.C_ifijxdsf;
 
 @Mixin(C_ifijxdsf.class)
 public abstract class PacketCodecDispatcherMixin<B extends ByteBuf, V, T> implements PacketCodec<B, V> {

@@ -16,11 +16,10 @@
 
 package org.quiltmc.qsl.networking.impl.server;
 
-import net.minecraft.network.NetworkSide;
 import org.jetbrains.annotations.ApiStatus;
 
+import net.minecraft.network.NetworkSide;
 import net.minecraft.network.NetworkState;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerConfigurationNetworkHandler;
 import net.minecraft.network.listener.ClientCommonPacketListener;
 import net.minecraft.network.packet.Packet;
@@ -29,9 +28,9 @@ import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
 import net.minecraft.server.network.ServerLoginNetworkHandler;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 
-import org.quiltmc.qsl.networking.api.ServerConfigurationNetworking;
-import org.quiltmc.qsl.networking.api.ServerLoginNetworking;
-import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
+import org.quiltmc.qsl.networking.api.server.ServerConfigurationNetworking;
+import org.quiltmc.qsl.networking.api.server.ServerLoginNetworking;
+import org.quiltmc.qsl.networking.api.server.ServerPlayNetworking;
 import org.quiltmc.qsl.networking.impl.GlobalReceiverRegistry;
 import org.quiltmc.qsl.networking.impl.NetworkHandlerExtensions;
 import org.quiltmc.qsl.networking.impl.PayloadTypeRegistryImpl;

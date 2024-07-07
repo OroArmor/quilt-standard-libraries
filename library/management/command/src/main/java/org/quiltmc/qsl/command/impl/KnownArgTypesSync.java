@@ -28,8 +28,8 @@ import net.minecraft.network.PacketByteBuf;
 
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.quiltmc.qsl.networking.api.PacketByteBufs;
-import org.quiltmc.qsl.networking.api.ServerLoginConnectionEvents;
-import org.quiltmc.qsl.networking.api.ServerLoginNetworking;
+import org.quiltmc.qsl.networking.api.server.ServerLoginConnectionEvents;
+import org.quiltmc.qsl.networking.api.server.ServerLoginNetworking;
 import org.quiltmc.qsl.networking.api.client.ClientLoginNetworking;
 
 @ApiStatus.Internal

@@ -17,12 +17,13 @@
 
 package org.quiltmc.qsl.networking.api;
 
+import org.jetbrains.annotations.ApiStatus;
+
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.packet.payload.CustomPayload;
 
-import org.jetbrains.annotations.ApiStatus;
 import org.quiltmc.qsl.networking.impl.PayloadTypeRegistryImpl;
 
 /**

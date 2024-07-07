@@ -30,7 +30,7 @@ import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 import org.quiltmc.qsl.networking.api.PacketSender;
 import org.quiltmc.qsl.networking.api.PayloadTypeRegistry;
-import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
+import org.quiltmc.qsl.networking.api.server.ServerPlayNetworking;
 import org.quiltmc.qsl.networking.api.client.ClientPlayConnectionEvents;
 import org.quiltmc.qsl.networking.test.NetworkingTestMods;
 
@@ -65,7 +65,7 @@ public class C2SPayloadTest implements ClientModInitializer {
 	}
 
 	public record TestC2SPayload(List<String> strings, int a, double b) implements CustomPayload {
-		public static final Id<TestC2SPayload> ID = new Id<>(new Identifier("quilt_networking_testmod", "test_c2s_payload"));
+		public static final Id<TestC2SPayload> ID = new Id<>(Identifier.of("quilt_networking_testmod", "test_c2s_payload"));
 		public static final PacketCodec<PacketByteBuf, TestC2SPayload> CODEC = CustomPayload.create(TestC2SPayload::write, TestC2SPayload::new);
 
 		TestC2SPayload(PacketByteBuf buf) {

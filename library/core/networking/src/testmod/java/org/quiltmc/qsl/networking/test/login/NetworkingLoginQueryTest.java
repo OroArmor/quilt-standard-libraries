@@ -20,7 +20,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.FutureTask;
 
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.packet.payload.CustomPayload;
 import net.minecraft.network.packet.s2c.login.payload.CustomQueryPayload;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerLoginNetworkHandler;
@@ -29,16 +28,18 @@ import net.minecraft.util.Util;
 
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
-import org.quiltmc.qsl.networking.api.PacketByteBufs;
 import org.quiltmc.qsl.networking.api.PacketSender;
-import org.quiltmc.qsl.networking.api.ServerLoginConnectionEvents;
-import org.quiltmc.qsl.networking.api.ServerLoginNetworking;
+import org.quiltmc.qsl.networking.api.server.ServerLoginConnectionEvents;
+import org.quiltmc.qsl.networking.api.server.ServerLoginNetworking;
 import org.quiltmc.qsl.networking.test.NetworkingTestMods;
 
 public final class NetworkingLoginQueryTest implements ModInitializer {
 	public static final Identifier TEST_CHANNEL_GLOBAL = NetworkingTestMods.id("test_channel_global").id();
 	public static final Identifier TEST_CHANNEL = NetworkingTestMods.id("test_channel").id();
 	private static final boolean useLoginDelayTest = System.getProperty("quilt_networking.login_delay_test") != null;
+
+	private static boolean successfulGlobal = false;
+	private static boolean successful = false;
 
 	@Override
 	public void onInitialize(ModContainer mod) {
@@ -48,6 +49,7 @@ public final class NetworkingLoginQueryTest implements ModInitializer {
 		// login delaying example
 		ServerLoginNetworking.registerGlobalReceiver(TEST_CHANNEL_GLOBAL, (server, handler, understood, buf, synchronizer, sender) -> {
 			if (understood) {
+				successfulGlobal = true;
 				NetworkingTestMods.LOGGER.info("Understood response from client in {}", TEST_CHANNEL_GLOBAL);
 
 				if (useLoginDelayTest) {
@@ -66,6 +68,16 @@ public final class NetworkingLoginQueryTest implements ModInitializer {
 				}
 			} else {
 				NetworkingTestMods.LOGGER.info("Client did not understand response query message with channel name {}", TEST_CHANNEL_GLOBAL);
+			}
+		});
+
+		ServerLoginConnectionEvents.DISCONNECT.register((handler, _server) -> {
+			if (!successfulGlobal) {
+				throw new IllegalStateException("Failed the global login networking test.");
+			}
+
+			if (!successful) {
+				throw new IllegalStateException("Failed the login networking test.");
 			}
 		});
 	}
@@ -91,20 +103,21 @@ public final class NetworkingLoginQueryTest implements ModInitializer {
 		ServerLoginNetworking.registerReceiver(networkHandler, TEST_CHANNEL, (_server, _handler, understood, buf, _synchronizer, _sender) -> {
 			if (understood) {
 				NetworkingTestMods.LOGGER.info("Understood response from client in {}", TEST_CHANNEL);
+				successful = true;
 			} else {
 				NetworkingTestMods.LOGGER.info("Client did not understand response query message with channel name {}", TEST_CHANNEL);
 			}
 		});
 
 		// Send a dummy query when the client starts accepting queries.
+		successful = false;
 		sender.sendPayload(new EmptyQuery(TEST_CHANNEL)); // dummy packet
+		successfulGlobal = false;
 		sender.sendPayload(new EmptyQuery(TEST_CHANNEL_GLOBAL)); // dummy packet
 	}
 
 	record EmptyQuery(Identifier id) implements CustomQueryPayload {
 		@Override
-		public void write(PacketByteBuf buf) {
-
-		}
+		public void write(PacketByteBuf buf) {}
 	}
 }

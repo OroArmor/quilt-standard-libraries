@@ -30,10 +30,10 @@ import net.minecraft.server.MinecraftServer;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.networking.api.PacketSender;
 import org.quiltmc.qsl.networking.api.PayloadTypeRegistry;
-import org.quiltmc.qsl.networking.api.ServerConfigurationConnectionEvents;
-import org.quiltmc.qsl.networking.api.ServerConfigurationNetworking;
-import org.quiltmc.qsl.networking.api.ServerConfigurationTaskManager;
-import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
+import org.quiltmc.qsl.networking.api.server.ServerConfigurationConnectionEvents;
+import org.quiltmc.qsl.networking.api.server.ServerConfigurationNetworking;
+import org.quiltmc.qsl.networking.api.server.ServerConfigurationTaskManager;
+import org.quiltmc.qsl.networking.api.server.ServerPlayNetworking;
 import org.quiltmc.qsl.networking.impl.NetworkingImpl;
 import org.quiltmc.qsl.networking.impl.server.ServerConfigurationNetworkAddon;
 import org.quiltmc.qsl.networking.impl.server.ServerNetworkingImpl;
@@ -43,6 +43,8 @@ public class CommonPacketsImpl {
 	public static final int[] SUPPORTED_COMMON_PACKET_VERSIONS = new int[]{PACKET_VERSION_1};
 
 	public static void init(ModContainer mod) {
+		PayloadTypeRegistry.configurationC2S().register(CommonVersionPayload.PACKET_ID, CommonVersionPayload.CODEC);
+		PayloadTypeRegistry.configurationC2S().register(CommonRegisterPayload.PACKET_ID, CommonRegisterPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(CommonVersionPayload.PACKET_ID, CommonVersionPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(CommonRegisterPayload.PACKET_ID, CommonRegisterPayload.CODEC);
 

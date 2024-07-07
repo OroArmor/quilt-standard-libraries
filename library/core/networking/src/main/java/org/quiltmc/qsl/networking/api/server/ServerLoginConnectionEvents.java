@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package org.quiltmc.qsl.networking.api;
+package org.quiltmc.qsl.networking.api.server;
 
-import net.minecraft.network.packet.s2c.login.payload.CustomQueryPayload;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerLoginNetworkHandler;
 import net.minecraft.util.Identifier;
 
 import org.quiltmc.qsl.base.api.event.Event;
 import org.quiltmc.qsl.base.api.event.EventAwareListener;
+import org.quiltmc.qsl.networking.api.LoginPacketSender;
+import org.quiltmc.qsl.networking.api.PacketSender;
 
 /**
  * Offers access to events related to the connection to a client on a logical server while a client is logging in.

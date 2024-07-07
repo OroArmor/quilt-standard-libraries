@@ -54,7 +54,7 @@ abstract class ClientConnectionMixin implements ChannelInfoHolder {
 	public abstract void send(Packet<?> packet, PacketSendListener listener);
 
 	@Shadow
-	public abstract void disconnect(Text disconnectReason);
+	public abstract void method_10747(Text disconnectReason);
 
 	@Unique
 	private Map<NetworkState, Collection<CustomPayload.Id<?>>> playChannels;
@@ -83,7 +83,7 @@ abstract class ClientConnectionMixin implements ChannelInfoHolder {
 			);
 		} else {
 			// Don't send packet if we cannot send proper packets
-			this.disconnect(Text.translatable("disconnect.genericReason", "Internal Exception: " + throwable));
+			this.method_10747(Text.translatable("disconnect.genericReason", "Internal Exception: " + throwable));
 		}
 	}
 

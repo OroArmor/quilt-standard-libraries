@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.quiltmc.qsl.networking.mixin;
+package org.quiltmc.qsl.networking.mixin.server;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -45,8 +45,9 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.common.DisconnectS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
+import net.minecraft.unmapped.C_igbzvhln;
 
-import org.quiltmc.qsl.networking.api.ServerConfigurationTaskManager;
+import org.quiltmc.qsl.networking.api.server.ServerConfigurationTaskManager;
 import org.quiltmc.qsl.networking.impl.DisconnectPacketSource;
 import org.quiltmc.qsl.networking.impl.NetworkHandlerExtensions;
 import org.quiltmc.qsl.networking.impl.server.SendChannelsTask;
@@ -168,7 +169,7 @@ abstract class ServerConfigurationNetworkHandlerMixin extends AbstractServerPack
 	}
 
 	@Inject(method = "onDisconnected", at = @At("HEAD"))
-	private void handleDisconnection(Text reason, CallbackInfo ci) {
+	private void handleDisconnection(C_igbzvhln c_igbzvhln, CallbackInfo ci) {
 		this.addon.handleDisconnect();
 	}
 

@@ -28,7 +28,7 @@ import net.minecraft.util.Identifier;
 
 public record CommonRegisterPayload(int version, String phase, Set<Id<?>> channels) implements CustomPayload {
 	public static final PacketCodec<PacketByteBuf, CommonRegisterPayload> CODEC = CustomPayload.create(CommonRegisterPayload::write, CommonRegisterPayload::new);
-	public static final Id<CommonRegisterPayload> PACKET_ID = new Id<>(new Identifier("c", "register"));
+	public static final Id<CommonRegisterPayload> PACKET_ID = new Id<>(Identifier.of("c", "register"));
 
 	public static final String PLAY_PHASE = "play";
 	public static final String CONFIGURATION_PHASE = "configuration";

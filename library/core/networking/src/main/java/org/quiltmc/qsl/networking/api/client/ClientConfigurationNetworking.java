@@ -25,14 +25,13 @@ import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientConfigurationNetworkHandler;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.listener.ServerCommonPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.payload.CustomPayload;
 
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.quiltmc.qsl.networking.api.PacketSender;
-import org.quiltmc.qsl.networking.api.ServerConfigurationNetworking;
+import org.quiltmc.qsl.networking.api.server.ServerConfigurationNetworking;
 import org.quiltmc.qsl.networking.impl.client.ClientConfigurationNetworkAddon;
 import org.quiltmc.qsl.networking.impl.client.ClientNetworkingImpl;
 

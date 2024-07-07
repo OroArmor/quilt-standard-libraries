@@ -33,7 +33,7 @@ import net.minecraft.network.packet.payload.CustomPayload;
 import net.minecraft.util.Identifier;
 
 import org.quiltmc.loader.api.minecraft.ClientOnly;
-import org.quiltmc.qsl.networking.api.ServerLoginNetworking;
+import org.quiltmc.qsl.networking.api.server.ServerLoginNetworking;
 import org.quiltmc.qsl.networking.impl.client.ClientNetworkingImpl;
 
 /**

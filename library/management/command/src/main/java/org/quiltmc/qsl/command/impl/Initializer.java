@@ -34,7 +34,7 @@ public final class Initializer implements ModInitializer {
 	public static final String NAMESPACE = "quilt_command";
 
 	public static Identifier id(String path) {
-		return new Identifier(NAMESPACE, path);
+		return Identifier.of(NAMESPACE, path);
 	}
 
 	private static final Logger LOGGER = LogUtils.getLogger();

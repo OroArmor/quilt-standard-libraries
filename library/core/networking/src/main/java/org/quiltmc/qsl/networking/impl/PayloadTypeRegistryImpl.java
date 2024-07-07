@@ -20,15 +20,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import net.minecraft.network.NetworkState;
-import net.minecraft.network.packet.payload.CustomPayload;
 import org.jetbrains.annotations.Nullable;
 
+import net.minecraft.network.NetworkState;
+import net.minecraft.network.packet.payload.CustomPayload;
 import net.minecraft.network.NetworkSide;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.util.Identifier;
+
 import org.quiltmc.qsl.networking.api.PayloadTypeRegistry;
 
 public class PayloadTypeRegistryImpl<B extends PacketByteBuf> implements PayloadTypeRegistry<B> {
@@ -53,30 +54,30 @@ public class PayloadTypeRegistryImpl<B extends PacketByteBuf> implements Payload
 
 		final CustomPayload.Type<B, T> payloadType = new CustomPayload.Type<>(id, codec.cast());
 
-		if (packetTypes.containsKey(id.id())) {
+		if (this.packetTypes.containsKey(id.id())) {
 			throw new IllegalArgumentException("Packet type " + id + " is already registered!");
 		}
 
-		packetTypes.put(id.id(), payloadType);
+		this.packetTypes.put(id.id(), payloadType);
 		return payloadType;
 	}
 
 	@Nullable
 	public CustomPayload.Type<B, ? extends CustomPayload> get(Identifier id) {
-		return packetTypes.get(id);
+		return this.packetTypes.get(id);
 	}
 
 	@Nullable
 	public <T extends CustomPayload> CustomPayload.Type<B, T> get(CustomPayload.Id<T> id) {
 		//noinspection unchecked
-		return (CustomPayload.Type<B, T>) packetTypes.get(id.id());
+		return (CustomPayload.Type<B, T>) this.packetTypes.get(id.id());
 	}
 
 	public NetworkState getPhase() {
-		return state;
+		return this.state;
 	}
 
 	public NetworkSide getSide() {
-		return side;
+		return this.side;
 	}
 }

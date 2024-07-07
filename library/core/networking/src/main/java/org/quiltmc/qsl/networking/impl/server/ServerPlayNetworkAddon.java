@@ -22,17 +22,15 @@ import java.util.Map;
 import org.jetbrains.annotations.ApiStatus;
 
 import net.minecraft.network.NetworkState;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.payload.CustomPayload;
 import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
-import net.minecraft.util.Identifier;
 
-import org.quiltmc.qsl.networking.api.S2CPlayChannelEvents;
-import org.quiltmc.qsl.networking.api.ServerPlayConnectionEvents;
-import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
+import org.quiltmc.qsl.networking.api.server.S2CPlayChannelEvents;
+import org.quiltmc.qsl.networking.api.server.ServerPlayConnectionEvents;
+import org.quiltmc.qsl.networking.api.server.ServerPlayNetworking;
 import org.quiltmc.qsl.networking.impl.AbstractChanneledNetworkAddon;
 import org.quiltmc.qsl.networking.impl.ChannelInfoHolder;
 import org.quiltmc.qsl.networking.impl.NetworkingImpl;

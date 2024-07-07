@@ -29,7 +29,7 @@ import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 import org.quiltmc.qsl.networking.api.PacketSender;
 import org.quiltmc.qsl.networking.api.PayloadTypeRegistry;
-import org.quiltmc.qsl.networking.api.ServerPlayConnectionEvents;
+import org.quiltmc.qsl.networking.api.server.ServerPlayConnectionEvents;
 import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
 import org.quiltmc.qsl.networking.test.NetworkingTestMods;
 
@@ -65,13 +65,12 @@ public class S2CPayloadTest implements ClientModInitializer {
 	}
 
 	public record TestS2CPayload(List<String> strings, int a, double b) implements CustomPayload {
-		public static final Id<TestS2CPayload> ID = new Id<>(new Identifier("quilt_networking_testmod", "test_s2c_payload"));
+		public static final Id<TestS2CPayload> ID = new Id<>(Identifier.of("quilt_networking_testmod", "test_s2c_payload"));
 		public static final PacketCodec<PacketByteBuf, TestS2CPayload> CODEC = CustomPayload.create(TestS2CPayload::write, TestS2CPayload::new);
 
 		TestS2CPayload(PacketByteBuf buf) {
 			this(buf.readList(PacketByteBuf::readString), buf.readInt(), buf.readDouble());
 		}
-
 
 		private void write(PacketByteBuf buf) {
 			buf.writeCollection(this.strings, PacketByteBuf::writeString);
@@ -79,10 +78,9 @@ public class S2CPayloadTest implements ClientModInitializer {
 			buf.writeDouble(this.b);
 		}
 
-
 		@Override
 		public Id<? extends CustomPayload> getId() {
-			return null;
+			return ID;
 		}
 	}
 }

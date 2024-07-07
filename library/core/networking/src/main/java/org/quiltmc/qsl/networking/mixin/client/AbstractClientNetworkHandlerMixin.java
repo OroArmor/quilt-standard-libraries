@@ -16,27 +16,25 @@
 
 package org.quiltmc.qsl.networking.mixin.client;
 
-import net.minecraft.network.packet.payload.CustomPayload;
-import org.quiltmc.qsl.networking.impl.client.ClientConfigurationNetworkAddon;
-import org.quiltmc.qsl.networking.impl.client.ClientPlayNetworkAddon;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.network.AbstractClientNetworkHandler;
+import net.minecraft.network.packet.payload.CustomPayload;
 import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
-import net.minecraft.text.Text;
+import net.minecraft.unmapped.C_igbzvhln;
 
 import org.quiltmc.loader.api.minecraft.ClientOnly;
-import org.quiltmc.qsl.networking.impl.AbstractChanneledNetworkAddon;
+import org.quiltmc.qsl.networking.impl.client.ClientConfigurationNetworkAddon;
+import org.quiltmc.qsl.networking.impl.client.ClientPlayNetworkAddon;
 import org.quiltmc.qsl.networking.impl.NetworkHandlerExtensions;
 
 // We want to apply a bit earlier than other mods which may not use us in order to prevent refCount issues
 @ClientOnly
 @Mixin(value = AbstractClientNetworkHandler.class, priority = 999)
 abstract class AbstractClientNetworkHandlerMixin implements NetworkHandlerExtensions {
-
 	@Inject(method = "onCustomPayload(Lnet/minecraft/network/packet/s2c/common/CustomPayloadS2CPacket;)V", at = @At("HEAD"), cancellable = true)
 	public void onCustomPayload(CustomPayloadS2CPacket packet, CallbackInfo ci) {
 		final CustomPayload payload = packet.payload();
@@ -54,9 +52,9 @@ abstract class AbstractClientNetworkHandlerMixin implements NetworkHandlerExtens
 			ci.cancel();
 		}
 	}
-	
+
 	@Inject(method = "onDisconnected", at = @At("HEAD"))
-	private void handleDisconnection(Text reason, CallbackInfo ci) {
+	private void handleDisconnection(C_igbzvhln c_igbzvhln, CallbackInfo ci) {
 		this.getAddon().handleDisconnect();
 	}
 }

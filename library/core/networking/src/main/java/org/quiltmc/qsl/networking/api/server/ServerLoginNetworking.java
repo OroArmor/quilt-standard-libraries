@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-package org.quiltmc.qsl.networking.api;
+package org.quiltmc.qsl.networking.api.server;
 
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
-import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.payload.CustomPayload;
-import net.minecraft.network.packet.s2c.login.payload.CustomQueryPayload;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerLoginNetworkHandler;
+import net.minecraft.util.Identifier;
 
+import org.quiltmc.qsl.networking.api.LoginPacketSender;
 import org.quiltmc.qsl.networking.api.client.ClientLoginNetworking;
 import org.quiltmc.qsl.networking.impl.server.ServerNetworkingImpl;
 import org.quiltmc.qsl.networking.mixin.accessor.ServerLoginNetworkHandlerAccessor;

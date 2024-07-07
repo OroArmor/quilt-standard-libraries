@@ -19,7 +19,6 @@ package org.quiltmc.qsl.networking.api.client;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientConfigurationNetworkHandler;
 import net.minecraft.network.packet.payload.CustomPayload;
-import net.minecraft.util.Identifier;
 
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.quiltmc.qsl.base.api.event.Event;
@@ -34,7 +33,7 @@ public final class ClientConfigurationConnectionEvents {
 	/**
 	 * Event indicating a connection entered the CONFIGURATION state, ready for registering channel handlers.
 	 *
-	 * @see ClientConfigurationNetworking#registerReceiver(Identifier, ClientConfigurationNetworking.CustomChannelReceiver)
+	 * @see ClientConfigurationNetworking#registerReceiver(CustomPayload.Id, ClientConfigurationNetworking.CustomChannelReceiver)
 	 */
 	public static final Event<Init> INIT = Event.create(Init.class, callbacks -> (handler, client) -> {
 		for (Init callback : callbacks) {

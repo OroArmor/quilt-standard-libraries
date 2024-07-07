@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.quiltmc.qsl.networking.api;
+package org.quiltmc.qsl.networking.api.server;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -24,7 +24,7 @@ import net.minecraft.network.configuration.ConfigurationTask;
 import org.quiltmc.qsl.base.api.util.InjectedInterface;
 
 /**
- * An injected interface for {@link net.minecraft.network.ServerConfigurationPacketHandler} that exposes the task system.
+ * An injected interface for {@link net.minecraft.network.server.ServerConfigurationPacketHandler} that exposes the task system.
  */
 @InjectedInterface(ServerConfigurationNetworkHandler.class)
 public interface ServerConfigurationTaskManager {

@@ -24,7 +24,7 @@ import net.minecraft.util.Identifier;
 
 public record CommonVersionPayload(int[] versions) implements CustomPayload {
 	public static final PacketCodec<PacketByteBuf, CommonVersionPayload> CODEC = CustomPayload.create(CommonVersionPayload::write, CommonVersionPayload::new);
-	public static final CustomPayload.Id<CommonVersionPayload> PACKET_ID = new Id<>(new Identifier("c", "version"));
+	public static final CustomPayload.Id<CommonVersionPayload> PACKET_ID = new Id<>(Identifier.of("c", "version"));
 
 	public CommonVersionPayload(PacketByteBuf buf) {
 		this(buf.readIntArray());

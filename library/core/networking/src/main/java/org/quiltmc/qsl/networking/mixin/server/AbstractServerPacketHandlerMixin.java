@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package org.quiltmc.qsl.networking.mixin;
+package org.quiltmc.qsl.networking.mixin.server;
 
-import net.minecraft.network.packet.payload.CustomPayload;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -25,14 +24,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.network.ClientConnection;
-import net.minecraft.server.network.ServerConfigurationNetworkHandler;
 import net.minecraft.network.listener.AbstractServerPacketHandler;
+import net.minecraft.network.packet.payload.CustomPayload;
 import net.minecraft.network.packet.c2s.common.CustomPayloadC2SPacket;
 import net.minecraft.network.packet.c2s.common.PongC2SPacket;
+import net.minecraft.server.network.ServerConfigurationNetworkHandler;
 import net.minecraft.server.MinecraftServer;
 
-import org.quiltmc.qsl.networking.api.ServerConfigurationTaskManager;
-import org.quiltmc.qsl.networking.impl.AbstractChanneledNetworkAddon;
+import org.quiltmc.qsl.networking.api.server.ServerConfigurationTaskManager;
 import org.quiltmc.qsl.networking.impl.NetworkHandlerExtensions;
 import org.quiltmc.qsl.networking.impl.server.SendChannelsTask;
 import org.quiltmc.qsl.networking.impl.server.ServerConfigurationNetworkAddon;
@@ -46,7 +45,6 @@ abstract class AbstractServerPacketHandlerMixin implements NetworkHandlerExtensi
 	@Shadow
 	@Final
 	protected ClientConnection connection;
-
 
 	@Inject(method = "onCustomPayload", at = @At("HEAD"), cancellable = true)
 	private void handleCustomPayloadReceivedAsync(CustomPayloadC2SPacket packet, CallbackInfo ci) {

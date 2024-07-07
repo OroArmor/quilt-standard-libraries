@@ -25,7 +25,6 @@ import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.listener.ServerCommonPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.payload.CustomPayload;
@@ -33,7 +32,7 @@ import net.minecraft.util.Identifier;
 
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.quiltmc.qsl.networking.api.PacketSender;
-import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
+import org.quiltmc.qsl.networking.api.server.ServerPlayNetworking;
 import org.quiltmc.qsl.networking.impl.client.ClientNetworkingImpl;
 import org.quiltmc.qsl.networking.impl.client.ClientPlayNetworkAddon;
 
@@ -61,7 +60,6 @@ public final class ClientPlayNetworking {
 	 * @param channelName    the identifier of the channel
 	 * @param channelHandler the handler
 	 * @return {@code false} if a handler is already registered to the channel, otherwise {@code true}
-	 * @see ClientPlayNetworking#registerGlobalReceiver(CustomPayload.Id, ChannelReceiver)
 	 * @see ClientPlayNetworking#unregisterGlobalReceiver(CustomPayload.Id)
 	 * @see ClientPlayNetworking#registerReceiver(CustomPayload.Id, CustomChannelReceiver)
 	 */

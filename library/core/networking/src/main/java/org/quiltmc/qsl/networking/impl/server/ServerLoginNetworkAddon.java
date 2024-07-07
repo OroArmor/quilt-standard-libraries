@@ -26,7 +26,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicReference;
 
-import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,7 +42,10 @@ import net.minecraft.network.packet.s2c.login.payload.CustomQueryPayload;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerLoginNetworkHandler;
 
-import org.quiltmc.qsl.networking.api.*;
+import org.quiltmc.qsl.networking.api.LoginPacketSender;
+import org.quiltmc.qsl.networking.api.PacketByteBufs;
+import org.quiltmc.qsl.networking.api.server.ServerLoginConnectionEvents;
+import org.quiltmc.qsl.networking.api.server.ServerLoginNetworking;
 import org.quiltmc.qsl.networking.impl.AbstractNetworkAddon;
 import org.quiltmc.qsl.networking.impl.payload.PacketByteBufLoginQueryResponsePayload;
 import org.quiltmc.qsl.networking.mixin.accessor.ServerLoginNetworkHandlerAccessor;
@@ -219,5 +221,4 @@ public final class ServerLoginNetworkAddon extends AbstractNetworkAddon<ServerLo
 	protected boolean isReservedChannel(CustomPayload.Id<?> channelName) {
 		return false;
 	}
-
 }

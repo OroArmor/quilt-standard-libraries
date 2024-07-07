@@ -32,6 +32,6 @@ qslModule {
 	}
 
 	injectedInterface("net/minecraft/class_8610") {
-		values = ["org/quiltmc/qsl/networking/api/ServerConfigurationTaskManager"]
+		values = ["org/quiltmc/qsl/networking/api/server/ServerConfigurationTaskManager"]
 	}
 }

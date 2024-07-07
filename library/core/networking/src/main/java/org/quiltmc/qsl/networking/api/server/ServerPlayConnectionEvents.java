@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package org.quiltmc.qsl.networking.api;
+package org.quiltmc.qsl.networking.api.server;
 
 import net.minecraft.network.packet.payload.CustomPayload;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
-import net.minecraft.util.Identifier;
 
 import org.quiltmc.qsl.base.api.event.Event;
 import org.quiltmc.qsl.base.api.event.EventAwareListener;
+import org.quiltmc.qsl.networking.api.PacketSender;
 
 /**
  * Offers access to events related to the connection to a client on a logical server while a client is in game.
@@ -31,7 +31,7 @@ public final class ServerPlayConnectionEvents {
 	/**
 	 * Event indicating a connection entered the PLAY state, ready for registering channel handlers.
 	 *
-	 * @see ServerPlayNetworking#registerReceiver(ServerPlayNetworkHandler, Identifier, ServerPlayNetworking.CustomChannelReceiver)
+	 * @see ServerPlayNetworking#registerReceiver(ServerPlayNetworkHandler, CustomPayload.Id, ServerPlayNetworking.CustomChannelReceiver)
 	 */
 	public static final Event<Init> INIT = Event.create(Init.class, callbacks -> (handler, server) -> {
 		for (Init callback : callbacks) {

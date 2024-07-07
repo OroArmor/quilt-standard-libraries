@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 
-package org.quiltmc.qsl.networking.api;
+package org.quiltmc.qsl.networking.api.server;
 
 import java.util.List;
 
-import net.minecraft.server.network.ServerConfigurationNetworkHandler;
 import net.minecraft.network.packet.payload.CustomPayload;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.Identifier;
+import net.minecraft.server.network.ServerPlayNetworkHandler;
 
 import org.quiltmc.qsl.base.api.event.Event;
 import org.quiltmc.qsl.base.api.event.EventAwareListener;
+import org.quiltmc.qsl.networking.api.PacketSender;
 
 /**
  * Offers access to events related to the indication of a connected client's ability to receive packets in certain channels.
  */
-public final class S2CConfigurationChannelEvents {
+public final class S2CPlayChannelEvents {
 	/**
-	 * An event for the server configuration network handler receiving an update indicating the connected client's ability to receive packets in certain channels.
+	 * An event for the server play network handler receiving an update indicating the connected client's ability to receive packets in certain channels.
 	 * This event may be invoked at any time after login and up to disconnection.
 	 */
 	public static final Event<Register> REGISTER = Event.create(Register.class, callbacks -> (handler, sender, server, channels) -> {
@@ -41,7 +41,7 @@ public final class S2CConfigurationChannelEvents {
 	});
 
 	/**
-	 * An event for the server configuration network handler receiving an update indicating the connected client's lack of ability to receive packets in certain channels.
+	 * An event for the server play network handler receiving an update indicating the connected client's lack of ability to receive packets in certain channels.
 	 * This event may be invoked at any time after login and up to disconnection.
 	 */
 	public static final Event<Unregister> UNREGISTER = Event.create(Unregister.class, callbacks -> (handler, sender, server, channels) -> {
@@ -50,22 +50,22 @@ public final class S2CConfigurationChannelEvents {
 		}
 	});
 
-	private S2CConfigurationChannelEvents() {
+	private S2CPlayChannelEvents() {
 	}
 
 	/**
-	 * @see S2CConfigurationChannelEvents#REGISTER
+	 * @see S2CPlayChannelEvents#REGISTER
 	 */
 	@FunctionalInterface
 	public interface Register extends EventAwareListener {
-		void onChannelRegister(ServerConfigurationNetworkHandler handler, PacketSender<CustomPayload> sender, MinecraftServer server, List<CustomPayload.Id<?>> channels);
+		void onChannelRegister(ServerPlayNetworkHandler handler, PacketSender<CustomPayload> sender, MinecraftServer server, List<CustomPayload.Id<?>> channels);
 	}
 
 	/**
-	 * @see S2CConfigurationChannelEvents#UNREGISTER
+	 * @see S2CPlayChannelEvents#UNREGISTER
 	 */
 	@FunctionalInterface
 	public interface Unregister extends EventAwareListener {
-		void onChannelUnregister(ServerConfigurationNetworkHandler handler, PacketSender<CustomPayload> sender, MinecraftServer server, List<CustomPayload.Id<?>> channels);
+		void onChannelUnregister(ServerPlayNetworkHandler handler, PacketSender<CustomPayload> sender, MinecraftServer server, List<CustomPayload.Id<?>> channels);
 	}
 }

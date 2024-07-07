@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.quiltmc.qsl.networking.mixin;
+package org.quiltmc.qsl.networking.mixin.server;
 
 import com.mojang.authlib.GameProfile;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,6 +32,7 @@ import net.minecraft.network.packet.s2c.login.LoginQueryRequestS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerLoginNetworkHandler;
 import net.minecraft.text.Text;
+import net.minecraft.unmapped.C_igbzvhln;
 
 import org.quiltmc.qsl.networking.impl.DisconnectPacketSource;
 import org.quiltmc.qsl.networking.impl.NetworkHandlerExtensions;
@@ -73,7 +74,7 @@ abstract class ServerLoginNetworkHandlerMixin implements NetworkHandlerExtension
 	}
 
 	@Inject(method = "onDisconnected", at = @At("HEAD"))
-	private void handleDisconnection(Text reason, CallbackInfo ci) {
+	private void handleDisconnection(C_igbzvhln c_igbzvhln, CallbackInfo ci) {
 		this.addon.handleDisconnect();
 	}
 

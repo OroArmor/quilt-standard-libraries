@@ -45,7 +45,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
 import org.quiltmc.qsl.command.api.CommandRegistrationCallback;
-import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
+import org.quiltmc.qsl.networking.api.server.ServerPlayNetworking;
 
 public final class NetworkingChannelTest implements CommandRegistrationCallback {
 	@Override

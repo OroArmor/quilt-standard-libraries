@@ -40,7 +40,7 @@ import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.quiltmc.qsl.command.api.CommandRegistrationCallback;
 import org.quiltmc.qsl.networking.api.PacketByteBufs;
 import org.quiltmc.qsl.networking.api.PayloadTypeRegistry;
-import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
+import org.quiltmc.qsl.networking.api.server.ServerPlayNetworking;
 import org.quiltmc.qsl.networking.test.NetworkingTestMods;
 
 public final class NetworkingPlayPacketTest implements ModInitializer {
@@ -48,7 +48,6 @@ public final class NetworkingPlayPacketTest implements ModInitializer {
 	public static final PacketCodec<PacketByteBuf, TestPacket> TEST_CODEC = CustomPayload.create(TestPacket::write, TestPacket::new);
 
 	public static void sendToTestChannel(ServerPlayerEntity player, String stuff) {
-		PayloadTypeRegistry.playS2C().register(TEST_CHANNEL, TEST_CODEC);
 		ServerPlayNetworking.send(player, new TestPacket(stuff));
 		NetworkingTestMods.LOGGER.info("Sent custom payload packet in {}", TEST_CHANNEL);
 	}
@@ -80,6 +79,7 @@ public final class NetworkingPlayPacketTest implements ModInitializer {
 	@Override
 	public void onInitialize(ModContainer mod) {
 		NetworkingTestMods.LOGGER.info("Hello from networking user!");
+		PayloadTypeRegistry.playS2C().register(TEST_CHANNEL, TEST_CODEC);
 
 		CommandRegistrationCallback.EVENT.register((dispatcher, buildContext, environment) -> {
 			NetworkingPlayPacketTest.registerCommand(dispatcher);
@@ -92,7 +92,7 @@ public final class NetworkingPlayPacketTest implements ModInitializer {
 		}
 
 		private void write(PacketByteBuf buf) {
-			buf.writeString(text);
+			buf.writeString(this.text);
 		}
 
 		@Override

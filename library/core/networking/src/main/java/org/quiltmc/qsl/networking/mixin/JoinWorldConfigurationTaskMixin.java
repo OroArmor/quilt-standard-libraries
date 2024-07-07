@@ -29,7 +29,7 @@ import net.minecraft.network.configuration.ConfigurationTask;
 import net.minecraft.network.configuration.JoinWorldConfigurationTask;
 import net.minecraft.network.packet.Packet;
 
-import org.quiltmc.qsl.networking.api.ServerConfigurationTaskManager;
+import org.quiltmc.qsl.networking.api.server.ServerConfigurationTaskManager;
 import org.quiltmc.qsl.networking.impl.server.ServerConfigurationNetworkHandlerKnowingTask;
 import org.quiltmc.qsl.networking.impl.server.ServerNetworkingImpl;
 import org.quiltmc.qsl.networking.mixin.accessor.ServerConfigurationNetworkHandlerAccessor;

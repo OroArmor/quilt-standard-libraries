@@ -33,7 +33,7 @@ import net.minecraft.server.network.ServerLoginNetworkHandler;
 
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.networking.api.PacketSender;
-import org.quiltmc.qsl.networking.api.ServerLoginNetworking;
+import org.quiltmc.qsl.networking.api.server.ServerLoginNetworking;
 import org.quiltmc.qsl.networking.impl.payload.ChannelPayload;
 import org.quiltmc.qsl.networking.mixin.accessor.ServerLoginNetworkHandlerAccessor;
 
@@ -50,7 +50,6 @@ public final class NetworkingImpl {
 	 */
 	public static final CustomPayload.Id<ChannelPayload.UnregisterChannelPayload> UNREGISTER_CHANNEL = CustomPayload.create("unregister");
 
-
 	public static void init(ModContainer mod) {
 		PayloadTypeRegistry.configurationC2S().register(REGISTER_CHANNEL, ChannelPayload.RegisterChannelPayload.CODEC);
 		PayloadTypeRegistry.configurationC2S().register(UNREGISTER_CHANNEL, ChannelPayload.UnregisterChannelPayload.CODEC);
@@ -60,7 +59,6 @@ public final class NetworkingImpl {
 		PayloadTypeRegistry.playS2C().register(UNREGISTER_CHANNEL, ChannelPayload.UnregisterChannelPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(REGISTER_CHANNEL, ChannelPayload.RegisterChannelPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(UNREGISTER_CHANNEL, ChannelPayload.UnregisterChannelPayload.CODEC);
-
 	}
 
 	public static boolean isReservedCommonChannel(CustomPayload.Id<?> channelName) {

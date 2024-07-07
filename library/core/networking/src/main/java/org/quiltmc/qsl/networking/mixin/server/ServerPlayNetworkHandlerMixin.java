@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package org.quiltmc.qsl.networking.mixin;
+package org.quiltmc.qsl.networking.mixin.server;
 
-import net.minecraft.network.packet.c2s.common.CustomPayloadC2SPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,10 +26,12 @@ import net.minecraft.network.ClientConnection;
 import net.minecraft.network.ConnectedClientData;
 import net.minecraft.network.listener.AbstractServerPacketHandler;
 import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.c2s.common.CustomPayloadC2SPacket;
 import net.minecraft.network.packet.s2c.common.DisconnectS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.text.Text;
+import net.minecraft.unmapped.C_igbzvhln;
 
 import org.quiltmc.qsl.networking.impl.DisconnectPacketSource;
 import org.quiltmc.qsl.networking.impl.NetworkHandlerExtensions;
@@ -55,13 +56,13 @@ abstract class ServerPlayNetworkHandlerMixin extends AbstractServerPacketHandler
 
 	@Inject(method = "onCustomPayload", at = @At("HEAD"), cancellable = true)
 	private void handleCustomPayloadReceivedAsync(CustomPayloadC2SPacket packet, CallbackInfo ci) {
-		if (getAddon().handle(packet.payload())) {
+		if (this.getAddon().handle(packet.payload())) {
 			ci.cancel();
 		}
 	}
 
 	@Inject(method = "onDisconnected", at = @At("HEAD"))
-	private void handleDisconnection(Text reason, CallbackInfo ci) {
+	private void handleDisconnection(C_igbzvhln c_igbzvhln, CallbackInfo ci) {
 		this.addon.handleDisconnect();
 	}
 

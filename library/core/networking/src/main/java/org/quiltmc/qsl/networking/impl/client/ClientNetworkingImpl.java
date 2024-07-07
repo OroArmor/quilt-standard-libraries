@@ -17,7 +17,6 @@
 
 package org.quiltmc.qsl.networking.impl.client;
 
-import net.minecraft.network.NetworkSide;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,6 +26,7 @@ import net.minecraft.client.network.ClientConfigurationNetworkHandler;
 import net.minecraft.client.network.ClientLoginNetworkHandler;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.ClientConnection;
+import net.minecraft.network.NetworkSide;
 import net.minecraft.network.NetworkState;
 import net.minecraft.network.listener.ServerCommonPacketListener;
 import net.minecraft.network.packet.Packet;
@@ -137,6 +137,8 @@ public final class ClientNetworkingImpl {
 			currentConfigurationAddon = null;
 		});
 
+		PayloadTypeRegistry.configurationS2C().register(CommonVersionPayload.PACKET_ID, CommonVersionPayload.CODEC);
+		PayloadTypeRegistry.configurationS2C().register(CommonRegisterPayload.PACKET_ID, CommonRegisterPayload.CODEC);
 		PayloadTypeRegistry.playS2C().register(CommonVersionPayload.PACKET_ID, CommonVersionPayload.CODEC);
 		PayloadTypeRegistry.playS2C().register(CommonRegisterPayload.PACKET_ID, CommonRegisterPayload.CODEC);
 
@@ -165,7 +167,6 @@ public final class ClientNetworkingImpl {
 			sender.sendPayload(addon.createRegisterPayload());
 		}
 	}
-
 
 	// Disconnect if there are no commonly supported versions.
 	// Client responds with the intersection of supported versions.
