@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2016, 2017, 2018, 2019 FabricMC
+ * Copyright 2016, 2017, 2018, 2019 FabricMC
+ * Copyright 2024 The Quilt Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +19,15 @@ package org.quiltmc.qsl.networking.api;
 
 import java.util.Objects;
 
-import net.minecraft.network.PacketSendListener;
-import net.minecraft.network.packet.s2c.login.payload.CustomQueryPayload;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
+import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.login.payload.CustomQueryPayload;
 import net.minecraft.util.Identifier;
+
 import org.quiltmc.qsl.networking.impl.payload.PacketByteBufLoginQueryRequestPayload;
 
 /**
