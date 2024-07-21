@@ -22,9 +22,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.network.AbstractClientNetworkHandler;
+import net.minecraft.network.DisconnectionDetails;
 import net.minecraft.network.packet.payload.CustomPayload;
 import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
-import net.minecraft.unmapped.C_igbzvhln;
 
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.quiltmc.qsl.networking.impl.client.ClientConfigurationNetworkAddon;
@@ -54,7 +54,7 @@ abstract class AbstractClientNetworkHandlerMixin implements NetworkHandlerExtens
 	}
 
 	@Inject(method = "onDisconnected", at = @At("HEAD"))
-	private void handleDisconnection(C_igbzvhln c_igbzvhln, CallbackInfo ci) {
+	private void handleDisconnection(DisconnectionDetails details, CallbackInfo ci) {
 		this.getAddon().handleDisconnect();
 	}
 }

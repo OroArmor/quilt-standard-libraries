@@ -29,7 +29,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MovementFlag;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.unmapped.C_zbvyjshu;
+import net.minecraft.world.DimensionTransition;
 import net.minecraft.world.World;
 
 import org.quiltmc.qsl.entity.event.api.EntityWorldChangeEvents;
@@ -39,7 +39,7 @@ public abstract class EntityMixin {
 	@Shadow public World world;
 
 	@Inject(method = "moveToWorld", at = @At("RETURN"))
-	private void quilt$afterWorldChanged(C_zbvyjshu c_zbvyjshu, CallbackInfoReturnable<Entity> cir) {
+	private void quilt$afterWorldChanged(DimensionTransition transition, CallbackInfoReturnable<Entity> cir) {
 		// Ret will only have an entity if the teleport worked (entity not removed, teleportTarget was valid, entity was successfully created)
 		Entity ret = cir.getReturnValue();
 

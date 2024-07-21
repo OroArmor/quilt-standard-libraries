@@ -37,6 +37,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.ConnectedClientData;
+import net.minecraft.network.DisconnectionDetails;
 import net.minecraft.server.network.ServerConfigurationNetworkHandler;
 import net.minecraft.network.configuration.ConfigurationTask;
 import net.minecraft.network.configuration.JoinWorldConfigurationTask;
@@ -45,7 +46,6 @@ import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.common.DisconnectS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
-import net.minecraft.unmapped.C_igbzvhln;
 
 import org.quiltmc.qsl.networking.api.server.ServerConfigurationTaskManager;
 import org.quiltmc.qsl.networking.impl.DisconnectPacketSource;
@@ -169,7 +169,7 @@ abstract class ServerConfigurationNetworkHandlerMixin extends AbstractServerPack
 	}
 
 	@Inject(method = "onDisconnected", at = @At("HEAD"))
-	private void handleDisconnection(C_igbzvhln c_igbzvhln, CallbackInfo ci) {
+	private void handleDisconnection(DisconnectionDetails details, CallbackInfo ci) {
 		this.addon.handleDisconnect();
 	}
 

@@ -26,8 +26,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientLoginNetworkHandler;
+import net.minecraft.network.DisconnectionDetails;
 import net.minecraft.network.packet.s2c.login.LoginQueryRequestS2CPacket;
-import net.minecraft.unmapped.C_igbzvhln;
 
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 import org.quiltmc.qsl.networking.impl.NetworkHandlerExtensions;
@@ -65,7 +65,7 @@ abstract class ClientLoginNetworkHandlerMixin implements NetworkHandlerExtension
 	}
 
 	@Inject(method = "onDisconnected", at = @At("HEAD"))
-	private void invokeLoginDisconnectEvent(C_igbzvhln c_igbzvhln, CallbackInfo ci) {
+	private void invokeLoginDisconnectEvent(DisconnectionDetails details, CallbackInfo ci) {
 		this.addon.handleDisconnect();
 	}
 

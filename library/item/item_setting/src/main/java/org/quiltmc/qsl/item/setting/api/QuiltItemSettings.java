@@ -241,8 +241,8 @@ public class QuiltItemSettings extends Item.Settings {
 
 	@Override
 	@Contract("_->this")
-	public QuiltItemSettings method_60745(RegistryKey<C_yeazlrrn> song) {
-		super.method_60745(song);
+	public QuiltItemSettings jukeboxSong(RegistryKey<C_yeazlrrn> song) {
+		super.jukeboxSong(song);
 		return this;
 	}
 

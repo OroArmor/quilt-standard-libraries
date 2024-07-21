@@ -16,10 +16,10 @@
 
 package org.quiltmc.qsl.item.setting.mixin.recipe_remainder;
 
-import org.objectweb.asm.Opcodes;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 
 import net.minecraft.item.Item;
@@ -31,18 +31,18 @@ import org.quiltmc.qsl.item.setting.api.RecipeRemainderLocation;
 
 @Mixin(Items.class)
 public class ItemsMixin {
-	@Redirect(
+	@WrapOperation(
 			method = "<clinit>",
+			slice = @Slice(
+				from = @At(value = "CONSTANT", args = "stringValue=dragon_breath")
+			),
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/item/Item$Settings;recipeRemainder(Lnet/minecraft/item/Item;)Lnet/minecraft/item/Item$Settings;"
-			),
-			slice = @Slice(
-					from = @At(value = "FIELD", target = "Lnet/minecraft/item/Items;BEETROOT_SOUP:Lnet/minecraft/item/Item;", opcode = Opcodes.PUTSTATIC),
-					to = @At(value = "FIELD", target = "Lnet/minecraft/item/Items;DRAGON_BREATH:Lnet/minecraft/item/Item;", opcode = Opcodes.PUTSTATIC)
+					target = "Lnet/minecraft/item/Item$Settings;recipeRemainder(Lnet/minecraft/item/Item;)Lnet/minecraft/item/Item$Settings;",
+					ordinal = 0
 			)
 	)
-	private static Item.Settings changeDragonBreathRecipeRemainder(Item.Settings instance, Item recipeRemainder) {
+	private static Item.Settings changeDragonBreathRecipeRemainder(Item.Settings instance, Item recipeRemainder, Operation<Item.Settings> originalCall) {
 		// See: https://github.com/FabricMC/fabric/issues/2873
 		//      https://bugs.mojang.com/browse/MC-259583
 		return new QuiltItemSettings()

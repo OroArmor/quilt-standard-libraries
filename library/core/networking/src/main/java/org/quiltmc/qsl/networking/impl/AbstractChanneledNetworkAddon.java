@@ -29,7 +29,7 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.network.ClientConnection;
-import net.minecraft.network.NetworkState;
+import net.minecraft.network.NetworkPhase;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.payload.CustomPayload;
@@ -59,7 +59,7 @@ public abstract class AbstractChanneledNetworkAddon<H> extends AbstractNetworkAd
 
 	public abstract void lateInit();
 
-	protected void registerPendingChannels(ChannelInfoHolder holder, NetworkState state) {
+	protected void registerPendingChannels(ChannelInfoHolder holder, NetworkPhase state) {
 		final Collection<CustomPayload.Id<?>> pending = holder.getPendingChannelsNames(state);
 
 		if (!pending.isEmpty()) {
@@ -182,7 +182,7 @@ public abstract class AbstractChanneledNetworkAddon<H> extends AbstractNetworkAd
 		if (currentPhase == null) {
 			// We don't support receiving the register packet during this phase. See getPhase() for supported phases.
 			// The normal case where the play channels are sent during configuration is handled in the client/common configuration packet handlers.
-			logger.warn("Received common register packet for phase {} in network state: {}", payload.phase(), this.receiver.getState());
+			logger.warn("Received common register packet for phase {} in network state: {}", payload.phase(), this.receiver.getPhase());
 			return;
 		}
 
@@ -210,7 +210,7 @@ public abstract class AbstractChanneledNetworkAddon<H> extends AbstractNetworkAd
 
 	@Nullable
 	private String getPhase() {
-		return switch (this.receiver.getState()) {
+		return switch (this.receiver.getPhase()) {
 			case PLAY -> CommonRegisterPayload.PLAY_PHASE;
 			case CONFIGURATION -> CommonRegisterPayload.CONFIGURATION_PHASE;
 			default -> null; // We don't support receiving this packet on any other phase

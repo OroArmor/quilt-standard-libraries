@@ -38,7 +38,7 @@ import org.quiltmc.qsl.item.extensions.api.crossbow.CrossbowShotProjectileEvents
 
 @Mixin(CrossbowItem.class)
 public class CrossbowItemMixin implements CrossbowExtensions {
-	@Inject(method = "method_57344", at = @At(value = "RETURN"), cancellable = true)
+	@Inject(method = "getProjectile", at = @At(value = "RETURN"), cancellable = true)
 	private void createArrow(World world, LivingEntity entity, ItemStack crossbow, ItemStack projectileStack, boolean critical, CallbackInfoReturnable<ProjectileEntity> cir) {
 		ProjectileEntity projectileEntity = CrossbowShotProjectileEvents.CROSSBOW_REPLACE_SHOT_PROJECTILE.invoker().replaceProjectileShot(crossbow, projectileStack, entity, cir.getReturnValue());
 		CrossbowShotProjectileEvents.CROSSBOW_MODIFY_SHOT_PROJECTILE.invoker().modifyProjectileShot(crossbow, projectileStack, entity, projectileEntity);

@@ -44,10 +44,10 @@ public abstract class ItemStackMixin {
 	public abstract Item getItem();
 
 	@WrapOperation(
-			method = "damageEquipment",
+			method = "damageEquipment(ILnet/minecraft/entity/LivingEntity;Lnet/minecraft/entity/EquipmentSlot;)V",
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/item/ItemStack;method_7956(ILnet/minecraft/server/world/ServerWorld;Lnet/minecraft/server/network/ServerPlayerEntity;Ljava/util/function/Consumer;)V"
+					target = "Lnet/minecraft/item/ItemStack;damageEquipment(ILnet/minecraft/server/world/ServerWorld;Lnet/minecraft/server/network/ServerPlayerEntity;Ljava/util/function/Consumer;)V"
 			)
 	)
 	private void hookDamage(ItemStack instance, int amount, ServerWorld world, @Nullable ServerPlayerEntity player, Consumer<Item> breakCallback, Operation<Void> original, @Local(argsOnly = true) EquipmentSlot slot) {

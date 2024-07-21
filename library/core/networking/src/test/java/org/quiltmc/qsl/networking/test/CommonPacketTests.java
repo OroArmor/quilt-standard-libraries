@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
 import net.minecraft.client.network.ClientConfigurationNetworkHandler;
-import net.minecraft.network.NetworkState;
+import net.minecraft.network.NetworkPhase;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
@@ -227,7 +227,7 @@ public class CommonPacketTests {
 
 		// Assert the entire packet was read
 		assertEquals(0, buf.readableBytes());
-		assertIterableEquals(List.of(SERVER_RECEIVE), channelInfoHolder.getPendingChannelsNames(NetworkState.PLAY));
+		assertIterableEquals(List.of(SERVER_RECEIVE), channelInfoHolder.getPendingChannelsNames(NetworkPhase.PLAY));
 
 		// Check the response we are sending back to the server
 		PacketByteBuf response = readResponse(packetSender, REGISTER_PAYLOAD_TYPE);
@@ -286,7 +286,7 @@ public class CommonPacketTests {
 
 		// Assert the entire packet was read
 		assertEquals(0, buf.readableBytes());
-		assertIterableEquals(List.of(SERVER_RECEIVE), channelInfoHolder.getPendingChannelsNames(NetworkState.PLAY));
+		assertIterableEquals(List.of(SERVER_RECEIVE), channelInfoHolder.getPendingChannelsNames(NetworkPhase.PLAY));
 	}
 
 	// Test handing the configuration registry packet on the server configuration handler
@@ -364,10 +364,10 @@ public class CommonPacketTests {
 	}
 
 	private static class MockChannelInfoHolder implements ChannelInfoHolder {
-		private final Map<NetworkState, Collection<CustomPayload.Id<?>>> playChannels = new ConcurrentHashMap<>();
+		private final Map<NetworkPhase, Collection<CustomPayload.Id<?>>> playChannels = new ConcurrentHashMap<>();
 
 		@Override
-		public Collection<CustomPayload.Id<?>> getPendingChannelsNames(NetworkState state) {
+		public Collection<CustomPayload.Id<?>> getPendingChannelsNames(NetworkPhase state) {
 			return this.playChannels.computeIfAbsent(state, (key) -> Collections.newSetFromMap(new ConcurrentHashMap<>()));
 		}
 	}

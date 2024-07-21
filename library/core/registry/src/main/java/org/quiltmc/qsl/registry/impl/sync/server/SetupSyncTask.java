@@ -43,7 +43,7 @@ public record SetupSyncTask(ServerConfigurationNetworkHandler handler) implement
 				((ServerConfigurationTaskManager) this.handler).addImmediateTask(fabricSyncTask);
 			} else {
 				if (ServerRegistrySync.requiresSync()) {
-					((AbstractServerPacketHandlerAccessor) this.handler).getConnection().method_10747(ServerRegistrySync.noRegistrySyncMessage);
+					((AbstractServerPacketHandlerAccessor) this.handler).getConnection().disconnect(ServerRegistrySync.noRegistrySyncMessage);
 				}
 			}
 		}

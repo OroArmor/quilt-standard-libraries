@@ -84,8 +84,8 @@ public final class DelayedRegistry<T> implements MutableRegistry<T> {
 	}
 
 	@Override
-	public Optional<Reference<T>> method_60385() {
-		return this.wrapped.method_60385();
+	public Optional<Reference<T>> getAny() {
+		return this.wrapped.getAny();
 	}
 
 	@Override

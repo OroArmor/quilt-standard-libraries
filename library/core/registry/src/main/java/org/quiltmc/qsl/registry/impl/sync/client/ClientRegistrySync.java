@@ -200,7 +200,7 @@ public final class ClientRegistrySync {
 				entry.append(errorStyleFooter);
 			}
 
-			((AbstractClientNetworkHandlerAccessor) handler).getConnection().method_10747(entry);
+			((AbstractClientNetworkHandlerAccessor) handler).getConnection().disconnect(entry);
 
 			LOGGER.warn(builder.asString());
 		} else {

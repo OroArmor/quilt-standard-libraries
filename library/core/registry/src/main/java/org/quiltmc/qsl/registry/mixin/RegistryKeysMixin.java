@@ -29,7 +29,7 @@ import org.quiltmc.qsl.registry.impl.dynamic.DynamicMetaRegistryImpl;
 @Mixin(RegistryKeys.class)
 public class RegistryKeysMixin {
 	@WrapOperation(
-			method = {"method_60915", "method_60916"},
+			method = {"getDirectory", "getTagDirectory"},
 			at = @At(
 				value = "INVOKE",
 				target = "Lnet/minecraft/util/Identifier;getPath()Ljava/lang/String;"

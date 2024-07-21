@@ -29,10 +29,10 @@ import net.minecraft.network.packet.payload.CustomPayload;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.packet.c2s.common.CustomPayloadC2SPacket;
 import net.minecraft.network.packet.s2c.common.CustomPayloadS2CPacket;
-import net.minecraft.unmapped.C_ifijxdsf;
+import net.minecraft.network.phase.PacketDispatchCodec;
 
-@Mixin(C_ifijxdsf.class)
-public abstract class PacketCodecDispatcherMixin<B extends ByteBuf, V, T> implements PacketCodec<B, V> {
+@Mixin(PacketDispatchCodec.class)
+public abstract class PacketDispatchCodecMixin<B extends ByteBuf, V, T> implements PacketCodec<B, V> {
 	// Add the custom payload id to the error message
 	@Inject(method = "encode(Lio/netty/buffer/ByteBuf;Ljava/lang/Object;)V", at = @At(value = "NEW", target = "(Ljava/lang/String;)Lio/netty/handler/codec/EncoderException;"))
 	public void unknownFailure(B byteBuf, V packet, CallbackInfo ci, @Local(ordinal = 1) T packetId) {

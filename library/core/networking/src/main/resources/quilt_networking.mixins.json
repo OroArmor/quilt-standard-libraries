@@ -12,7 +12,7 @@
     "LoginQueryRequestS2CPacketMixin",
     "LoginQueryResponseC2SPacketMixin",
     "PacketBundleMixin",
-    "PacketCodecDispatcherMixin",
+    "PacketDispatchCodecMixin",
     "PlayerManagerMixin",
     "accessor.AbstractServerPacketHandlerAccessor",
     "accessor.EntityTrackerAccessor",

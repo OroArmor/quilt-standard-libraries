@@ -20,7 +20,7 @@ package org.quiltmc.qsl.networking.impl.common;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
-import net.minecraft.network.NetworkState;
+import net.minecraft.network.NetworkPhase;
 import net.minecraft.server.network.ServerConfigurationNetworkHandler;
 import net.minecraft.network.configuration.ConfigurationTask;
 import net.minecraft.network.packet.Packet;
@@ -81,7 +81,7 @@ public class CommonPacketsImpl {
 			}
 
 			// Play phase hasnt started yet, add them to the pending names.
-			addon.getChannelInfoHolder().getPendingChannelsNames(NetworkState.PLAY).addAll(payload.channels());
+			addon.getChannelInfoHolder().getPendingChannelsNames(NetworkPhase.PLAY).addAll(payload.channels());
 			NetworkingImpl.LOGGER.debug("Received accepted channels from the client for play phase");
 		} else {
 			addon.onCommonRegisterPacket(payload);
