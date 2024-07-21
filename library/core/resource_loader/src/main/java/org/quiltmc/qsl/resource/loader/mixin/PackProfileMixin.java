@@ -23,11 +23,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.minecraft.resource.PackPosition;
 import net.minecraft.resource.pack.PackLocationInfo;
 import net.minecraft.resource.pack.PackProfile;
-import net.minecraft.resource.pack.PackSource;
-import net.minecraft.text.Text;
-import net.minecraft.unmapped.C_yzksgymh;
 
 import org.quiltmc.qsl.resource.loader.api.QuiltPackProfile;
 import org.quiltmc.qsl.resource.loader.api.PackActivationType;
@@ -38,7 +36,7 @@ public class PackProfileMixin implements QuiltPackProfile {
 	private PackActivationType quilt$activationType;
 
 	@Inject(method = "<init>", at = @At("RETURN"))
-	private void quilt$onInit(PackLocationInfo locationInfo, PackProfile.PackFactory packFactory, PackProfile.Metadata info, C_yzksgymh c_yzksgymh, CallbackInfo ci) {
+	private void quilt$onInit(PackLocationInfo locationInfo, PackProfile.PackFactory packFactory, PackProfile.Metadata info, PackPosition position, CallbackInfo ci) {
 		try (var pack = packFactory.open(locationInfo, info)) {
 			this.quilt$activationType = pack.getActivationType();
 		}

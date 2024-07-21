@@ -33,7 +33,9 @@ import org.jetbrains.annotations.UnmodifiableView;
 
 import net.minecraft.resource.ResourceIoSupplier;
 import net.minecraft.resource.ResourceType;
+import net.minecraft.resource.pack.CompositeResourcePack;
 import net.minecraft.resource.pack.PackLocationInfo;
+import net.minecraft.resource.pack.PackProfile;
 import net.minecraft.resource.pack.ResourcePack;
 import net.minecraft.resource.pack.metadata.ResourceMetadataSectionReader;
 import net.minecraft.text.Text;
@@ -53,7 +55,6 @@ public abstract class GroupPack implements ResourcePack {
 	protected final ResourceType type;
 	protected final List<? extends ResourcePack> packs;
 	protected final Map<String, List<ResourcePack>> namespacedPacks = new Object2ObjectOpenHashMap<>();
-	private boolean builtin;
 
 	public GroupPack(@NotNull ResourceType type, @NotNull List<? extends ResourcePack> packs) {
 		this.type = type;
@@ -150,6 +151,8 @@ public abstract class GroupPack implements ResourcePack {
 		this.packs.forEach(ResourcePack::close);
 	}
 
+	public abstract PackProfile.PackFactory wrapToFactory();
+
 	/**
 	 * Represents a group resource pack which wraps a "base" resource pack.
 	 */
@@ -212,6 +215,40 @@ public abstract class GroupPack implements ResourcePack {
 		public @NotNull String getFullName() {
 			return this.getName() + " (" + this.packs.stream().filter(pack -> pack != this.basePack)
 					.map(ResourcePack::getName).collect(Collectors.joining(", ")) + ")";
+		}
+
+		@Override
+		public @NotNull ResourcePack createOverlay(String overlay) {
+			return new Wrapped(
+				this.type,
+				this.basePack.createOverlay(overlay),
+				this.packs.stream().map(pack -> pack.createOverlay(overlay)).toList(),
+				false
+			);
+		}
+
+		@Override
+		public PackProfile.PackFactory wrapToFactory() {
+			return new PackProfile.PackFactory() {
+				@Override
+				public ResourcePack openPrimary(PackLocationInfo locationInfo) {
+					return Wrapped.this;
+				}
+
+				@Override
+				public ResourcePack open(PackLocationInfo locationInfo, PackProfile.Metadata metadata) {
+					if (metadata.overlays().isEmpty()) {
+						return Wrapped.this;
+					}
+
+					List<ResourcePack> overlays = metadata.overlays()
+							.stream()
+							.map(Wrapped.this::createOverlay)
+							.toList();
+
+					return new CompositeResourcePack(Wrapped.this, overlays);
+				}
+			};
 		}
 	}
 }

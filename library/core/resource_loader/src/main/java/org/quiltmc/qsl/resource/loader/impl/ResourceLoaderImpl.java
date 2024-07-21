@@ -258,7 +258,7 @@ public final class ResourceLoaderImpl implements ResourceLoader {
 			if (currentReloader instanceof IdentifiableResourceReloader identifiable) {
 				id = identifiable.getQuiltId();
 			} else {
-				id = new Identifier("unknown",
+				id = Identifier.of("unknown",
 						"private/"
 								+ currentReloader.getClass().getName()
 								.replace(".", "/")
@@ -488,7 +488,7 @@ public final class ResourceLoaderImpl implements ResourceLoader {
 			// Add the built-in pack only if namespaces for the specified resource type are present.
 			if (!pack.getNamespaces(type).isEmpty()) {
 				// Make the resource pack profile for built-in pack, should never be always enabled.
-				var profile = ModPackUtil.makeBuiltinPackProfile(pack);
+				var profile = QuiltBuiltinPackProfile.of(pack);
 
 				if (profile != null) {
 					profileAdder.accept(profile);
@@ -511,7 +511,7 @@ public final class ResourceLoaderImpl implements ResourceLoader {
 
 		try (var manager = new MultiPackResourceManager(ResourceType.CLIENT_RESOURCES, List.of(pack))) {
 			for (var namespace : manager.getAllNamespaces()) {
-				var langId = new Identifier(namespace, "lang/" + Language.DEFAULT_LANGUAGE + ".json");
+				var langId = Identifier.of(namespace, "lang/" + Language.DEFAULT_LANGUAGE + ".json");
 
 				for (var resource : manager.getAllResources(langId)) {
 					try (var stream = resource.open()) {

@@ -24,13 +24,12 @@ import org.jetbrains.annotations.NotNull;
 import com.mojang.blaze3d.texture.NativeImage;
 
 import net.minecraft.SharedConstants;
+import net.minecraft.resource.PackPosition;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.resource.pack.PackLocationInfo;
 import net.minecraft.resource.pack.PackProfile;
 import net.minecraft.resource.pack.PackSource;
 import net.minecraft.text.Text;
-import net.minecraft.unmapped.C_yzksgymh;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
 import org.quiltmc.loader.api.ModContainer;
@@ -50,7 +49,7 @@ public class ResourcePackProfileProviderTestMod implements ClientModInitializer 
 					pack.getLocationInfo(),
 					QuiltPackProfile.wrapToFactory(pack),
 					ResourceType.CLIENT_RESOURCES,
-					new C_yzksgymh(
+					new PackPosition(
 						true,
 						PackProfile.InsertionPosition.TOP,
 						true
@@ -59,7 +58,7 @@ public class ResourcePackProfileProviderTestMod implements ClientModInitializer 
 	}
 
 	static class TestPack extends InMemoryPack {
-		private static final Identifier DIRT_IDENTIFIER = new Identifier("textures/block/dirt.png");
+		private static final Identifier DIRT_IDENTIFIER = Identifier.ofDefault("textures/block/dirt.png");
 		private final Random random = new Random();
 
 		TestPack() {

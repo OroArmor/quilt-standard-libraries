@@ -23,12 +23,12 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import net.minecraft.SharedConstants;
+import net.minecraft.resource.PackPosition;
 import net.minecraft.resource.pack.PackCompatibility;
 import net.minecraft.resource.pack.PackProfile;
 import net.minecraft.resource.pack.PackSource;
 import net.minecraft.resource.pack.ResourcePack;
 import net.minecraft.text.Text;
-import net.minecraft.unmapped.C_yzksgymh;
 import net.minecraft.util.Formatting;
 
 import org.quiltmc.qsl.resource.loader.api.QuiltPackProfile;
@@ -56,7 +56,7 @@ public final class QuiltBuiltinPackProfile extends PackProfile {
 				pack.getLocationInfo(),
 				QuiltPackProfile.wrapToFactory(pack),
 				info,
-				new C_yzksgymh(
+				new PackPosition(
 					true,
 					PackProfile.InsertionPosition.TOP,
 					false

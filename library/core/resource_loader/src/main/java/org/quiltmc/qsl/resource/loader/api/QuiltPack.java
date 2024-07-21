@@ -52,6 +52,15 @@ public interface QuiltPack {
 	}
 
 	/**
+	 * Creates the specified overlay for the pack.
+	 *
+	 * @return the activation type of this resource pack
+	 */
+	default @NotNull ResourcePack createOverlay(String overlay) {
+		return (ResourcePack) this;
+	}
+
+	/**
 	 * {@return the path inside a resource pack of the given resource path}
 	 *
 	 * @param type the type of the resource

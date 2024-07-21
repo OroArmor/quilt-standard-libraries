@@ -33,10 +33,8 @@ import net.minecraft.resource.ResourceType;
 import net.minecraft.resource.pack.DataPackSettings;
 import net.minecraft.resource.pack.PackProfile;
 import net.minecraft.resource.pack.ResourcePack;
-import net.minecraft.unmapped.C_yzksgymh;
 
 import org.quiltmc.loader.api.ModMetadata;
-import org.quiltmc.qsl.resource.loader.api.QuiltPackProfile;
 
 @ApiStatus.Internal
 public final class ModPackUtil {
@@ -98,31 +96,5 @@ public final class ModPackUtil {
 		}
 
 		return new DataPackSettings(enabled, disabled);
-	}
-
-	public static PackProfile makeBuiltinPackProfile(ModNioPack pack, PackProfile.Metadata info) {
-		return PackProfile.of(
-			pack.getLocationInfo(),
-			QuiltPackProfile.wrapToFactory(pack),
-			ResourceType.CLIENT_RESOURCES,
-			new C_yzksgymh(
-				true,
-				PackProfile.InsertionPosition.TOP,
-				false
-			)
-		);
-	}
-
-	static @Nullable PackProfile makeBuiltinPackProfile(ModNioPack pack) {
-		// I think the resource version really shouldn't matter here, but we'll go for the latest asset version just in case
-		PackProfile.Metadata info = PackProfile.loadMetadata(pack.getLocationInfo(), QuiltPackProfile.wrapToFactory(pack),
-				SharedConstants.getGameVersion().getResourceVersion(ResourceType.CLIENT_RESOURCES));
-
-		if (info == null) {
-			LOGGER.warn("Couldn't find pack meta for pack {}.", pack.getName());
-			return null;
-		}
-
-		return makeBuiltinPackProfile(pack, info);
 	}
 }

@@ -66,7 +66,7 @@ public class MinecraftClientMixin {
 	}
 
 	@Inject(
-			method = "method_36561",
+			method = "reloadResources(ZLnet/minecraft/client/MinecraftClient$LoadingContext;)Ljava/util/concurrent/CompletableFuture;",
 			at = @At(
 					value = "INVOKE",
 					target = "Lnet/minecraft/resource/ReloadableResourceManager;reload(Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;Ljava/util/concurrent/CompletableFuture;Ljava/util/List;)Lnet/minecraft/resource/ResourceReload;"

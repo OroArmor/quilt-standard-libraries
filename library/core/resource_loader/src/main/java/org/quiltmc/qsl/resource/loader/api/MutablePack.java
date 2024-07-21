@@ -19,6 +19,7 @@ package org.quiltmc.qsl.resource.loader.api;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Future;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -108,7 +109,7 @@ public interface MutablePack extends ResourcePack {
 	 * @see #putResource(ResourceType, Identifier, Supplier)
 	 */
 	@NotNull Future<byte[]> putResourceAsync(@NotNull ResourceType type, @NotNull Identifier id,
-			@NotNull Function<@NotNull Identifier, byte @NotNull []> resourceFactory);
+											 @NotNull Function<@NotNull Identifier, byte @NotNull []> resourceFactory);
 
 	/**
 	 * Puts a text resource into the resource pack's root.
@@ -180,7 +181,7 @@ public interface MutablePack extends ResourcePack {
 	 * @see #putResourceAsync(ResourceType, Identifier, Function)
 	 */
 	default @NotNull Future<byte[]> putTextAsync(@NotNull ResourceType type, @NotNull Identifier id,
-			@NotNull Function<@NotNull Identifier, @NotNull String> textFactory) {
+												 @NotNull Function<@NotNull Identifier, @NotNull String> textFactory) {
 		return this.putResourceAsync(type, id, textFactory.andThen(text -> text.getBytes(StandardCharsets.UTF_8)));
 	}
 
@@ -292,6 +293,14 @@ public interface MutablePack extends ResourcePack {
 			}
 		}));
 	}
+
+	/**
+	 * Adds a pack overlay to the mutable pack.
+	 *
+	 * @param overlay the overlay name
+	 * @param pack    the pack
+	 */
+	void putOverlay(@NotNull String overlay, ResourcePack pack);
 
 	/**
 	 * Clears the resource of a specific resource type.

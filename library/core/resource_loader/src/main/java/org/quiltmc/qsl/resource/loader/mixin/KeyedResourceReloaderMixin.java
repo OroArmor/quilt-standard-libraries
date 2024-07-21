@@ -55,7 +55,7 @@ public abstract class KeyedResourceReloaderMixin implements IdentifiableResource
 			} else if (self instanceof TagManagerLoader) {
 				this.quilt$id = ResourceReloaderKeys.Server.TAGS;
 			} else {
-				this.quilt$id = new Identifier("private/" + self.getClass().getSimpleName().toLowerCase(Locale.ROOT));
+				this.quilt$id = Identifier.ofDefault("private/" + self.getClass().getSimpleName().toLowerCase(Locale.ROOT));
 			}
 		}
 

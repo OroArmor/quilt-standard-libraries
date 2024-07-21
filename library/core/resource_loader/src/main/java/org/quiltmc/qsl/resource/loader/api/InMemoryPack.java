@@ -47,6 +47,7 @@ import org.slf4j.Logger;
 import net.minecraft.resource.ResourceIoSupplier;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.resource.pack.PackLocationInfo;
+import net.minecraft.resource.pack.PackSource;
 import net.minecraft.resource.pack.ResourcePack;
 import net.minecraft.resource.pack.metadata.ResourceMetadataSectionReader;
 import net.minecraft.text.Text;
@@ -62,6 +63,7 @@ import org.quiltmc.qsl.resource.loader.impl.ResourceLoaderImpl;
  * <p>
  * The resources of this pack are stored in memory instead of it being on-disk.
  */
+// TODO: Add API for overlays
 public abstract class InMemoryPack implements MutablePack {
 	private static final Logger LOGGER = LogUtils.getLogger();
 	private static final ExecutorService EXECUTOR_SERVICE;
@@ -71,6 +73,8 @@ public abstract class InMemoryPack implements MutablePack {
 	private final Map<Identifier, Supplier<byte[]>> assets = new ConcurrentHashMap<>();
 	private final Map<Identifier, Supplier<byte[]>> data = new ConcurrentHashMap<>();
 	private final Map<String, Supplier<byte[]>> root = new ConcurrentHashMap<>();
+
+	private final Map<String, ResourcePack> overlays = new ConcurrentHashMap<>();
 
 	@Override
 	public @Nullable ResourceIoSupplier<InputStream> openRoot(String... path) {
@@ -205,6 +209,11 @@ public abstract class InMemoryPack implements MutablePack {
 	}
 
 	@Override
+	public void putOverlay(@NotNull String overlay, ResourcePack pack) {
+		this.overlays.put(overlay, pack);
+	}
+
+	@Override
 	public void clearResources(ResourceType type) {
 		this.getResourceMap(type).clear();
 	}
@@ -212,6 +221,7 @@ public abstract class InMemoryPack implements MutablePack {
 	@Override
 	public void clearResources() {
 		this.root.clear();
+		this.overlays.clear();
 		this.clearResources(ResourceType.CLIENT_RESOURCES);
 		this.clearResources(ResourceType.SERVER_DATA);
 	}
@@ -230,6 +240,14 @@ public abstract class InMemoryPack implements MutablePack {
 					this.dumpResource(path, QuiltPack.getResourcePath(ResourceType.CLIENT_RESOURCES, p), resource.get()));
 			this.data.forEach((p, resource) ->
 					this.dumpResource(path, QuiltPack.getResourcePath(ResourceType.SERVER_DATA, p), resource.get()));
+			this.overlays.forEach((overlay, pack) -> {
+				if (pack instanceof InMemoryPack imp) {
+					imp.dumpTo(path.resolve(overlay));
+					return;
+				}
+
+				LOGGER.info("Unable to dump overlay {} ({}) from In Memory Pack {}", overlay, pack.getName(), this.getName());
+			});
 		} catch (IOException e) {
 			LOGGER.error("Failed to write resource pack dump from pack {} to {}.", this.getName(), path, e);
 		}
@@ -275,6 +293,10 @@ public abstract class InMemoryPack implements MutablePack {
 		);
 	}
 
+	protected PackSource getSource() {
+		return PackSource.PACK_SOURCE_BUILTIN;
+	}
+
 	/**
 	 * Represents an in-memory resource pack with a static name.
 	 */
@@ -290,7 +312,7 @@ public abstract class InMemoryPack implements MutablePack {
 			return new PackLocationInfo(
 				this.name,
 				Text.literal(this.name),
-				null,
+				this.getSource(),
 				Optional.empty()
 			);
 		}

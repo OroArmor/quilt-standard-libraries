@@ -26,21 +26,17 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.resource.ClientBuiltinResourcePackProvider;
+import net.minecraft.resource.PackPosition;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.resource.pack.BuiltinPackProvider;
 import net.minecraft.resource.pack.PackLocationInfo;
 import net.minecraft.resource.pack.PackProfile;
-import net.minecraft.resource.pack.PackSource;
-import net.minecraft.resource.pack.ResourcePack;
 import net.minecraft.text.Text;
-import net.minecraft.unmapped.C_yzksgymh;
 
 import org.quiltmc.loader.api.minecraft.ClientOnly;
-import org.quiltmc.qsl.resource.loader.api.QuiltPackProfile;
 import org.quiltmc.qsl.resource.loader.impl.ModPackProvider;
 import org.quiltmc.qsl.resource.loader.impl.ResourceLoaderImpl;
 
@@ -52,30 +48,39 @@ public abstract class ClientBuiltinResourcePackProviderMixin {
 	private static Map<String, Text> BUILTIN_PACK_DISPLAY_NAMES;
 
 	@WrapOperation(
+			method = "createVanillaPackProfile",
+			at = @At(
+				value = "INVOKE",
+				target = "Lnet/minecraft/resource/pack/PackProfile;of(Lnet/minecraft/resource/pack/PackLocationInfo;Lnet/minecraft/resource/pack/PackProfile$PackFactory;Lnet/minecraft/resource/ResourceType;Lnet/minecraft/resource/PackPosition;)Lnet/minecraft/resource/pack/PackProfile;"
+			)
+	)
+	private PackProfile onCreateVanillaPackProfile(PackLocationInfo locationInfo, PackProfile.PackFactory packFactory, ResourceType type, PackPosition position, Operation<PackProfile> original) {
+		packFactory = ResourceLoaderImpl
+			.buildMinecraftPack(
+				ResourceType.CLIENT_RESOURCES,
+				packFactory.openPrimary(locationInfo))
+			.wrapToFactory();
+
+		return original.call(locationInfo, packFactory, type, position);
+	}
+
+	@WrapOperation(
 			method = "createBuiltinPackProfile(Ljava/lang/String;Lnet/minecraft/resource/pack/PackProfile$PackFactory;Lnet/minecraft/text/Text;)Lnet/minecraft/resource/pack/PackProfile;",
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/resource/pack/PackProfile;of(Lnet/minecraft/resource/pack/PackLocationInfo;Lnet/minecraft/resource/pack/PackProfile$PackFactory;Lnet/minecraft/resource/ResourceType;Lnet/minecraft/unmapped/C_yzksgymh;)Lnet/minecraft/resource/pack/PackProfile;"
+					target = "Lnet/minecraft/resource/pack/PackProfile;of(Lnet/minecraft/resource/pack/PackLocationInfo;Lnet/minecraft/resource/pack/PackProfile$PackFactory;Lnet/minecraft/resource/ResourceType;Lnet/minecraft/resource/PackPosition;)Lnet/minecraft/resource/pack/PackProfile;"
 			)
 	)
-	private PackProfile onCreateBuiltinResourcePackProfile(PackLocationInfo locationInfo, PackProfile.PackFactory packFactory, ResourceType type, C_yzksgymh c_yzksgymh, Operation<PackProfile> original) {
+	private PackProfile onCreateBuiltinPackProfile(PackLocationInfo locationInfo, PackProfile.PackFactory packFactory, ResourceType type, PackPosition position, Operation<PackProfile> original) {
 		if (BUILTIN_PACK_DISPLAY_NAMES.containsKey(locationInfo.id())) {
-			packFactory = QuiltPackProfile.wrapToFactory(ResourceLoaderImpl.buildVanillaBuiltinPack(packFactory.openPrimary(locationInfo), ResourceType.CLIENT_RESOURCES, locationInfo.id()));
+			packFactory = ResourceLoaderImpl
+				.buildVanillaBuiltinPack(packFactory.openPrimary(locationInfo),
+					ResourceType.CLIENT_RESOURCES,
+					locationInfo.id())
+				.wrapToFactory();
 		}
 
-		return original.call(locationInfo, packFactory, type, c_yzksgymh);
-	}
-
-	@ModifyArg(
-			method = "createBuiltinPackProfile(Lnet/minecraft/resource/pack/ResourcePack;)Lnet/minecraft/resource/pack/PackProfile;",
-			at = @At(
-					value = "INVOKE",
-					target = "Lnet/minecraft/client/resource/ClientBuiltinResourcePackProvider;wrapToFactory(Lnet/minecraft/resource/pack/ResourcePack;)Lnet/minecraft/resource/pack/PackProfile$PackFactory;"
-			),
-			index = 0
-	)
-	private ResourcePack onPackGet(ResourcePack pack) {
-		return ResourceLoaderImpl.buildMinecraftPack(ResourceType.CLIENT_RESOURCES, pack);
+		return original.call(locationInfo, packFactory, type, position);
 	}
 
 	@ClientOnly

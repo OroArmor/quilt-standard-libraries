@@ -201,6 +201,19 @@ public class ModNioPack extends AbstractFileResourcePack implements QuiltPack {
 		}
 	}
 
+	@Override
+	public @NotNull ResourcePack createOverlay(String overlay) {
+		return new ModNioPack(
+			this.name,
+			this.modInfo,
+			this.displayName,
+			this.activationType,
+			this.io.basePath.resolve(overlay),
+			this.type,
+			this.closer
+		);
+	}
+
 	//region metadata
 	@Override
 	public String getName() {

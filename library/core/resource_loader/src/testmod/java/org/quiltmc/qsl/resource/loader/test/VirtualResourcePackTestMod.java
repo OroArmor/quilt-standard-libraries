@@ -26,12 +26,10 @@ import net.minecraft.block.Blocks;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.resource.PackPosition;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.resource.pack.PackProfile;
-import net.minecraft.resource.pack.PackSource;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.text.Text;
-import net.minecraft.unmapped.C_yzksgymh;
 import net.minecraft.util.Identifier;
 
 import org.quiltmc.loader.api.ModContainer;
@@ -46,11 +44,11 @@ import org.quiltmc.qsl.resource.loader.api.PackRegistrationContext;
 public class VirtualResourcePackTestMod implements ModInitializer, PackRegistrationContext.Callback, ServerLifecycleEvents.Ready {
 	private static final TagKey<Block> TEST_TAG = TagKey.of(RegistryKeys.BLOCK, ResourceLoaderTestMod.id("test_virtual_tag"));
 	private static final TagKey<Block> TEST_TAG2 = TagKey.of(RegistryKeys.BLOCK, ResourceLoaderTestMod.id("test_stackable_tag"));
-	private static final Identifier TAG_FILE = new Identifier(
-			TEST_TAG.id().getNamespace(), "tags/blocks/" + TEST_TAG.id().getPath() + ".json"
+	private static final Identifier TAG_FILE = Identifier.of(
+			TEST_TAG.id().getNamespace(), "tags/block/" + TEST_TAG.id().getPath() + ".json"
 	);
-	private static final Identifier TAG_FILE2 = new Identifier(
-			TEST_TAG2.id().getNamespace(), "tags/blocks/" + TEST_TAG2.id().getPath() + ".json"
+	private static final Identifier TAG_FILE2 = Identifier.of(
+			TEST_TAG2.id().getNamespace(), "tags/block/" + TEST_TAG2.id().getPath() + ".json"
 	);
 
 	@Override
@@ -82,7 +80,7 @@ public class VirtualResourcePackTestMod implements ModInitializer, PackRegistrat
 		pack.putText("pack.mcmeta", String.format("""
 				{"pack":{"pack_format":%d,"description":"Provided pack activation test."}}
 					""", SharedConstants.getGameVersion().getResourceVersion(type)));
-		pack.putText(ResourceType.CLIENT_RESOURCES, new Identifier("models/block/dandelion.json"), """
+		pack.putText(ResourceType.CLIENT_RESOURCES, Identifier.ofDefault("models/block/dandelion.json"), """
 				{
 					"parent": "minecraft:block/cube_all",
 					"textures": {
@@ -90,7 +88,7 @@ public class VirtualResourcePackTestMod implements ModInitializer, PackRegistrat
 					}
 				}
 				""");
-		pack.putText(ResourceType.SERVER_DATA, new Identifier("loot_tables/blocks/dandelion.json"), """
+		pack.putText(ResourceType.SERVER_DATA, Identifier.ofDefault("loot_table/blocks/dandelion.json"), """
 				{
 					"type": "minecraft:block",
 					"pools": [
@@ -116,17 +114,17 @@ public class VirtualResourcePackTestMod implements ModInitializer, PackRegistrat
 		profileAdder.accept(PackProfile.of(pack.getLocationInfo(),
 				QuiltPackProfile.wrapToFactory(pack),
 				type,
-				new C_yzksgymh(
-					true,
-					PackProfile.InsertionPosition.BOTTOM,
-					true
+				new PackPosition(
+					false,
+					PackProfile.InsertionPosition.TOP,
+					false
 				)));
 	}
 
 	@Override
 	public void onRegisterPack(@NotNull PackRegistrationContext context) {
 		var pack = new InMemoryPack.Named("Test Virtual Resource Pack");
-		pack.putText(ResourceType.CLIENT_RESOURCES, new Identifier("models/block/poppy.json"), """
+		pack.putText(ResourceType.CLIENT_RESOURCES, Identifier.ofDefault("models/block/poppy.json"), """
 				{
 				  "parent": "minecraft:block/cube_all",
 				  "textures": {
@@ -134,7 +132,7 @@ public class VirtualResourcePackTestMod implements ModInitializer, PackRegistrat
 				  }
 				}
 				""");
-		pack.putText(ResourceType.SERVER_DATA, new Identifier("loot_tables/blocks/poppy.json"), """
+		pack.putText(ResourceType.SERVER_DATA, Identifier.ofDefault("loot_table/blocks/poppy.json"), """
 				{
 					"type": "minecraft:block",
 					"pools": [
