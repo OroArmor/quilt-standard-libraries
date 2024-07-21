@@ -86,7 +86,7 @@ public class ModNioPack extends AbstractFileResourcePack implements QuiltPack {
 		super(new PackLocationInfo(
 				name,
 				displayName,
-				PackSource.PACK_SOURCE_BUILTIN,
+				new QuiltBuiltinPackProfile.BuiltinPackSource(modInfo, activationType),
 				Optional.empty()
 		));
 
