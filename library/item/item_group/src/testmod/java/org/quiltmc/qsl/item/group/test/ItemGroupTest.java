@@ -31,7 +31,7 @@ import org.quiltmc.qsl.item.group.api.QuiltItemGroup;
 public class ItemGroupTest implements ModInitializer {
 	public static final String NAMESPACE = "quilt_item_group_testmod";
 	// Adds an item group with all items in it
-	private static final ItemGroup SUPPLIER_ITEM_GROUP = QuiltItemGroup.builder(new Identifier(NAMESPACE, "test_supplied_group"))
+	private static final ItemGroup SUPPLIER_ITEM_GROUP = QuiltItemGroup.builder(Identifier.of(NAMESPACE, "test_supplied_group"))
 			.icon(() -> new ItemStack(Items.STONE))
 			.appendItems(stacks ->
 					Registry.ITEM.stream()
@@ -40,7 +40,7 @@ public class ItemGroupTest implements ModInitializer {
 							.forEach(stacks::add)
 			).build();
 
-	private static final QuiltItemGroup DELAYED_ITEM_GROUP = QuiltItemGroup.builder(new Identifier(NAMESPACE, "test_delayed_group"))
+	private static final QuiltItemGroup DELAYED_ITEM_GROUP = QuiltItemGroup.builder(Identifier.of(NAMESPACE, "test_delayed_group"))
 			.appendItems(stacks ->
 					Registry.ITEM.stream()
 							.filter(item -> item != Items.AIR)
@@ -48,7 +48,7 @@ public class ItemGroupTest implements ModInitializer {
 							.forEach(stacks::add)
 			).build();
 
-	public static final QuiltItemGroup ITEM_GROUP_WITH_TEXTURE_ICON = QuiltItemGroup.create(new Identifier(NAMESPACE, "test_texture_icon_group"));
+	public static final QuiltItemGroup ITEM_GROUP_WITH_TEXTURE_ICON = QuiltItemGroup.create(Identifier.of(NAMESPACE, "test_texture_icon_group"));
 
 	private static final QuiltItemGroup[] MANY_GROUPS = IntStream.range(0, 20).mapToObj(i -> QuiltItemGroup.builder(new Identifier(NAMESPACE, "many_group_" + i)).build()).toArray(QuiltItemGroup[]::new);
 

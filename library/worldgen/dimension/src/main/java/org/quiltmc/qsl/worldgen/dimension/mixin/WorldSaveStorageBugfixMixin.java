@@ -55,7 +55,7 @@ public class WorldSaveStorageBugfixMixin {
 	@SuppressWarnings("unchecked")
 	@Inject(method = "method_54523", at = @At("HEAD"))
 	private static <T> void onReadGeneratorProperties(
-		Dynamic<T> nbt, FeatureAndDataSettings featureAndDataSettings, Registry<DimensionOptions> registry, DynamicRegistryManager.Frozen frozen,
+			Dynamic<T> nbt, FeatureAndDataSettings featureAndDataSettings, Registry<DimensionOptions> registry, DynamicRegistryManager.Frozen frozen,
 			CallbackInfoReturnable<Pair<GeneratorOptions, Lifecycle>> cir
 	) {
 		NbtElement nbtTag = ((Dynamic<NbtElement>) nbt).getValue();

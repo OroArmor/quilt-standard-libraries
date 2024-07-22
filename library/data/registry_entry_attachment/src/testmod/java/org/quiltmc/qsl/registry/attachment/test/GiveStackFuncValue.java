@@ -19,14 +19,23 @@ package org.quiltmc.qsl.registry.attachment.test;
 import com.mojang.serialization.MapCodec;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 public final class GiveStackFuncValue extends FuncValue {
-	public static final Identifier TYPE = new Identifier("quilt", "give_stack");
-	public static final MapCodec<GiveStackFuncValue> CODEC = ItemStack.CODEC.fieldOf("stack")
-		.xmap(GiveStackFuncValue::new, gs -> gs.stack);
+	public static final Identifier TYPE = Identifier.of("quilt", "give_stack");
+	public static final MapCodec<GiveStackFuncValue> CODEC = ItemStack
+			.CODEC
+			.fieldOf("stack")
+			.xmap(GiveStackFuncValue::new, gs -> gs.stack);
+
+	public static final PacketCodec<RegistryByteBuf, GiveStackFuncValue> PACKET_CODEC = ItemStack
+			.PACKET_CODEC
+			.map(GiveStackFuncValue::new, gs -> gs.stack);
 
 	private final ItemStack stack;
 

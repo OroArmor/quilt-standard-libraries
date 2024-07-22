@@ -11,7 +11,7 @@ qslModule {
 		core {
 			api("qsl_base")
 			api("registry")
-//			api("resource_loader")
+			api("resource_loader")
 			compileOnly("networking")
 
 			testmodOnly("lifecycle_events")

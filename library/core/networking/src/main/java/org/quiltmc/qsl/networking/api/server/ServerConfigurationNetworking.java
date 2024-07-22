@@ -230,7 +230,7 @@ public final class ServerConfigurationNetworking {
 		 * This method is executed on {@linkplain io.netty.channel.EventLoop netty's event loops}.
 		 * Modification to the game should be {@linkplain net.minecraft.util.thread.ThreadExecutor#submit(Runnable) scheduled} using the provided Minecraft server instance.
 		 * <pre>{@code
-		 * ServerConfigurationNetworking.registerReceiver(new Identifier("mymod", "boom"), (server, handler, data, responseSender) -> {
+		 * ServerConfigurationNetworking.registerReceiver(Identifier.of("mymod", "boom"), (server, handler, data, responseSender) -> {
 		 * 	boolean fire = data.readBoolean();
 		 *
 		 * 	// All operations on the server or world must be executed on the server thread

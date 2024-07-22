@@ -21,6 +21,8 @@ import java.util.Map;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.MapCodec;
 
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
@@ -34,6 +36,12 @@ public abstract class FuncValue implements DispatchedType {
 					.put(SendMessageFuncValue.TYPE, SendMessageFuncValue.CODEC)
 					.put(GiveStackFuncValue.TYPE, GiveStackFuncValue.CODEC)
 					.build());
+
+	public static final Map<Identifier, PacketCodec<RegistryByteBuf, ? extends FuncValue>> PACKET_CODECS = Util.make(() ->
+			ImmutableMap.<Identifier, PacketCodec<RegistryByteBuf, ? extends FuncValue>>builder()
+				.put(SendMessageFuncValue.TYPE, SendMessageFuncValue.PACKET_CODEC)
+				.put(GiveStackFuncValue.TYPE, GiveStackFuncValue.PACKET_CODEC)
+				.build());
 
 	protected final Identifier type;
 

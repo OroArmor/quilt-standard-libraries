@@ -17,13 +17,13 @@ qslModule {
 	moduleDependencies {
 		core {
 			api("qsl_base")
-//			testmodOnly("resource_loader")
+			testmodOnly("resource_loader")
 			testmodOnly("lifecycle_events")
 			testmodOnly("networking")
 		}
-//		item {
-//			testmodOnly("item_content_registry")
-//		}
+		item {
+			testmodOnly("item_content_registry")
+		}
 	}
 }
 

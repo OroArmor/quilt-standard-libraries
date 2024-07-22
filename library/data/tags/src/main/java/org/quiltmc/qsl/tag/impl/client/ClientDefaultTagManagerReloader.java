@@ -26,14 +26,13 @@ import org.jetbrains.annotations.NotNull;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.resource.AutoCloseableResourceManager;
 import net.minecraft.resource.MultiPackResourceManager;
+import net.minecraft.resource.PackPosition;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.resource.pack.DefaultPack;
 import net.minecraft.resource.pack.PackLocationInfo;
 import net.minecraft.resource.pack.PackManager;
 import net.minecraft.resource.pack.PackProfile;
-import net.minecraft.resource.pack.PackSource;
-import net.minecraft.unmapped.C_yzksgymh;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
 
@@ -46,7 +45,7 @@ import org.quiltmc.qsl.resource.loader.impl.ResourceLoaderImpl;
 @ClientOnly
 @ApiStatus.Internal
 final class ClientDefaultTagManagerReloader extends ClientOnlyTagManagerReloader {
-	private static final Identifier ID = new Identifier(ClientQuiltTagsMod.NAMESPACE, "client_default_tags");
+	private static final Identifier ID = Identifier.of(ClientQuiltTagsMod.NAMESPACE, "client_default_tags");
 	private final PackManager resourcePackManager;
 
 	ClientDefaultTagManagerReloader() {
@@ -62,7 +61,7 @@ final class ClientDefaultTagManagerReloader extends ClientOnlyTagManagerReloader
 						pack.getKnownPackInfo()),
 					QuiltPackProfile.wrapToFactory(pack),
 					ResourceType.SERVER_DATA,
-					new C_yzksgymh(
+					new PackPosition(
 						true,
 						PackProfile.InsertionPosition.BOTTOM,
 						true

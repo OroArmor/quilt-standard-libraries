@@ -49,9 +49,9 @@ public final class DataFixerUpperTestMod implements ModInitializer, ServerLifecy
 	private static final Logger LOGGER = LogUtils.getLogger();
 
 	private static final Item ITEM = Registry.register(
-			Registry.ITEM, new Identifier(NAMESPACE, "fine_item"), new Item(new Item.Settings()));
+			Registry.ITEM, Identifier.of(NAMESPACE, "fine_item"), new Item(new Item.Settings()));
 	private static final Block BLOCK = Registry.register(
-			Registry.BLOCK, new Identifier(NAMESPACE, "cool_block"), new Block(Block.Settings.of(Material.STONE)));
+			Registry.BLOCK, Identifier.of(NAMESPACE, "cool_block"), new Block(Block.Settings.of(Material.STONE)));
 
 	@Override
 	public void onInitialize(ModContainer mod) {
@@ -63,12 +63,12 @@ public final class DataFixerUpperTestMod implements ModInitializer, ServerLifecy
 		builder.addSchema(0, QuiltDataFixes.BASE_SCHEMA);
 		Schema schemaV1 = builder.addSchema(1, IdentifierNormalizingSchema::new);
 		SimpleFixes.addItemRenameFix(builder, "Rename old_item to new_item",
-				new Identifier(NAMESPACE, "old_item"), new Identifier(NAMESPACE, "new_item"), schemaV1);
+				Identifier.of(NAMESPACE, "old_item"), Identifier.of(NAMESPACE, "new_item"), schemaV1);
 		Schema schemaV2 = builder.addSchema(2, IdentifierNormalizingSchema::new);
 		SimpleFixes.addItemRenameFix(builder, "Rename new_item to fine_item",
-				new Identifier(NAMESPACE, "new_item"), new Identifier(NAMESPACE, "fine_item"), schemaV2);
+				Identifier.of(NAMESPACE, "new_item"), Identifier.of(NAMESPACE, "fine_item"), schemaV2);
 		SimpleFixes.addBlockRenameFix(builder, "Rename old_block to cool_block",
-				new Identifier(NAMESPACE, "old_block"), new Identifier(NAMESPACE, "cool_block"), schemaV2);
+				Identifier.of(NAMESPACE, "old_block"), Identifier.of(NAMESPACE, "cool_block"), schemaV2);
 
 		QuiltDataFixes.registerFixer(mod, DATA_VERSION, builder.build(Util::getBootstrapExecutor));
 	}

@@ -36,13 +36,13 @@ import org.quiltmc.qsl.data.callback.api.CodecAware;
 import org.quiltmc.qsl.data.callback.api.CodecMap;
 import org.quiltmc.qsl.data.callback.api.DynamicEventCallbackSource;
 import org.quiltmc.qsl.networking.api.PacketSender;
-import org.quiltmc.qsl.networking.api.ServerPlayConnectionEvents;
+import org.quiltmc.qsl.networking.api.server.ServerPlayConnectionEvents;
 import org.quiltmc.qsl.resource.loader.api.ResourceLoader;
 import org.quiltmc.qsl.resource.loader.api.reloader.SimpleSynchronousResourceReloader;
 
 public class DataCallbackTests implements ModInitializer {
-	public static final Identifier BEFORE_PHASE = new Identifier("quilt_data_callback_testmod", "before_phase");
-	public static final Identifier AFTER_PHASE = new Identifier("quilt_data_callback_testmod", "after_phase");
+	public static final Identifier BEFORE_PHASE = Identifier.of("quilt_data_callback_testmod", "before_phase");
+	public static final Identifier AFTER_PHASE = Identifier.of("quilt_data_callback_testmod", "after_phase");
 
 	// We make our own event here because we want our callback to have the CodecAware interface. In an actual usage, this
 	// would be added to the base event itself instead; however, this is a test mod, and we would have to make a whole
@@ -54,7 +54,7 @@ public class DataCallbackTests implements ModInitializer {
 	}, BEFORE_PHASE, Event.DEFAULT_PHASE, AFTER_PHASE);
 
 	public static final CodecMap<ServerJoin> JOIN_SERVER_CODECS = new CodecMap<>((handler, sender, server) -> {});
-	public static DynamicEventCallbackSource<ServerJoin> JOIN_SERVER_DATA = new DynamicEventCallbackSource<>(new Identifier("quilt_data_callback_testmod", "server_join"), JOIN_SERVER_CODECS, ServerJoin.class, SERVER_JOIN, callbacks -> (handler, sender, server) -> {
+	public static DynamicEventCallbackSource<ServerJoin> JOIN_SERVER_DATA = new DynamicEventCallbackSource<>(Identifier.of("quilt_data_callback_testmod", "server_join"), JOIN_SERVER_CODECS, ServerJoin.class, SERVER_JOIN, callbacks -> (handler, sender, server) -> {
 		for (ServerJoin callback : callbacks.get()) {
 			callback.onPlayReady(handler, sender, server);
 		}
@@ -67,9 +67,9 @@ public class DataCallbackTests implements ModInitializer {
 		ServerPlayConnectionEvents.JOIN.register(((handler, sender, server) ->
 				SERVER_JOIN.invoker().onPlayReady(handler, sender, server)));
 
-		JOIN_SERVER_DATA.register(new Identifier(mod.metadata().id(), "after"), new ServerJoinChat("Registered in the after phase from code!", Style.EMPTY), AFTER_PHASE);
+		JOIN_SERVER_DATA.register(Identifier.of(mod.metadata().id(), "after"), new ServerJoinChat("Registered in the after phase from code!", Style.EMPTY), AFTER_PHASE);
 		// This callback is overridden by data and should not fire.
-		JOIN_SERVER_DATA.register(new Identifier(mod.metadata().id(), "overridden"), (handler, sender, server) -> {
+		JOIN_SERVER_DATA.register(Identifier.of(mod.metadata().id(), "overridden"), (handler, sender, server) -> {
 			throw new RuntimeException("This callback should have been overridden by data!");
 		});
 
@@ -81,7 +81,7 @@ public class DataCallbackTests implements ModInitializer {
 
 			@Override
 			public @NotNull Identifier getQuiltId() {
-				return new Identifier("quilt_data_callback_testmod", "server_join_callbacks_listener");
+				return Identifier.of("quilt_data_callback_testmod", "server_join_callbacks_listener");
 			}
 		});
 	}
@@ -93,7 +93,7 @@ public class DataCallbackTests implements ModInitializer {
 
 	public record ServerJoinChat(String text, Style style) implements ServerJoin {
 		public static final Codec<ServerJoinChat> CODEC = RecordCodecBuilder.create(instance -> instance.group(Codec.STRING.fieldOf("text").forGetter(ServerJoinChat::text), Style.Serializer.CODEC.fieldOf("style").forGetter(ServerJoinChat::style)).apply(instance, ServerJoinChat::new));
-		public static final Identifier CODEC_ID = new Identifier("quilt_data_callback_testmod", "chat");
+		public static final Identifier CODEC_ID = Identifier.of("quilt_data_callback_testmod", "chat");
 
 		@Override
 		public Identifier getCodecId() {

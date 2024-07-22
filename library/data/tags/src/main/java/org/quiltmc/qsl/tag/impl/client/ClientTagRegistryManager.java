@@ -42,6 +42,7 @@ import net.minecraft.registry.HolderLookup.RegistryLookup;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagEntry;
 import net.minecraft.registry.tag.TagGroupLoader;
 import net.minecraft.registry.tag.TagKey;
@@ -266,7 +267,7 @@ public final class ClientTagRegistryManager<T> {
 	@SuppressWarnings("unchecked")
 	public static <T> ClientTagRegistryManager<T> get(RegistryKey<? extends Registry<T>> registryKey) {
 		return (ClientTagRegistryManager<T>) TAG_GROUP_MANAGERS.computeIfAbsent(registryKey,
-				key -> new ClientTagRegistryManager<>(registryKey, TagManagerLoader.getRegistryDirectory(key))
+				key -> new ClientTagRegistryManager<>(registryKey, RegistryKeys.getTagDirectory(key))
 		);
 	}
 

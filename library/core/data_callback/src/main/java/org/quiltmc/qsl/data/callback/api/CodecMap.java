@@ -48,7 +48,7 @@ public class CodecMap<T extends CodecAware> {
 	 * @param nullOperation a value that has no effect
 	 */
 	public CodecMap(T nullOperation) {
-		this.codecs.put(new Identifier("quilt", "nothing"), Codec.unit(nullOperation));
+		this.codecs.put(Identifier.of("quilt", "nothing"), Codec.unit(nullOperation));
 	}
 
 	/**

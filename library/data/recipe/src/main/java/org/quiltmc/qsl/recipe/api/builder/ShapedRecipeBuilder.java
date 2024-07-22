@@ -28,8 +28,8 @@ import net.minecraft.recipe.CraftingCategory;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeHolder;
 import net.minecraft.recipe.ShapedRecipe;
+import net.minecraft.recipe.ShapedRecipePattern;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.unmapped.C_vhpbjodz;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 
@@ -151,6 +151,6 @@ public class ShapedRecipeBuilder extends RecipeBuilder<ShapedRecipeBuilder, Shap
 	public RecipeHolder<ShapedRecipe> build(Identifier id, String group) {
 		this.checkOutputItem();
 		DefaultedList<Ingredient> ingredients = VanillaRecipeBuilders.getIngredients(this.pattern, this.ingredients, this.width, this.height);
-		return new RecipeHolder<>(id, new ShapedRecipe(group, this.category, new C_vhpbjodz(this.width, this.height, ingredients, Optional.empty()), this.output));
+		return new RecipeHolder<>(id, new ShapedRecipe(group, this.category, new ShapedRecipePattern(this.width, this.height, ingredients, Optional.empty()), this.output));
 	}
 }

@@ -12,7 +12,7 @@ qslModule {
 			api("qsl_base")
 			impl("registry") // For registry-sync.
 			impl("lifecycle_events")
-//			testmodOnly("resource_loader")
+			testmodOnly("resource_loader")
 		}
 		block {
 			testmodOnly("block_extensions")

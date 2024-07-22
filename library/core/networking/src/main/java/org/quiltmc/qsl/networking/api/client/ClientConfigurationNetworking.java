@@ -242,7 +242,7 @@ public final class ClientConfigurationNetworking {
 		 * <p>
 		 * An example usage of this is to display an overlay message:
 		 * <pre>{@code
-		 * ClientConfigurationNetworking.registerReceiver(new Identifier("mymod", "overlay"), (client, handler, data, responseSender) -&rt; {
+		 * ClientConfigurationNetworking.registerReceiver(Identifier.of("mymod", "overlay"), (client, handler, data, responseSender) -&rt; {
 		 * 	String message = data.readString(32767);
 		 *
 		 * 	// All operations on the server or world must be executed on the server thread

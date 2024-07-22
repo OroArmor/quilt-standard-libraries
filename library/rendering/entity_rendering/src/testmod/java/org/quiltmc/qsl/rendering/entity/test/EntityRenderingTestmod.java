@@ -39,7 +39,7 @@ public final class EntityRenderingTestmod implements ModInitializer {
 	public static final String NAMESPACE = "quilt_entity_rendering_testmod";
 
 	public static Identifier id(String path) {
-		return new Identifier(NAMESPACE, path);
+		return Identifier.of(NAMESPACE, path);
 	}
 
 	private static final Holder<ArmorMaterial> QUILT_ARMOR_MATERIAL = Registry.registerHolder(

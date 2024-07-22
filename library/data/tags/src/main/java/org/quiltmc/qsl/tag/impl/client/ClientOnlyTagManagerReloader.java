@@ -36,7 +36,7 @@ import org.quiltmc.qsl.resource.loader.api.reloader.SimpleResourceReloader;
 @ClientOnly
 @ApiStatus.Internal
 class ClientOnlyTagManagerReloader implements SimpleResourceReloader<List<ClientOnlyTagManagerReloader.Entry>> {
-	private static final Identifier ID = new Identifier(ClientQuiltTagsMod.NAMESPACE, "client_only_tags");
+	private static final Identifier ID = Identifier.of(ClientQuiltTagsMod.NAMESPACE, "client_only_tags");
 
 	@Override
 	public @NotNull Identifier getQuiltId() {

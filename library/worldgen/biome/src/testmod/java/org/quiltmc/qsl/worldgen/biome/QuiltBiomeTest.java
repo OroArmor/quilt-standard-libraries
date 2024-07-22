@@ -146,7 +146,7 @@ public class QuiltBiomeTest implements ModInitializer {
 		TheEndBiomes.addMidlandsBiome(TEST_END_HIGHLANDS, TEST_END_MIDLANDS, 10.0);
 		TheEndBiomes.addBarrensBiome(TEST_END_HIGHLANDS, TEST_END_BARRRENS, 10.0);
 
-		BiomeModifications.create(new Identifier("quilt:testmod"))
+		BiomeModifications.create(Identifier.of("quilt", "testmod"))
 				.add(ModificationPhase.ADDITIONS,
 						BiomeSelectors.foundInOverworld(),
 						modification -> modification.getWeather().setDownfall(100))
@@ -259,6 +259,6 @@ public class QuiltBiomeTest implements ModInitializer {
 	}
 
 	private static Identifier id(String path) {
-		return new Identifier(NAMESPACE, path);
+		return Identifier.of(NAMESPACE, path);
 	}
 }

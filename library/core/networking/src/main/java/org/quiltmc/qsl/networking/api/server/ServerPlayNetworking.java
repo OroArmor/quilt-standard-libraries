@@ -296,7 +296,7 @@ public final class ServerPlayNetworking {
 		 * <p>
 		 * An example usage of this is to create an explosion where the player is looking:
 		 * <pre>{@code
-		 * ServerPlayNetworking.registerReceiver(new Identifier("mymod", "boom"), (server, player, handler, data, responseSender) -> {
+		 * ServerPlayNetworking.registerReceiver(Identifier.of("mymod", "boom"), (server, player, handler, data, responseSender) -> {
 		 * 	boolean fire = data.readBoolean();
 		 *
 		 * 	// All operations on the server or world must be executed on the server thread

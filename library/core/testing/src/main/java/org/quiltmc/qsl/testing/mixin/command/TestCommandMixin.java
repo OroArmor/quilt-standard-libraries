@@ -157,7 +157,7 @@ public class TestCommandMixin {
 			expect = 2
 	)
 	private static Identifier quiltGameTest$fixStructureIdentifierImport(String namespace, String structure) {
-		return new Identifier(structure);
+		return Identifier.ofDefault(structure);
 	}
 
 	@ModifyArg(

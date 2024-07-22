@@ -19,14 +19,24 @@ package org.quiltmc.qsl.registry.attachment.test;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public final class SendMessageFuncValue extends FuncValue {
-	public static final Identifier TYPE = new Identifier("quilt", "send_message");
-	public static final MapCodec<SendMessageFuncValue> CODEC = Codec.STRING.fieldOf("message")
-		.xmap(SendMessageFuncValue::new, sm -> sm.message);
+	public static final Identifier TYPE = Identifier.of("quilt", "send_message");
+	public static final MapCodec<SendMessageFuncValue> CODEC = Codec
+			.STRING
+			.fieldOf("message")
+			.xmap(SendMessageFuncValue::new, sm -> sm.message);
+
+	public static final PacketCodec<RegistryByteBuf, SendMessageFuncValue> PACKET_CODEC = PacketCodecs
+			.STRING
+			.<RegistryByteBuf>cast()
+			.map(SendMessageFuncValue::new, sm -> sm.message);
 
 	private final String message;
 
