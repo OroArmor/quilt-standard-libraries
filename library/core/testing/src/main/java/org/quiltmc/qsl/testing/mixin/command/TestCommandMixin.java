@@ -153,11 +153,11 @@ public class TestCommandMixin {
 
 	@Redirect(
 			method = {"executeImport"},
-			at = @At(value = "NEW", target = "(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/util/Identifier;"),
+			at = @At(value = "INVOKE", target = "Lnet/minecraft/util/Identifier;ofDefault(Ljava/lang/String;)Lnet/minecraft/util/Identifier;"),
 			expect = 2
 	)
-	private static Identifier quiltGameTest$fixStructureIdentifierImport(String namespace, String structure) {
-		return Identifier.ofDefault(structure);
+	private static Identifier quiltGameTest$fixStructureIdentifierImport(String structure) {
+		return Identifier.parse(structure);
 	}
 
 	@ModifyArg(
