@@ -49,9 +49,9 @@ public final class DataFixerUpperTestMod implements ModInitializer, ServerLifecy
 	private static final Logger LOGGER = LogUtils.getLogger();
 
 	private static final Item ITEM = Registry.register(
-			Registry.ITEM, Identifier.of(NAMESPACE, "new_item"), new Item(new Item.Settings()));
+			Registry.ITEM, new Identifier(NAMESPACE, "new_item"), new Item(new Item.Settings()));
 	private static final Block BLOCK = Registry.register(
-			Registry.BLOCK, Identifier.of(NAMESPACE, "old_block"), new Block(Block.Settings.of(Material.STONE)));
+			Registry.BLOCK, new Identifier(NAMESPACE, "old_block"), new Block(Block.Settings.of(Material.STONE)));
 
 	@Override
 	public void onInitialize(ModContainer mod) {
@@ -63,7 +63,7 @@ public final class DataFixerUpperTestMod implements ModInitializer, ServerLifecy
 		builder.addSchema(0, QuiltDataFixes.BASE_SCHEMA);
 		Schema schemaV1 = builder.addSchema(1, IdentifierNormalizingSchema::new);
 		SimpleFixes.addItemRenameFix(builder, "Rename old_item to new_item",
-				Identifier.of(NAMESPACE, "old_item"), Identifier.of(NAMESPACE, "new_item"), schemaV1);
+				new Identifier(NAMESPACE, "old_item"), new Identifier(NAMESPACE, "new_item"), schemaV1);
 
 		QuiltDataFixes.buildAndRegisterFixer(mod, builder);
 	}

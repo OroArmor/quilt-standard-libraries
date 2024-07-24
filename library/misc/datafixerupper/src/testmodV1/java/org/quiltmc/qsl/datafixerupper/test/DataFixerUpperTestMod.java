@@ -44,7 +44,7 @@ public final class DataFixerUpperTestMod implements ModInitializer, ServerLifecy
 	private static final Logger LOGGER = LogUtils.getLogger();
 
 	private static final Item ITEM = Registry.register(
-			Registry.ITEM, Identifier.of(NAMESPACE, "old_item"), new Item(new Item.Settings()));
+			Registry.ITEM, new Identifier(NAMESPACE, "old_item"), new Item(new Item.Settings()));
 
 	@Override
 	public void onInitialize(ModContainer mod) {}
