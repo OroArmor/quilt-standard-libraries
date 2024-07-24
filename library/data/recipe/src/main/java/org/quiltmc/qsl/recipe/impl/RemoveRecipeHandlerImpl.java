@@ -16,9 +16,11 @@
 
 package org.quiltmc.qsl.recipe.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import com.google.common.collect.Multimap;
 import org.jetbrains.annotations.ApiStatus;
@@ -63,8 +65,14 @@ final class RemoveRecipeHandlerImpl extends BasicRecipeHandlerImpl implements Re
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Recipe<?>> void removeIf(RecipeType<T> recipeType, Predicate<RecipeHolder<T>> recipeRemovalPredicate) {
-		this.removeIfInternal(this.recipes.get(recipeType).stream()
-			.map(holder -> (RecipeHolder<T>)holder).toList(), recipeRemovalPredicate);
+		this.removeIfInternal(
+				this.recipes
+					.get(recipeType)
+					.stream()
+					.map(holder -> (RecipeHolder<T>) holder)
+					.collect(Collectors.toCollection(ArrayList::new)),
+				recipeRemovalPredicate
+		);
 	}
 
 	@Override

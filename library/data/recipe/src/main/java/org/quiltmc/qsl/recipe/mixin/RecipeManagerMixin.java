@@ -44,7 +44,7 @@ import org.quiltmc.qsl.recipe.impl.RecipeManagerImpl;
 
 @Mixin(RecipeManager.class)
 public class RecipeManagerMixin {
-	@Shadow(aliases = "field_51481")
+	@Shadow
 	private Multimap<RecipeType<?>, RecipeHolder<?>> recipesByType;
 
 	@Shadow

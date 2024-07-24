@@ -17,7 +17,7 @@
         "org.quiltmc.qsl.registry.test.RegistryLibMonitorTest",
         "org.quiltmc.qsl.registry.test.RegistryLibSyncOrderTest",
         "org.quiltmc.qsl.registry.test.RegistryLibSyncTest",
-        "org.quitlmc.qsl.registry.test.dynamic.RegistryLibDynamicRegistryTest"
+        "org.quiltmc.qsl.registry.test.dynamic.RegistryLibDynamicRegistryTest"
       ],
       "quilt:game_test": [
         "org.quiltmc.qsl.registry.test.dynamic.RegistryLibDynamicRegistryTest"
